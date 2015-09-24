@@ -2,7 +2,8 @@
 # extract stem of each keyword,
 #   so that tags like "Distributed Databases"
 #   and "Distributed Database" will be taken as a same keyword
-# output : time, author and keywords as parsed_publication.txt
+# data source is ../results/publication.data
+# output : time, author and keywords as ../results/publication_simplified.data
 
 import ast
 import operator
@@ -44,7 +45,7 @@ class Extraction(object):
             assert( len(self.time) == len(self.author) and len(self.author) == len(self.keyword) )
 
     def output(self):
-        output = open('../results/parsed_publication.txt', 'w')
+        output = open('../results/publication_simplified.data', 'w')
         for i in range(0, len(self.time)):
             output.write(repr(self.time[i]) + '\n')
             for j in self.author[i]:

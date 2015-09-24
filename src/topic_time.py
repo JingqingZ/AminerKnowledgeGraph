@@ -1,5 +1,9 @@
 # given the number of topics
 # get the time distribution of each specific topic
+# keyword source is ../results/people_publication.keywords
+# data source is ../results/publication_simplified.data
+# output data is ../results/publication_time.keywords
+
 from stemming.porter2 import stem
 
 class TopicTime(object):
@@ -16,7 +20,7 @@ class TopicTime(object):
             s = stem(words[i].split('\t')[0])
             self.topics[ s ] = dict()
             self.stemword_dict[s] = words[i].split('\t')[0]
-        content = open('../results/parsed_publication.txt', 'r').readlines()
+        content = open('../results/publication_simplified.data', 'r').readlines()
         counter = 0
         year = ''
         for i in content:
@@ -39,7 +43,7 @@ class TopicTime(object):
             counter = counter + 1
     
     def show(self):
-        output = open('../results/topic_time.txt', 'w')
+        output = open('../results/publication_time.keywords', 'w')
         words = open('../results/people_publication.keywords', 'r').readlines()
         for i in range(0, self.topic_number):
             s = stem(words[i].split('\t')[0])

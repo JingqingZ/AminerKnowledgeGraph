@@ -1,4 +1,5 @@
-# Get the basic information about parsed_publication
+# Get the basic information about ../results/publication_simplified.data
+# output is saved in ../results/publication.info
 
 class PublicationInfo(object):
     """docstring for PublicationInfo"""
@@ -11,7 +12,7 @@ class PublicationInfo(object):
         self.invalid_paper_count = 0
 
     def readin(self):
-        content = open('../parsed_publication.txt', 'r').readlines()
+        content = open('../results/publication_simplified.data', 'r').readlines()
         counter = 0
         for i in content:
             # this is the line of year
@@ -39,7 +40,7 @@ class PublicationInfo(object):
             counter = counter + 1
     
     def count_invalid(self):
-        content = open('../parsed_publication.txt', 'r').readlines()
+        content = open('../results/publication_simplified.data', 'r').readlines()
         counter = 0
         year = 0
         author = ''
@@ -57,13 +58,13 @@ class PublicationInfo(object):
                 if (not (year >= 1900 and year <= 2014)) or len(author) < 2 or len(keyword) < 2:
                     self.invalid_paper_count += 1
             counter += 1
-        output = open('publication_info.txt', 'a')
+        output = open('../results/publication.info', 'a')
         output.write(repr(self.invalid_paper_count) + ' invalid paper\n')
         output.write(repr(126444-self.invalid_paper_count) + ' valid paper\n')
         output.close()
 
     def show(self):
-        output = open('publication_info.txt', 'w')
+        output = open('../results/publication.info', 'w')
         output.write('----------------------------------------------------\n')
         li = list(self.year_count.items())
         li = sorted(li, key = lambda asd:asd[0], reverse=False)
