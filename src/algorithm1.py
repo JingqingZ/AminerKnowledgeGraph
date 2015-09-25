@@ -51,7 +51,7 @@ stemm2keywords_dictionary = {}
 
 print("Loading top 100 keywords from publication.keywords file")
 curline = 0
-infile1 = open("publication.keywords", 'r')
+infile1 = open("../results/publication.keywords", 'r')
 for line in infile1:
     if curline >= 100:
         break
@@ -70,7 +70,7 @@ curyear = 0
 curauthorlist = []
 curkeywordslist = []
 skip = False
-infile2 = open("publication_simplified.data", 'r')
+infile2 = open("../results/publication_simplified.data", 'r')
 for line in infile2:
     if curline % 10000 == 0:
         print(curline)
@@ -111,7 +111,7 @@ infile2.close()
 
 
 print("Output1: overall dictionary to author_year_keywords.list file")
-outfile1 = open("author_year_keywords.list", 'w')
+outfile1 = open("../results/author_year_keywords.list", 'w')
 for author in overall_dictionary.keys():
     outfile1.write(author + " " +
                    repr(len(overall_dictionary[author].keys())) + "\n")
@@ -124,7 +124,6 @@ for author in overall_dictionary.keys():
         outfile1.write("\n")
 outfile1.close()
 
-
 # author keyword link dictionary
 # {author: { key1!key2: [year1, year2, ...], ...}, ...}
 author_keyword_dictionary = {}
@@ -132,20 +131,21 @@ print("Computing keyword links of each author")
 for author in overall_dictionary.keys():
     if author not in author_keyword_dictionary:
         author_keyword_dictionary[author] = {}
-    for year in overall_dictionary[author]:
-        if year + 1 not in overall_dictionary[author]:
-            continue
-        for key1 in overall_dictionary[author][year]:
-            for key2 in overall_dictionary[author][year + 1]:
-                if key1 == key2:
-                    continue
-                link = key1 + "!" + key2
-                if link not in author_keyword_dictionary[author]:
-                    author_keyword_dictionary[author][link] = []
-                author_keyword_dictionary[author][link].append(year)
+    for year_begin in overall_dictionary[author]:
+        # change from (year, year+1) to (year1, year2)
+        for year_end in overall_dictionary[author]:
+            if year_end > year_begin:
+                for key1 in overall_dictionary[author][year_begin]:
+                    for key2 in overall_dictionary[author][year_end]:
+                        if key1 == key2:
+                            continue
+                        link = key1 + "!" + key2
+                        if link not in author_keyword_dictionary[author]:
+                            author_keyword_dictionary[author][link] = []
+                        author_keyword_dictionary[author][link].append(year_begin * 4096 + year_end)
 
 print("Output2: keyword link of each author to link_author.list file")
-outfile2 = open("link_author.list", 'w')
+outfile2 = open("../results/link_author.list", 'w')
 for author in author_keyword_dictionary.keys():
     outfile2.write(author + " " +
                    repr(len(author_keyword_dictionary[author].keys())) + "\n")
@@ -154,7 +154,7 @@ for author in author_keyword_dictionary.keys():
         outfile2.write("\t" + stemm2keywords_dictionary[keys[0]] + " " +
                        stemm2keywords_dictionary[keys[1]] + " ")
         for year in author_keyword_dictionary[author][link]:
-            outfile2.write("(" + repr(year) + "," + repr(year + 1) + ") ")
+            outfile2.write("(" + repr(year//4096) + "," + repr(year % 4096) + ") ")
         outfile2.write("\n")
 outfile2.close()
 
@@ -173,7 +173,7 @@ sorted_link_dictionary = sorted(link_dictionary.items(),
                                 key=operator.itemgetter(1))
 
 print("Output3: keyword link link.list file")
-outfile3 = open("link.list", 'w')
+outfile3 = open("../results/link.list", 'w')
 for i in range(len(sorted_link_dictionary) - 1, -1, -1):
     keys = sorted_link_dictionary[i][0].split("!")
     outfile3.write(stemm2keywords_dictionary[keys[0]] + " " +
@@ -181,6 +181,7 @@ for i in range(len(sorted_link_dictionary) - 1, -1, -1):
                    repr(sorted_link_dictionary[i][1]) + " " +
                    repr(sorted_link_dictionary[i][1] / author_num) + "\n")
 outfile3.close()
+
 
 # link difference dictionary
 # {key1!key2: difference, ...}
@@ -206,7 +207,7 @@ sorted_link_diff_dictionary = sorted(link_diff_dictionary.items(),
                                      key=operator.itemgetter(1))
 
 print("Output4: keyword link link_diff.list file")
-outfile4 = open("link_diff.list", 'w')
+outfile4 = open("../results/link_diff.list", 'w')
 for i in range(len(sorted_link_diff_dictionary) - 1, -1, -1):
     keys = sorted_link_diff_dictionary[i][0].split("!")
     link = sorted_link_diff_dictionary[i][0]
@@ -220,3 +221,4 @@ for i in range(len(sorted_link_diff_dictionary) - 1, -1, -1):
                    repr(reverse_num) + " " +
                    repr(sorted_link_diff_dictionary[i][1]) + "\n")
 outfile4.close()
+
