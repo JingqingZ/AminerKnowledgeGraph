@@ -4,9 +4,9 @@ import json
 # import time
 
 
-def search(type):
+def search(type, query):
     base_url = "https://api.aminer.org/api/search/" + type + "?"
-    static_para = "query=data mining&sort=relevance&"
+    static_para = 'query=' + query + '&sort=relevance&'
     offset = 92700
     size = 100
     outfile = open(type + ".data", 'w')
@@ -28,4 +28,8 @@ def search(type):
         round += 1
     outfile.close()
 
-search("pub")
+def main():
+    search('pub', 'data mining')
+
+if __name__ == '__main__':
+    main()

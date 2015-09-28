@@ -11,8 +11,8 @@ class PublicationInfo(object):
         self.have_author_count = 0
         self.invalid_paper_count = 0
 
-    def readin(self):
-        content = open('../results/publication_simplified.data', 'r').readlines()
+    def readin(self, publication_data):
+        content = open(publication_data, 'r').readlines()
         counter = 0
         for i in content:
             # this is the line of year
@@ -39,8 +39,8 @@ class PublicationInfo(object):
                     self.have_key_count += 1
             counter = counter + 1
     
-    def count_invalid(self):
-        content = open('../results/publication_simplified.data', 'r').readlines()
+    def count_invalid(self, publication_data, publicatin_info_file):
+        content = open(publication_data, 'r').readlines()
         counter = 0
         year = 0
         author = ''
@@ -58,13 +58,13 @@ class PublicationInfo(object):
                 if (not (year >= 1900 and year <= 2014)) or len(author) < 2 or len(keyword) < 2:
                     self.invalid_paper_count += 1
             counter += 1
-        output = open('../results/publication.info', 'a')
+        output = open(publicatin_info_file, 'a')
         output.write(repr(self.invalid_paper_count) + ' invalid paper\n')
         output.write(repr(126444-self.invalid_paper_count) + ' valid paper\n')
         output.close()
 
-    def show(self):
-        output = open('../results/publication.info', 'w')
+    def show(self, publicatin_info_file):
+        output = open(publicatin_info_file, 'w')
         output.write('----------------------------------------------------\n')
         li = list(self.year_count.items())
         li = sorted(li, key = lambda asd:asd[0], reverse=False)
@@ -89,9 +89,9 @@ class PublicationInfo(object):
 
 def main():
     pi = PublicationInfo()
-    pi.readin()
-    pi.show()
-    pi.count_invalid()
+    pi.readin('../results/publication_simplified.data_merge')
+    pi.show('../results/publication.info')
+    pi.count_invalid('../results/publication_simplified.data_merge', '../results/publication.info')
 
 if __name__ == '__main__':
     main()

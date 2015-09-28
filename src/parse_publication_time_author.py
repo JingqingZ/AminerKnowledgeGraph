@@ -18,8 +18,8 @@ class Extraction(object):
         self.keyword = list()
         self.keyword_dict = dict()
 
-    def extract(self):
-        infile = open('../results/publication.data', 'r')
+    def extract(self, original_publication_data):
+        infile = open(original_publication_data, 'r')
         cur = 0
         for line in infile:
             if cur % 1000 == 0:
@@ -44,8 +44,8 @@ class Extraction(object):
             self.author.append(li)
             assert( len(self.time) == len(self.author) and len(self.author) == len(self.keyword) )
 
-    def output(self):
-        output = open('../results/publication_simplified.data', 'w')
+    def output(self, output_simplified_publication):
+        output = open(output_simplified_publication, 'w')
         for i in range(0, len(self.time)):
             output.write(repr(self.time[i]) + '\n')
             for j in self.author[i]:
@@ -58,8 +58,8 @@ class Extraction(object):
 
 def main():
     e = Extraction()
-    e.extract()
-    e.output()
+    e.extract('../results/publication.data')
+    e.output('../results/publication_simplified.data')
 
 if __name__ == '__main__':
     main()

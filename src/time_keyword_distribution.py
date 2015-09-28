@@ -14,13 +14,13 @@ class TopicTime(object):
         self.topics = dict()
         self.stemword_dict = dict()
 
-    def read(self):
-        words = open('../results/people_publication.keywords', 'r').readlines()
+    def read(self, publication_keyword, publication_data):
+        words = open(publication_keyword, 'r').readlines()
         for i in range(0, self.topic_number):
             s = stem(words[i].split('\t')[0])
             self.topics[ s ] = dict()
             self.stemword_dict[s] = words[i].split('\t')[0]
-        content = open('../results/publication_simplified.data', 'r').readlines()
+        content = open(publication_data, 'r').readlines()
         counter = 0
         year = ''
         for i in content:
@@ -42,9 +42,9 @@ class TopicTime(object):
                             self.topics[j][year] = 1
             counter = counter + 1
     
-    def show(self):
-        output = open('../results/publication_time.keywords', 'w')
-        words = open('../results/people_publication.keywords', 'r').readlines()
+    def show(self, publication_keyword, time_keyword_distribution):
+        output = open(time_keyword_distribution, 'w')
+        words = open(publication_keyword, 'r').readlines()
         for i in range(0, self.topic_number):
             s = stem(words[i].split('\t')[0])
             output.write(self.stemword_dict[s] + '\n')
@@ -56,8 +56,8 @@ class TopicTime(object):
 
 def main():
     tt = TopicTime()
-    tt.read()
-    tt.show()
+    tt.read('../results/publication.keywords_merge', '../results/publication_simplified.data_merge')
+    tt.show('../results/publication.keywords_merge', '../results/time_keyword_distribution.txt')
 
 if __name__ == '__main__':
     main()
