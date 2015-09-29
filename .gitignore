@@ -1,2 +1,4 @@
 results/publication.data
 .DS_Store
+data/
+src/__pycache__/
