@@ -7,11 +7,12 @@ import json
 def search(type, query):
     base_url = "https://api.aminer.org/api/search/" + type + "?"
     static_para = 'query=' + query + '&sort=relevance&'
-    offset = 92700
+    offset = 0
     size = 100
-    outfile = open(type + ".data", 'w')
+    limit = 150000
+    outfile = open(type + '_' + query.replace(' ', '_') + ".data", 'w')
     round = 0
-    while(True and round < 2550):
+    while(True):
         search_url = base_url + static_para
         search_url += "offset=" + repr(offset) + "&size=" + repr(size)
         print(search_url)
@@ -22,14 +23,17 @@ def search(type, query):
         for r in results:
             outfile.write(str(r) + '\n')
         offset += size
+        print ('%d %d' % (offset, total))
         if (offset > total):
+            break
+        if (offset > limit):
             break
         # time.sleep()
         round += 1
     outfile.close()
 
 def main():
-    search('pub', 'data mining')
+    search('pub', 'software engineering')
 
 if __name__ == '__main__':
     main()
