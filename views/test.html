@@ -1,0 +1,64 @@
+<html>
+<head>
+<script src="static/raphael-min.js"></script>
+<script src="static/jquery-1.8.2.min.js"></script>
+<script src="static/morris-0.4.1.min.js"></script>
+<meta charset=utf-8 />
+<title>Knowledge Trend Check</title>
+</head>
+<body>
+	<div id="results" style="display: none">
+		<p id="link1-results">0</p>
+		<p id="link2-results">0</p>
+	</div>
+
+	<input type="checkbox" id="link1-checkbox1"> knowledge graph --> association rules (frequency 500)<br>
+	<input type="checkbox" id="link1-checkbox2"> association rules --> knowledge graph (frequency 300)<br>
+  	<div id="link1" style="height: 200px; width: 50%"></div>
+	<script id="jsbin-javascript">
+	$("#link1-checkbox1").click(function() {
+		if(document.getElementById("link1-checkbox1").checked == true) {
+			document.getElementById("link1-checkbox2").checked = false;
+			$("#link1-results").html("1");
+		} else {
+			$("#link1-results").html("0");
+		}
+	});
+	$("#link1-checkbox2").click(function() {
+		if(document.getElementById("link1-checkbox2").checked == true) {
+			document.getElementById("link1-checkbox1").checked = false;
+			$("#link1-results").html("-1");
+		} else {
+			$("#link1-results").html("0");
+		}
+	});
+	/*
+	 * Play with this code and it'll update in the panel opposite.
+	 *
+	 * Why not try some of the options above?
+	 */
+	Morris.Line({
+	  element: 'link1',
+	  data: [
+	    { y: '2005', a: 361, b: 171 },
+	    { y: '2006', a: 404, b: 161 },
+	    { y: '2007', a: 465,  b: 166 },
+	    { y: '2008', a: 492,  b: 197 },
+	    { y: '2009', a: 537,  b: 190 },
+	    { y: '2010', a: 529,  b: 194 },
+	    { y: '2011', a: 408,  b: 129 },
+	    { y: '2012', a: 372, b: 146 }
+	  ],
+	  xkey: 'y',
+	  ykeys: ['a', 'b'],
+	  labels: ['Knowledge Discovery', 'Association Rule']
+	});
+	</script>
+
+	<p  style="margin-top: 100px">----------------------------------------------------------------------------------------------------------------------------------------------------------------</p>
+
+
+
+	<h2 style="margin-top: 100px"> Finished! Please press Ctrl+S to save this page, and then send the <font color="red">html</font> file back. Great Thanks!</h2>
+</body>
+</html>

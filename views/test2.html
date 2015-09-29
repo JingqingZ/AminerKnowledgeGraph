@@ -1,0 +1,53 @@
+
+<html>
+  <head>
+    <style>
+      input[type=checkbox]
+      {
+        /* Double-sized Checkboxes */
+        -ms-transform: scale(2); /* IE */
+        -moz-transform: scale(2); /* FF */
+        -webkit-transform: scale(2); /* Safari and Chrome */
+        -o-transform: scale(2); /* Opera */
+        padding: 10px;
+      }
+    </style>
+    <script type="text/javascript"
+          src="https://www.google.com/jsapi?autoload={
+            'modules':[{
+              'name':'visualization',
+              'version':'1',
+              'packages':['corechart']
+            }]
+          }"></script>
+
+    <script type="text/javascript">
+      data0 = [
+          ['Year', 'knowledge graph', 'association rules'],
+          ['2004',  1000,      400],
+          ['2005',  1170,      460],
+          ['2006',  660,       1120],
+          ['2007',  1030,      540]
+        ];
+      options0 = {
+          title: 'knowledge graph --> association rules',
+          curveType: 'function',
+          legend: { position: 'bottom' }
+        };
+      id0 = "chart0";
+
+      google.setOnLoadCallback(drawChart(data0, options0, id0));
+
+      function drawChart(data, options, id) {
+        var data = google.visualization.arrayToDataTable(data);
+
+        var chart = new google.visualization.LineChart(document.getElementById(id));
+
+        chart.draw(data, options);
+      }
+    </script>
+  </head>
+  <body>
+    <div id="chart0" style="width: 500px; height: 500px"></div>  
+  </body>
+</html>
