@@ -2,9 +2,9 @@
 
 from stemming.porter2 import stem
 
-minyear = 1990
+minyear = 1980
 maxyear = 2014
-timelinefile = open("../results/publication_time.keywords", "r")
+timelinefile = open("../results/pub_computer_vision.dist", "r")
 dictionary = {}
 keyword = ""
 for line in timelinefile:
@@ -20,7 +20,7 @@ for line in timelinefile:
         dictionary[keyword] = {}
 timelinefile.close()
 
-linkdifffile = open("../results/link_diff_trend_sim.list", "r")
+linkdifffile = open("../results/trend_sim_computer_vision.list", "r")
 linklist = []
 for line in linkdifffile:
     line = line.replace("\n", "").split(" ")
@@ -90,7 +90,7 @@ for i in range(0, len(linklist)):
     htmlfile.write('  ],')
     htmlfile.write('  xkey: "y",')
     htmlfile.write('  ykeys: ["a", "b"],')
-    htmlfile.write('  labels: ["Knowledge Discovery", "Association Rule"]')
+    htmlfile.write('  labels: ["' + linklist[i][0].replace("_", " ") + '", "' + linklist[i][1].replace("_", " ") + '"]')
     htmlfile.write('});')
     htmlfile.write('</script>')
     htmlfile.write('<p  style="margin-top: 100px">----------------------------------------------------------------------------------------------------------------------------------------------------------------</p>')

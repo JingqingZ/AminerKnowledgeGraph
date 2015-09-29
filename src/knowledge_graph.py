@@ -1,6 +1,7 @@
 # Building knowledge graph from AMiner scientific network
 
 import os
+import sys
 from stemming.porter2 import stem
 
 from parse_publication_tag import PublicationTagParser
@@ -8,6 +9,7 @@ from parse_publication_time_author import Extraction
 from time_keyword_distribution import TopicTime
 from merge_keywords import MergeKeywords
 from algorithm1 import Algorithm1
+from trend_sim import TrendSim
 
 
 def main():
@@ -15,7 +17,7 @@ def main():
     data_dir = '../data/'
 
     # change here to change different topic
-    q = 'data mining'
+    q = sys.argv[1]
 
     query = q.replace(' ', '_')
     publication_data = data_dir + 'pub_' + query + '.data'
@@ -28,35 +30,48 @@ def main():
     list_author = result_dir + 'link_author_' + query + '.list'
     list_link = result_dir + 'link_' + query + '.list'
     link_diff = result_dir + 'diff_' + query + '.list'
+    trend_sim = result_dir + 'trend_sim_' + query + '.list'
 
-    # extract keywords
+    '''# extract keywords
+    print("extract keywords")
     ptp = PublicationTagParser()
     ptp.parse_publication_tag(publication_data, publication_keyword, q)
 
     # extract author, time
+    print("extract author time")
     e = Extraction()
     e.extract(publication_data)
     e.output(publication_simplified)
 
     # merge keywords
+    print("merge keywords")
     mk = MergeKeywords()
     mk.readin(publication_keyword)
     mk.process_keywords(publication_keyword + '_merge', q)
     mk.process_publication(publication_simplified, publication_simplified + '_merge')
-    # rename the new file after merge keywords 
+    # rename the new file after merge keywords
     os.rename(publication_keyword + '_merge', publication_keyword)
     os.rename(publication_simplified + '_merge', publication_simplified)
 
-    # get the topic time distribution
+    '''# get the topic time distribution
+    print("get the topic time distribution")
     tt = TopicTime()
     tt.read(publication_keyword, publication_simplified)
     tt.show(publication_keyword, publication_distribution)
 
     # use algorithm1 to get link
+    print("algorithm1")
     alg1 = Algorithm1()
     alg1.algorithm1(publication_keyword, publication_simplified,
                     list_author_year_keyword, list_author,
                     list_link, link_diff)
+
+    # compute trend similarity
+    print("compute trend similarity")
+    tsim = TrendSim()
+    tsim.trend_sim(publication_distribution,
+                   link_diff,
+                   trend_sim)
 
 if __name__ == '__main__':
     main()

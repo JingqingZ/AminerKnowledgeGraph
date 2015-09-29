@@ -1,4 +1,5 @@
 .DS_Store
-data/*.data
-results/*.data
+data/*
+tmp/*
+results/*
 src/__pycache__/
