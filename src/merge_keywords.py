@@ -1,18 +1,21 @@
 # merge keywords with same meaning
 from stemming.porter2 import stem
+import os
 
 class MergeKeywords(object):
     """docstring for MergeKeywords"""
     def __init__(self):
         super(MergeKeywords, self).__init__()
-        self.suffix = [ '.', '_algorithms', '_algorithm', '_theory',
-                        '_data_mining', '_mining', '_analysis', '_module', 
-                        '_model', '_processing', '_tools', '_tool', '_technique', 
+        self.suffix = [ '.', '_algorithms', '_algorithm', '_theory', '_mining',
+                        '_analysis', '_module', '_techniques', '_technique'
+                        '_model', '_processing', '_tools', '_tool', 
                         '_applications', '_application', '_systems', '_system']
         self.matching = dict()
         self.keywords = dict()
+        self.simword = dict()
 
     def readin(self, origin_keyword_file):
+        # load original keyword
         content = open(origin_keyword_file).readlines()
         for i in content:
             li = i.strip().split('\t')
@@ -21,6 +24,23 @@ class MergeKeywords(object):
                 continue
             self.keywords[li[0]] = int(li[1])
 
+        # load similar keyword dictionary
+        filename = 'simword.txt'
+        if os.path.exists(filename):
+            content = open(filename).readlines()
+            for i in content:
+                li = i.strip().split('\t')
+                self.simword[li[0]] = li[1]
+
+    def save_file(self, simword_output):
+        print ('saving similar keywords file')
+        output = open(simword_output, 'w')
+        for i in self.matching:
+            output.write(i + '\t' + self.matching[i] + '\n')
+        output.close()
+
+    def process_keywords(self, new_keyword_file, query_string):
+        # check the suffix for keywords
         print ('checking suffix for all keywords')
         for i in self.keywords:
             # in this step we remove the suffix for all the keywords
@@ -28,12 +48,17 @@ class MergeKeywords(object):
             for j in self.suffix:
                 if i.endswith(j):
                     where = i.rfind(j)
-                    self.matching[i] =i[:where]
+                    self.matching[i] = i[:where]
                     flag = True
                     break
             if flag == False:
                 self.matching[i] = i
-        
+
+        # check simword.txt
+        for i in self.matching:
+            if i in self.simword:
+                self.matching[i] = self.simword[i]
+
         # this step find the most common keywords for each keyword without suffix
         print ('find most common keywords after removing suffix')
         keywords_stem = dict()
@@ -53,15 +78,11 @@ class MergeKeywords(object):
             s = stem(self.matching[i])
             self.matching[i] = keywords_stem[s][0]
 
-
-    def save_file(self, simword_output):
-        print ('saving similar keywords file')
-        output = open(simword_output, 'w')
         for i in self.matching:
-            output.write(i + '\t' + self.matching[i] + '\n')
-        output.close()
+            if self.matching[i] in self.simword:
+                new = self.simword[self.matching[i]]
+                self.matching[i] = new
 
-    def process_keywords(self, new_keyword_file, query_string):
         print ('merging keywords')
         new_key = dict()
         for i in self.matching:
@@ -99,10 +120,10 @@ class MergeKeywords(object):
 
 def main():
     mk = MergeKeywords()
-    mk.readin('../results/publication.keywords')
-    #mk.save_file('../results/similar_keywords.txt')
-    mk.process_keywords('../results/publication.keywords_merge', 'data mining')
-    mk.process_publication('../results/publication_simplified.data', '../results/publication_simplified.data_merge')
+    mk.readin('../results/pub_artificial_intelligence.keywords')
+    mk.process_keywords('../results/pub_artificial_intelligence.merged', 'artificial intelligence')
+    
+    mk.process_publication('../results/AI.simp', '../results/AI.ttt')
 
 if __name__ == '__main__':
     main()
