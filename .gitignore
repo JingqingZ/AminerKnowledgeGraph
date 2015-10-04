@@ -1,5 +1,5 @@
 .DS_Store
 data/*
 tmp/*
-results/*
+results/
 src/__pycache__/
