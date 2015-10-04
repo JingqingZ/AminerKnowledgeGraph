@@ -5,10 +5,14 @@ import sys
 
 query = sys.argv[1].replace(" ", "_")
 sim_threshold = 0.85
+times_threshold = 10
 graph_num = 30
 
 minyear = 1980
 maxyear = 2014
+
+reciprocal_times_threshold = 1 / times_threshold
+
 timelinefile = open("../results/pub_" + query + ".dist", "r")
 dictionary = {}
 keyword = ""
@@ -24,6 +28,13 @@ for line in timelinefile:
         keyword = stem(line[0])
         dictionary[keyword] = {}
 timelinefile.close()
+
+keyword_sum = dict()
+for keyword in dictionary:
+    counter = 0
+    for year in dictionary[keyword]:
+        counter += dictionary[keyword][year]
+    keyword_sum[keyword] = counter
 
 linkdifffile = open("../results/trend_sim_" + query + ".list", "r")
 linklist = []
@@ -60,7 +71,12 @@ valid = 0
 for i in range(0, len(linklist)):
     key0 = stem(linklist[i][0])
     key1 = stem(linklist[i][1])
-    if key0 not in dictionary or key1 not in dictionary or float(linklist[i][5]) > sim_threshold:
+    if key0 not in dictionary or key1 not in dictionary:
+        continue
+    if float(linklist[i][5]) > sim_threshold:
+        continue
+    ratio = keyword_sum[key0] / keyword_sum[key1]
+    if ratio > times_threshold or ratio < reciprocal_times_threshold:
         continue
     valid += 1
     if valid > graph_num:
@@ -76,7 +92,12 @@ valid = 0
 for i in range(0, len(linklist)):
     key0 = stem(linklist[i][0])
     key1 = stem(linklist[i][1])
-    if key0 not in dictionary or key1 not in dictionary or float(linklist[i][5]) > sim_threshold:
+    if key0 not in dictionary or key1 not in dictionary:
+        continue
+    if float(linklist[i][5]) > sim_threshold:
+        continue
+    ratio = keyword_sum[key0] / keyword_sum[key1]
+    if ratio > times_threshold or ratio < reciprocal_times_threshold:
         continue
     valid += 1
     if valid > graph_num:
