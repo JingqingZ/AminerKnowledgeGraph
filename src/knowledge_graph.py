@@ -32,7 +32,7 @@ def main():
     link_diff = result_dir + 'diff_' + query + '.list'
     trend_sim = result_dir + 'trend_sim_' + query + '.list'
 
-    '''# extract keywords
+    # extract keywords
     print("extract keywords")
     ptp = PublicationTagParser()
     ptp.parse_publication_tag(publication_data, publication_keyword, q)
@@ -53,7 +53,7 @@ def main():
     os.rename(publication_keyword + '_merge', publication_keyword)
     os.rename(publication_simplified + '_merge', publication_simplified)
 
-    '''# get the topic time distribution
+    # get the topic time distribution
     print("get the topic time distribution")
     tt = TopicTime()
     tt.read(publication_keyword, publication_simplified)
