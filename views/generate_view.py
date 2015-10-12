@@ -18,30 +18,6 @@ class HTMLGenerator(object):
 
         self.reciprocal_times_threshold = 1 / self.times_threshold
 
-        self.htmlfile = open(self.query + ".html", "w")
-        self.htmlfile.write('<html><head>')
-        jsfile = open("static/jquery-1.8.2.min.js", 'r')
-        self.htmlfile.write('<script>')
-        for line in jsfile:
-            self.htmlfile.write(line)
-        self.htmlfile.write('</script>')
-        jsfile.close()
-        jsfile = open("static/raphael-min.js", 'r')
-        self.htmlfile.write('<script>')
-        for line in jsfile:
-            self.htmlfile.write(line)
-        self.htmlfile.write('</script>')
-        jsfile.close()
-        jsfile = open("static/morris-0.4.1.min.js", 'r')
-        self.htmlfile.write('<script>')
-        for line in jsfile:
-            self.htmlfile.write(line)
-        self.htmlfile.write('</script>')
-        jsfile.close()
-
-    def __del__(self):
-        self.htmlfile.close()
-
     def load_files(self):
         timelinefile = open("../results/pub_" + self.query + ".dist", "r")
         self.dictionary = {}
@@ -83,7 +59,39 @@ class HTMLGenerator(object):
             return False
         return True
 
+    def filter(self):
+        # do not generate html file, just filter the correct relationships
+        correct_list = list()
+        for i in range(0, len(self.linklist)):
+            key0 = stem(self.linklist[i][0])
+            key1 = stem(self.linklist[i][1])
+            if self.judge(key0, key1, i) == False:
+                continue
+            correct_list.append(i)
+        return correct_list
+
     def gen_html(self):
+        self.htmlfile = open(self.query + ".html", "w")
+        self.htmlfile.write('<html><head>')
+        jsfile = open("static/jquery-1.8.2.min.js", 'r')
+        self.htmlfile.write('<script>')
+        for line in jsfile:
+            self.htmlfile.write(line)
+        self.htmlfile.write('</script>')
+        jsfile.close()
+        jsfile = open("static/raphael-min.js", 'r')
+        self.htmlfile.write('<script>')
+        for line in jsfile:
+            self.htmlfile.write(line)
+        self.htmlfile.write('</script>')
+        jsfile.close()
+        jsfile = open("static/morris-0.4.1.min.js", 'r')
+        self.htmlfile.write('<script>')
+        for line in jsfile:
+            self.htmlfile.write(line)
+        self.htmlfile.write('</script>')
+        jsfile.close()
+
         self.htmlfile.write('<meta charset=utf-8 /><title>Knowledge Trend Check</title></head><body>')
         self.htmlfile.write('<div id="results" style="display: none">\n')
         valid = 0
@@ -151,10 +159,12 @@ class HTMLGenerator(object):
             self.htmlfile.write('</script>')
             self.htmlfile.write('<p  style="margin-top: 100px">----------------------------------------------------------------------------------------------------------------------------------------------------------------</p>')
         self.htmlfile.write('<h2 style="margin-top: 100px"> Finished! Please press Ctrl+S to save this page, and then send the <font color="red">html</font> file back. Great Thanks!</h2></body></html>')
+        self.htmlfile.close()
 
 def main():
     hg = HTMLGenerator(sys.argv[1])
     hg.load_files()
+    result = hg.filter()
     hg.gen_html()
 
 if __name__ == '__main__':
