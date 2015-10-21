@@ -82,18 +82,18 @@ class Algorithm1(object):
                 print(curline)
             if skip:
                 curline += 1
-                if curline % 3 == 0:
+                if curline % 4 == 0:
                     skip = False
                 continue
-            if curline % 3 == 0:
+            if curline % 4 == 1:
                 curyear = int(line)
-                if curyear < 1800 or curyear > 2014:  # illegal
+                if curyear < 1980 or curyear > 2014:  # illegal
                     skip = True
-            elif curline % 3 == 1:
+            elif curline % 4 == 2:
                 curauthorlist = line.replace("\n", "").split("!")
                 if len(curauthorlist) == 1 and len(curauthorlist[0]) == 0:
                     skip = True
-            else:
+            elif curline % 4 == 3:
                 curkeywordslist = line.replace("\n", "").split(" ")
                 if len(curkeywordslist) == 1 and len(curkeywordslist[0]) == 0:
                     skip = True

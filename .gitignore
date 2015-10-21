@@ -3,4 +3,5 @@ data/*
 tmp/*
 results/
 views/*.html
+paper/*
 src/__pycache__/

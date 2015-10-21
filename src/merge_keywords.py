@@ -105,7 +105,7 @@ class MergeKeywords(object):
         output = open(new_publication_file, 'w')
         content = open(origin_publication_file).readlines()
         for i in content:
-            if counter % 3 == 2:
+            if counter % 4 == 3:
                 li = i.strip().split(' ')
                 for j in li:
                     if j in self.matching:
