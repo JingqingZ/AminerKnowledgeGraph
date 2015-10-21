@@ -17,6 +17,7 @@ class Extraction(object):
         self.author = list()
         self.keyword = list()
         self.keyword_dict = dict()
+        self.id = list()
 
     def extract(self, original_publication_data):
         infile = open(original_publication_data, 'r')
@@ -42,11 +43,15 @@ class Extraction(object):
             authors_info = publication["authors"]
             li = [i['name'] for i in authors_info]
             self.author.append(li)
-            assert( len(self.time) == len(self.author) and len(self.author) == len(self.keyword) )
+            self.id.append(publication["id"])
+            assert( len(self.time) == len(self.author) and
+                    len(self.author) == len(self.keyword) and
+                    len(self.keyword) == len(self.id))
 
     def output(self, output_simplified_publication):
         output = open(output_simplified_publication, 'w')
         for i in range(0, len(self.time)):
+            output.write(repr(self.id[i]) + '\n')
             output.write(repr(self.time[i]) + '\n')
             for j in self.author[i]:
                 output.write(j + '!')

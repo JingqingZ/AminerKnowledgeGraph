@@ -1,3 +1,5 @@
+echo 'artificial intelligence'
+python3.4 generate_view.py 'artificial intelligence'
 echo 'data mining'
 python3.4 generate_view.py 'data mining'
 echo 'computer graphics'

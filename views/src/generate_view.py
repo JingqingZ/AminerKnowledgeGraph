@@ -19,7 +19,7 @@ class HTMLGenerator(object):
         self.reciprocal_times_threshold = 1 / self.times_threshold
 
     def load_files(self):
-        timelinefile = open("../results/pub_" + self.query + ".dist", "r")
+        timelinefile = open("../../results/pub_" + self.query + ".dist", "r")
         self.dictionary = {}
         keyword = ""
         for line in timelinefile:
@@ -42,7 +42,7 @@ class HTMLGenerator(object):
                 counter += self.dictionary[keyword][year]
             self.keyword_sum[keyword] = counter
         
-        linkdifffile = open("../results/trend_sim_" + self.query + ".list", "r")
+        linkdifffile = open("../../results/trend_sim_" + self.query + ".list", "r")
         self.linklist = []
         for line in linkdifffile:
             line = line.replace("\n", "").split(" ")
@@ -71,21 +71,21 @@ class HTMLGenerator(object):
         return correct_list
 
     def gen_html(self):
-        self.htmlfile = open(self.query + ".html", "w")
+        self.htmlfile = open("../html/" + self.query + ".html", "w")
         self.htmlfile.write('<html><head>')
-        jsfile = open("static/jquery-1.8.2.min.js", 'r')
+        jsfile = open("../static/jquery-1.8.2.min.js", 'r')
         self.htmlfile.write('<script>')
         for line in jsfile:
             self.htmlfile.write(line)
         self.htmlfile.write('</script>')
         jsfile.close()
-        jsfile = open("static/raphael-min.js", 'r')
+        jsfile = open("../static/raphael-min.js", 'r')
         self.htmlfile.write('<script>')
         for line in jsfile:
             self.htmlfile.write(line)
         self.htmlfile.write('</script>')
         jsfile.close()
-        jsfile = open("static/morris-0.4.1.min.js", 'r')
+        jsfile = open("../static/morris-0.4.1.min.js", 'r')
         self.htmlfile.write('<script>')
         for line in jsfile:
             self.htmlfile.write(line)
@@ -103,7 +103,7 @@ class HTMLGenerator(object):
             valid += 1
             if valid > self.graph_num:
                 break
-            self.htmlfile.write('<p id="link' + repr(i) + '-results">0</p>\n')
+            self.htmlfile.write('<p id="link' + repr(i) + '-results" label0="' + key0 + '" label1="' + key1 + '">0</p>\n')
         self.htmlfile.write('</div>\n')
         self.htmlfile.write('<p>说明1：请在你认为正确的衍生关系前打勾</p>')
         self.htmlfile.write('<p>说明2：frequency代表发表的论文中有该先后关系的作者数，仅供参考</p>')

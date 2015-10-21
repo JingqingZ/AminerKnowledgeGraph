@@ -28,10 +28,10 @@ class TopicTime(object):
             if counter % 3000 == 0:
                 print (counter / 3)
             # record the year of this publication
-            if counter % 3 == 0:
+            if counter % 4 == 1:
                 year = int(i.strip())
             # parse the keywords of this publication
-            elif counter % 3 == 2:
+            elif counter % 4 == 3:
                 keywords = i.strip().split(' ')
                 for j in keywords:
                     j = stem(j)
