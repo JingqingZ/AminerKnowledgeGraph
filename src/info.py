@@ -1,5 +1,6 @@
 # Get the basic information about ../results/publication_simplified.data
 # output is saved in ../results/publication.info
+import sys
 
 class PublicationInfo(object):
     """docstring for PublicationInfo"""
@@ -88,10 +89,20 @@ class PublicationInfo(object):
         output.close()
 
 def main():
+    result_dir = '../results/'
+    data_dir = '../data/'
+
+    # change here to change different topic
+    q = sys.argv[1]
+
+    query = q.replace(' ', '_')
+    publication_simplified = result_dir + 'pub_' + query + '.simp'
+    publication_info = result_dir + 'pub_' + query + '.info'
+
     pi = PublicationInfo()
-    pi.readin('../results/publication_simplified.data_merge')
-    pi.show('../results/publication.info')
-    pi.count_invalid('../results/publication_simplified.data_merge', '../results/publication.info')
+    pi.readin(publication_simplified)
+    pi.show(publication_info)
+    pi.count_invalid(publication_simplified, publication_info)
 
 if __name__ == '__main__':
     main()
