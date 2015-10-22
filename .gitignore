@@ -5,3 +5,4 @@ results/
 views/*.html
 paper/*
 src/__pycache__/
+word2vec/*
