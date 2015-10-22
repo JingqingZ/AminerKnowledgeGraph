@@ -1,11 +1,17 @@
 class GetTopicFactor(object):
     """docstring for GetTopicFactor"""
+
     def __init__(self):
         super(GetTopicFactor, self).__init__()
         self.year_begin = 1980
         self.year_end = 2015
         self.topic_num = 100
         self.topic_dict = {}
+        self.numb_max = -1
+        self.numb_max_year = -1
+        self.soar_max = -1
+        self.soar_max_year = -1
+        self.topic = ""
 
     def init_topic_dict(self, infile_topic):
         infile = open(infile_topic)
@@ -27,8 +33,29 @@ class GetTopicFactor(object):
             self.topic_dict[topic]["paper_soar_num"] = -1
             self.topic_dict[topic]["paper_list"] = []
             self.topic_dict[topic]["author_list"] = {}
+            self.topic_dict[topic]["voc_dist"] = []
             curline += 1
         infile.close()
+
+    def update_paper_info(self):
+        # update peak info and soar info
+        if self.topic != "":
+            # update and initialize peak info
+            self.topic_dict[self.topic]["paper_peak_year"] = self.numb_max_year
+            self.topic_dict[self.topic]["paper_peak_num"] = self.numb_max
+            self.numb_max = -1
+            self.numb_max_year = 0
+            # update and initialize soar info
+            for year in range(self.year_begin + 1, self.year_end):
+                growth = self.topic_dict[self.topic]["paper_trend"][year - self.year_begin] - \
+                    self.topic_dict[self.topic]["paper_trend"][year - 1 - self.year_begin]
+                if growth > self.soar_max:
+                    self.soar_max = growth
+                    self.soar_max_year = year
+            self.topic_dict[self.topic]["paper_soar_year"] = self.soar_max_year
+            self.topic_dict[self.topic]["paper_soar_num"] = self.soar_max
+            self.soar_max = -1
+            self.soar_max_year = 0
 
     def get_paper_number(self, infile_pub_dist):
         # range of year: [1980, 2015)
@@ -38,36 +65,19 @@ class GetTopicFactor(object):
         #   papers that have a certain topic grows fastest
         # get the trend of a certain topic
         infile = open(infile_pub_dist, "r")
-        topic = ""
-        numb_max = -1
-        numb_max_year = -1
-        soar_max = -1
-        soar_max_year = -1
+        self.topic = ""
+        self.numb_max = -1
+        self.numb_max_year = -1
+        self.soar_max = -1
+        self.soar_max_year = -1
         for line in infile:
             content = line.replace("\n", "").split("\t")
             if len(content) == 1:   # topic
-                # update peak info and soar info
-                if topic != "":
-                    # update and initialize peak info
-                    self.topic_dict[topic]["paper_peak_year"] = numb_max_year
-                    self.topic_dict[topic]["paper_peak_num"] = numb_max
-                    numb_max = -1
-                    numb_max_year = 0
-                    # update and initialize soar info
-                    for year in range(self.year_begin + 1, self.year_end):
-                        growth = self.topic_dict[topic]["paper_trend"][year - self.year_begin] - \
-                            self.topic_dict[topic]["paper_trend"][year - 1 - self.year_begin]
-                        if growth > soar_max:
-                            soar_max = growth
-                            soar_max_year = year
-                    self.topic_dict[topic]["paper_soar_year"] = soar_max_year
-                    self.topic_dict[topic]["paper_soar_num"] = soar_max
-                    soar_max = -1
-                    soar_max_year = 0
+                self.update_paper_info()
                 # update and initial new topic factors
-                topic = content[0]
-                print(topic)
-                assert(topic in self.topic_dict)
+                self.topic = content[0]
+                print(self.topic)
+                assert(self.topic in self.topic_dict)
             else:  # topic distribution
                 assert(len(content) == 3)
                 year = int(content[1])
@@ -76,11 +86,12 @@ class GetTopicFactor(object):
                 if year < self.year_begin or year >= self.year_end:
                     continue
                 # update trend info
-                self.topic_dict[topic]["paper_trend"][year - self.year_begin] = numb
+                self.topic_dict[self.topic]["paper_trend"][year - self.year_begin] = numb
                 # update peak info
-                if numb > numb_max:
-                    numb_max = numb
-                    numb_max_year = year
+                if numb > self.numb_max:
+                    self.numb_max = numb
+                    self.numb_max_year = year
+        self.update_paper_info()
         infile.close()
 
     def get_paper_author_list(self, infile_paper_simp):
@@ -106,6 +117,45 @@ class GetTopicFactor(object):
                         self.topic_dict[topic]["author_list"][author] += 1
             curline += 1
 
+    def get_voc_dist(self, infile_voc_dist):
+        infile = open(infile_voc_dist, 'r')
+        line = infile.readline()
+        content = line.replace("\n", "").split(" ")
+        assert(len(content) == 2)
+        linenum = int(content[0])
+        vocsize = int(content[1])
+        for i in range(0, linenum):
+            line = infile.readline()
+            content = line.replace("\n", "").split(" ")
+            topic = content[0]
+            if topic not in self.topic_dict:
+                continue
+            content = content[1: len(content) - 1]
+            assert(len(content) == vocsize)
+            assert(len(self.topic_dict[topic]["voc_dist"]) == 0)
+            self.topic_dict[topic]["voc_dist"] = content
+        infile.close()
+
+    def check_factor(self):
+        num = 0
+        for topic in self.topic_dict.keys():
+            if self.topic_dict[topic]["paper_peak_year"] <= 0:
+                print("Error! Topic: " + topic + " , paper_peak_year <= 0")
+            if self.topic_dict[topic]["paper_peak_num"] <= 0:
+                print("Error! Topic: " + topic + " , paper_peak_num <= 0")
+            if self.topic_dict[topic]["paper_soar_year"] <= 0:
+                print("Error! Topic: " + topic + " , paper_soar_year <= 0")
+            if self.topic_dict[topic]["paper_soar_num"] <= 0:
+                print("Error! Topic: " + topic + " , paper_soar_num <= 0")
+            if len(self.topic_dict[topic]["paper_list"]) == 0:
+                print("Error! Topic: " + topic + " , paper_list empty")
+            if len(self.topic_dict[topic]["author_list"].keys()) == 0:
+                print("Error! Topic: " + topic + " , author_list empty")
+            if len(self.topic_dict[topic]["voc_dist"]) == 0:
+                print("Error! Topic: " + topic + " , voc_dist empty")
+                num += 1
+        print(repr(num) + "/" + repr(len(self.topic_dict.keys())))
+
     def output_topic_dict(self, outfilename):
         # output
         outfile = open(outfilename, "w")
@@ -119,6 +169,8 @@ def main():
     ga.get_paper_number("../results/pub_data_mining.dist")
     # ga.output_topic_dict("../results/topic_factor_data_mining_paper_num.txt")
     ga.get_paper_author_list("../results/pub_data_mining.simp")
+    ga.get_voc_dist("../results/vec_data_mining.txt")
+    ga.check_factor()
     ga.output_topic_dict("../results/topic_factor_data_mining.txt")
 
 if __name__ == '__main__':
