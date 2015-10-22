@@ -124,10 +124,10 @@ class MergeKeywords(object):
 
 def main():
     mk = MergeKeywords()
-    mk.readin('../results/pub_artificial_intelligence.keywords')
-    mk.process_keywords('../results/pub_artificial_intelligence.merged', 'artificial intelligence')
+    mk.readin('../results/pub_data_mining.keywords')
+    mk.process_keywords('../results/pub_data_mining.merged', 'data mining')
     
-    mk.process_publication('../results/AI.simp', '../results/AI.ttt')
+    mk.process_publication('../results/pub_data_mining.simp', '../results/pub_data_mining.ttt')
 
 if __name__ == '__main__':
     main()
