@@ -83,6 +83,10 @@ class MergeKeywords(object):
                 new = self.simword[self.matching[i]]
                 self.matching[i] = new
 
+        # change '-' to '_' for all keywords
+        for i in self.matching:
+            self.matching[i] = self.matching[i].replace('-', '_')
+
         print ('merging keywords')
         new_key = dict()
         for i in self.matching:
