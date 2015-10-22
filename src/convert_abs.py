@@ -2,6 +2,7 @@ from stemming.porter2 import stem
 import ast
 import re
 import string
+import os
 import sys
 
 class ConvertAbstract(object):
@@ -64,10 +65,12 @@ class ConvertAbstract(object):
                     j += 1
             output.write('\n')
         output.close()
+        # overwrite the previous abstract file
+        os.rename('../results/pub_' + self.query + '.w2v', '../results/pub_' + self.query + '.abs')
 
 def main():
     ca = ConvertAbstract(sys.argv[1])
-    #ca.parse_publication_abstract()
+    ca.parse_publication_abstract()
     ca.load_keywords()
     ca.parse_abstract(100000)
 
