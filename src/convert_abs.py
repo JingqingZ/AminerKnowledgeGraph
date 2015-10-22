@@ -2,6 +2,7 @@ from stemming.porter2 import stem
 import ast
 import re
 import string
+import os
 import sys
 
 class ConvertAbstract(object):
@@ -42,7 +43,7 @@ class ConvertAbstract(object):
                     self.keyword_dict[ words[0] ] = { stem(words[1]) }
         print ('load keywords complete')
 
-    def parse_abstract(self):
+    def parse_abstract(self, doclength):
         content = open('../results/pub_' + self.query + '.abs').readlines()
         output = open('../results/pub_' + self.query + '.w2v', 'w')
         cnt = 0
@@ -51,7 +52,7 @@ class ConvertAbstract(object):
             cnt = cnt + 1
             if cnt % 1000 == 0:
                 print (cnt)
-            if cnt == 10000:
+            if cnt == doclength:
                 break
             li = line.split(' ')
             j = 0
@@ -64,12 +65,14 @@ class ConvertAbstract(object):
                     j += 1
             output.write('\n')
         output.close()
+        # overwrite the previous abstract file
+        os.rename('../results/pub_' + self.query + '.w2v', '../results/pub_' + self.query + '.abs')
 
 def main():
     ca = ConvertAbstract(sys.argv[1])
-    #ca.parse_publication_abstract()
+    ca.parse_publication_abstract()
     ca.load_keywords()
-    ca.parse_abstract()
+    ca.parse_abstract(100000)
 
 if __name__ == '__main__':
     main()
