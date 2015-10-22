@@ -1,6 +1,5 @@
-import os
+import sys
 import copy
-from pairfilter import PairFilter
 
 class GraphSearch(object):
     """docstring for GraphSearch"""
@@ -10,7 +9,7 @@ class GraphSearch(object):
         self.keynum = 0
         self.edge_counter = 0
         self.min_threshold = 5
-        self.p = 0.01
+        self.p = 0.1
 
         self.key2num = dict()
         self.num2key = dict()
@@ -104,7 +103,7 @@ class GraphSearch(object):
             self.update_tv_ddv(query_num)
             query_num = self.get_max_ddv()
             self.answer.add(query_num)
-            print ('d : %d' % (self.dv[query_num]))
+            print ('dv : %d,    tv : %d' % (self.dv[query_num], self.tv[query_num]))
         print (len(self.ddv))
         self.show_answer(q)
 
@@ -121,7 +120,7 @@ def main():
                 'database',
                 'machine learning']
     gs.load_diff_files(file_list)
-    gs.degree_discount_IC('association rule', 30)
+    gs.degree_discount_IC(sys.argv[1], 15)
 
 if __name__ == '__main__':
     main()
