@@ -4,7 +4,7 @@ import re
 import string
 import os
 import sys
-
+        
 class ConvertAbstract(object):
     """docstring for ConvertAbstract"""
     def __init__(self, q):
@@ -20,6 +20,7 @@ class ConvertAbstract(object):
         output = open(output_file, 'w')
         cur = 0
         for line in infile:
+            cur += 1
             if cur % 1000 == 0:
                 print (cur)
             publication = ast.literal_eval(line)
@@ -27,7 +28,6 @@ class ConvertAbstract(object):
             if len(abstract) < 5:
                 continue
             output.write(abstract + '\n')
-            cur += 1
         output.close()
 
     def load_keywords(self):
@@ -36,11 +36,26 @@ class ConvertAbstract(object):
         for i in content:
             key = i.split('\t')[0]
             words = key.split('_')
+
             if len(words) == 2:
+                st1 = stem(words[1])
                 if words[0] in self.keyword_dict:
-                    self.keyword_dict[ words[0] ].add(stem(words[1]))
+                    if st1 in self.keyword_dict[ words[0] ]:
+                        self.keyword_dict[ words[0] ][st1].add(-1)
+                    else:
+                        self.keyword_dict[ words[0] ][st1] = {-1}
                 else:
-                    self.keyword_dict[ words[0] ] = { stem(words[1]) }
+                    self.keyword_dict[ words[0] ] = { st1 : {-1} }
+
+            if len(words) == 3:
+                st2 = stem(words[2])
+                if words[0] in self.keyword_dict:
+                    if words[1] in self.keyword_dict[ words[0] ]:
+                        self.keyword_dict[ words[0] ][ words[1] ].add(st2)
+                    else:
+                        self.keyword_dict[ words[0] ][ words[1] ] = {st2}
+                else:
+                    self.keyword_dict[ words[0] ] = { words[1] : {st2} }
         print ('load keywords complete')
 
     def parse_abstract(self, doclength):
@@ -54,23 +69,30 @@ class ConvertAbstract(object):
                 print (cnt)
             if cnt == doclength:
                 break
-            li = line.split(' ')
+            li = re.split('\s+', line)
             j = 0
             while j < len(li):
-                if (j+1) < len(li) and li[j] in self.keyword_dict and stem(li[j+1]) in self.keyword_dict[ li[j] ]:
-                    output.write(li[j] + '_' + li[j+1] + ' ')
-                    j += 2
+                if li[j] in self.keyword_dict:
+                    if (j+2) < len(li) and li[j+1] in self.keyword_dict[ li[j] ] and stem(li[j+2]) in self.keyword_dict[ li[j] ][ li[j+1] ]:
+                        output.write(li[j] + '_' + li[j+1] + '_' + li[j+2] + ' ')
+                        j += 3
+                    elif (j+1) < len(li) and stem(li[j+1]) in self.keyword_dict[ li[j] ] and -1 in self.keyword_dict[ li[j] ][ stem(li[j+1]) ]:
+                        output.write(li[j] + '_' + li[j+1] + ' ')
+                        j += 2
+                    else:
+                        output.write(li[j] + ' ')
+                        j += 1
                 else:
                     output.write(li[j] + ' ')
                     j += 1
             output.write('\n')
         output.close()
         # overwrite the previous abstract file
-        os.rename('../results/pub_' + self.query + '.w2v', '../results/pub_' + self.query + '.abs')
+        #os.rename('../results/pub_' + self.query + '.w2v', '../results/pub_' + self.query + '.abs')
 
 def main():
     ca = ConvertAbstract(sys.argv[1])
-    ca.parse_publication_abstract()
+    #ca.parse_publication_abstract()
     ca.load_keywords()
     ca.parse_abstract(100000)
 
