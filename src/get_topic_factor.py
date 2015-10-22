@@ -119,7 +119,7 @@ def main():
     ga.get_paper_number("../results/pub_data_mining.dist")
     # ga.output_topic_dict("../results/topic_factor_data_mining_paper_num.txt")
     ga.get_paper_author_list("../results/pub_data_mining.simp")
-    ga.output_topic_dict("../results/topic_factor_data_mining_paper_author_list.txt")
+    ga.output_topic_dict("../results/topic_factor_data_mining.txt")
 
 if __name__ == '__main__':
     main()
