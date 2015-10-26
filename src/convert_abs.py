@@ -88,7 +88,7 @@ class ConvertAbstract(object):
             output.write('\n')
         output.close()
         # overwrite the previous abstract file
-        #os.rename('../results/pub_' + self.query + '.w2v', '../results/pub_' + self.query + '.abs')
+        os.rename('../results/pub_' + self.query + '.w2v', '../results/pub_' + self.query + '.abs')
 
 def main():
     ca = ConvertAbstract(sys.argv[1])

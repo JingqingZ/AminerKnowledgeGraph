@@ -1,3 +1,6 @@
+import numpy
+
+
 class GetTopicFactor(object):
     """docstring for GetTopicFactor"""
 
@@ -31,7 +34,7 @@ class GetTopicFactor(object):
             self.topic_dict[topic]["paper_peak_num"] = -1
             self.topic_dict[topic]["paper_soar_year"] = -1
             self.topic_dict[topic]["paper_soar_num"] = -1
-            self.topic_dict[topic]["paper_list"] = []
+            self.topic_dict[topic]["paper_list"] = {}
             self.topic_dict[topic]["author_list"] = {}
             self.topic_dict[topic]["voc_dist"] = []
             curline += 1
@@ -110,8 +113,10 @@ class GetTopicFactor(object):
                 for topic in topiclist:
                     if topic not in self.topic_dict:
                         continue
-                    self.topic_dict[topic]["paper_list"].append(paper_id)
+                    self.topic_dict[topic]["paper_list"][paper_id] = 1
                     for author in author_list:
+                        if len(author) <= 0:
+                            continue
                         if author not in self.topic_dict[topic]["author_list"]:
                             self.topic_dict[topic]["author_list"][author] = 0
                         self.topic_dict[topic]["author_list"][author] += 1
@@ -131,6 +136,8 @@ class GetTopicFactor(object):
             if topic not in self.topic_dict:
                 continue
             content = content[1: len(content) - 1]
+            for i in range(0, len(content)):
+                content[i] = float(content[i])
             assert(len(content) == vocsize)
             assert(len(self.topic_dict[topic]["voc_dist"]) == 0)
             self.topic_dict[topic]["voc_dist"] = content
@@ -154,6 +161,8 @@ class GetTopicFactor(object):
             if len(self.topic_dict[topic]["voc_dist"]) == 0:
                 print("Error! Topic: " + topic + " , voc_dist empty")
                 num += 1
+            if numpy.sum(self.topic_dict[topic]["paper_trend"]) == 0:
+                print("Error! Topic: " + topic + " , paper_trend empty")
         print(repr(num) + "/" + repr(len(self.topic_dict.keys())))
 
     def output_topic_dict(self, outfilename):
