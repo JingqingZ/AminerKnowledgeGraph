@@ -90,11 +90,26 @@ class ConvertAbstract(object):
         # overwrite the previous abstract file
         os.rename('../results/pub_' + self.query + '.w2v', '../results/pub_' + self.query + '.abs')
 
+    def call_word2vec(self):
+        # parameters for word2vec
+        window = 5
+        size = 200
+        train_file = '../results/pub_' + self.query + '.abs'
+        bin_file = '../results/vec_' + self.query + '.bin'
+        txt_file = '../results/vec_' + self.query + '.txt'
+
+        command1 = 'word2vec -train %s -output %s -size %d -window %d -sample 1e-4 -negative 5 -hs 0 -binary %d -cbow 1 -iter 3' % (train_file, bin_file, size, window, 1)
+        command2 = 'word2vec -train %s -output %s -size %d -window %d -sample 1e-4 -negative 5 -hs 0 -binary %d -cbow 1 -iter 3' % (train_file, txt_file, size, window, 0)
+
+        os.system(command1)
+        os.system(command2)
+
 def main():
     ca = ConvertAbstract(sys.argv[1])
-    #ca.parse_publication_abstract()
+    ca.parse_publication_abstract()
     ca.load_keywords()
     ca.parse_abstract(100000)
+    ca.call_word2vec()
 
 if __name__ == '__main__':
     main()
