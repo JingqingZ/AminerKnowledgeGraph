@@ -1,456 +1,456 @@
-association_rule social_networking 226 68 158
-association_rule data_stream 303 170 133
-association_rule big_data 139 10 129
-association_rule text_mining 305 177 128
-knowledge_discovery text_mining 247 125 122
-association_rule clustering 661 539 122
-knowledge_discovery machine_learning 357 240 117
-internet social_networking 201 85 116
-machine_learning big_data 146 34 112
-association_rule pattern_classification 303 192 111
-clustering social_networking 223 113 110
-association_rule graph_theory 205 95 110
-knowledge_discovery big_data 120 12 108
-association_rule cloud_computing 124 30 94
-association_rule pattern_clustering 325 235 90
-pattern_clustering social_networking 184 95 89
-association_rule algorithms 172 84 88
-clustering big_data 105 18 87
-decision_trees machine_learning 266 179 87
-knowledge_discovery graph_theory 162 78 84
-classification text_mining 230 146 84
-association_rule classification 387 304 83
-clustering machine_learning 356 273 83
-knowledge_discovery social_networking 168 86 82
-web_mining text_mining 170 89 81
-information_retrieval social_networking 153 73 80
-large_database association_rule 259 180 79
-association_rule frequent_pattern 311 232 79
-knowledge_discovery data_stream 166 87 79
-internet big_data 88 10 78
-pattern_clustering big_data 95 17 78
-association_rule machine_learning 381 305 76
-large_database pattern_clustering 140 65 75
-information_retrieval text_mining 246 172 74
-large_database data_stream 105 31 74
-large_database pattern_classification 126 52 74
-genetic_algorithm social_networking 93 21 72
-association_rule recommender_systems 149 77 72
-clustering text_mining 269 197 72
-knowledge_discovery classification 243 172 71
-clustering graph_theory 171 100 71
-knowledge_discovery clustering 308 238 70
-neural_networks clustering 204 134 70
-data_warehouse text_mining 118 49 69
-association_rule time_series 212 143 69
-data_stream big_data 80 12 68
-database pattern_classification 173 106 67
-internet text_mining 248 181 67
-large_database clustering 167 100 67
-web_mining social_networking 126 59 67
-association_rule design 82 16 66
-clustering pattern_clustering 416 350 66
-internet recommender_systems 104 39 65
-frequent_itemset graph_theory 101 37 64
-clustering time_series 218 154 64
-knowledge_discovery statistical_analysis 134 71 63
-neural_networks machine_learning 177 114 63
-large_database machine_learning 146 83 63
-large_database graph_theory 83 21 62
-decision_trees text_mining 141 80 61
-frequent_itemset text_mining 112 51 61
-knowledge_discovery pattern_classification 206 145 61
-association_rule feature_extraction 169 109 60
-rough_set social_networking 71 12 59
-neural_networks association_rule 220 161 59
-knowledge_discovery bioinformatics 112 53 59
-large_database social_networking 68 9 59
-web_sites social_networking 97 38 59
-rough_set text_mining 109 51 58
-machine_learning social_networking 196 139 57
-frequent_itemset social_networking 88 31 57
-database text_mining 137 80 57
-large_database time_series 84 27 57
-clustering recommender_systems 124 67 57
-knowledge_discovery information_retrieval 174 117 57
-database social_networking 98 41 57
-classification social_networking 128 71 57
-data_warehouse social_networking 75 18 57
-efficient_algorithm social_networking 75 18 57
-decision_trees cloud_computing 67 11 56
-text_mining big_data 73 17 56
-internet machine_learning 253 197 56
-clustering pattern_classification 246 191 55
-frequent_pattern graph_theory 124 69 55
-genetic_algorithm feature_selection 112 57 55
-intrusion_detection social_networking 66 11 55
-mine big_data 56 2 54
-knowledge_discovery algorithms 89 35 54
-association_rule parallel_computation 93 40 53
-query_processing social_networking 85 32 53
-social_networking big_data 75 23 52
-data_warehouse big_data 55 3 52
-text_mining social_networking 206 154 52
-frequent_itemset data_stream 201 149 52
-new_algorithm pattern_clustering 86 34 52
-rough_set pattern_classification 136 84 52
-classification big_data 71 19 52
-frequent_itemset big_data 53 2 51
-knowledge_discovery internet 194 143 51
-data_warehouse machine_learning 124 73 51
-large_database internet 103 52 51
-association_rule internet 259 209 50
-large_database statistical_analysis 78 28 50
-internet bioinformatics 84 34 50
-knowledge_discovery cloud_computing 72 22 50
-large_database information_retrieval 84 35 49
-data_stream cloud_computing 59 10 49
-data_warehouse internet 103 54 49
-neural_networks big_data 52 3 49
-data_stream graph_theory 108 59 49
-decision_trees data_stream 151 102 49
-rough_set machine_learning 175 127 48
-database clustering 215 167 48
-web_page text_mining 76 28 48
-classification graph_theory 111 63 48
-neural_networks pattern_clustering 118 70 48
-genetic_algorithm machine_learning 219 171 48
-decision_trees feature_selection 130 82 48
-web_mining internet 170 122 48
-web_mining big_data 47 0 47
-genetic_algorithm big_data 51 4 47
-database pattern_clustering 169 122 47
-pattern_clustering graph_theory 156 109 47
-sequential_pattern social_networking 65 18 47
-statistical_analysis text_mining 135 88 47
-information_retrieval big_data 61 15 46
-intrusion_detection machine_learning 96 50 46
-knowledge_discovery decision_making 110 64 46
-rough_set support_vector_machines 113 67 46
-neural_nets machine_learning 100 54 46
-web_data_mining text_mining 77 31 46
-large_database feature_extraction 65 19 46
-association_rule decision_trees 355 309 46
-knowledge_discovery decision_support_system 119 74 45
-time_series big_data 50 5 45
-clustering data_stream 232 187 45
-frequent_itemset pattern_classification 108 63 45
-database recommender_systems 65 20 45
-association_rule probability 90 45 45
-clustering algorithms 112 68 44
-rough_set feature_selection 106 62 44
-new_algorithm text_mining 77 33 44
-machine_learning cloud_computing 79 35 44
-machine_learning text_mining 305 261 44
-decision_trees graph_theory 83 39 44
-pattern_classification cloud_computing 77 33 44
-clustering bioinformatics 116 73 43
-frequent_pattern big_data 47 4 43
-new_algorithm clustering 127 84 43
-neural_networks pattern_classification 125 82 43
-association_rule query_processing 152 109 43
-search_engine social_networking 77 34 43
-association_rule case_study 108 65 43
-web_mining recommender_systems 72 29 43
-web_sites text_mining 110 67 43
-query_processing graph_theory 87 44 43
-knowledge_discovery support_vector_machines 126 83 43
-internet cloud_computing 68 26 42
-mine social_networking 77 35 42
-database classification 145 103 42
-large_database web_mining 77 35 42
-neural_networks text_mining 100 58 42
-pattern_clustering pattern_classification 261 219 42
-regression_analysis big_data 44 2 42
-rough_set internet 96 54 42
-decision_trees support_vector_machines 134 92 42
-frequent_pattern social_networking 80 38 42
-machine_learning feature_selection 188 146 42
-internet pattern_classification 197 155 42
-large_database knowledge_discovery 166 124 42
-intrusion_detection text_mining 62 20 42
-knowledge_discovery feature_selection 123 81 42
-information_retrieval recommender_systems 85 43 42
-decision_trees pattern_clustering 149 108 41
-association_rule natural_language_processing 98 57 41
-data_warehouse cloud_computing 54 13 41
-database machine_learning 191 150 41
-genetic_algorithm classification 177 136 41
-information_retrieval pattern_classification 136 95 41
-large_database data_structure 82 41 41
-security_of_data social_networking 65 24 41
-data_warehouse time_series 74 33 41
-database graph_theory 105 64 41
-rough_set cloud_computing 52 11 41
-web_page social_networking 56 15 41
-security_of_data big_data 43 2 41
-association_rule feature_selection 155 115 40
-association_rule wireless_sensor_networks 78 38 40
-intrusion_detection pattern_classification 89 49 40
-large_database database 144 104 40
-pattern_classification social_networking 140 100 40
-knowledge_discovery disease 70 30 40
-pattern_classification feature_selection 137 97 40
-database association_rule 324 284 40
-clustering design 57 17 40
-association_rule information_system 141 101 40
-association_rule data_structure 159 119 40
-fuzzy_set_theory machine_learning 144 104 40
-data_warehouse classification 117 77 40
-rough_set clustering 223 183 40
-genetic_algorithm bioinformatics 111 71 40
-genetic_algorithm text_mining 124 85 39
-graph_theory big_data 54 15 39
-large_database bioinformatics 47 8 39
-large_database classification 113 74 39
-web_mining clustering 174 135 39
-association_rule data_privacy 116 77 39
-clustering probability 89 50 39
-web_usage_mining data_stream 57 18 39
-statistical_analysis big_data 48 9 39
-information_retrieval machine_learning 213 174 39
-pattern_classification bioinformatics 99 60 39
-web_services cloud_computing 46 7 39
-new_algorithm machine_learning 90 51 39
-classification cloud_computing 55 17 38
-association_rule sequential_pattern 228 190 38
-ontology social_networking 56 18 38
-association_rule coal_miners 80 42 38
-intrusion_detection data_stream 71 33 38
-knowledge_discovery artificial_intelligence 101 63 38
-spatial_data_mining big_data 40 2 38
-fuzzy_set_theory social_networking 58 20 38
-relational_databases social_networking 47 9 38
-pattern_clustering algorithms 71 33 38
-association_rule statistical_analysis 162 124 38
-knowledge_discovery pattern_clustering 200 162 38
-knowledge_discovery data_structure 110 72 38
-web_usage_mining clustering 102 64 38
-pattern_clustering cloud_computing 69 32 37
-association_rule mine 241 204 37
-text_mining algorithms 66 29 37
-knowledge_discovery information_system 119 82 37
-query_processing text_mining 87 50 37
-association_rule genetic_algorithm 271 234 37
-case_study social_networking 64 27 37
-proposed_algorithm social_networking 64 27 37
-rough_set information_system 108 71 37
-relational_databases association_rule 135 98 37
-text_mining cloud_computing 60 23 37
-support_vector_machines text_mining 136 100 36
-large_database support_vector_machines 53 17 36
-neural_networks recommender_systems 54 18 36
-large_database probability 47 11 36
-web_mining design 43 7 36
-database probability 57 21 36
-web_sites machine_learning 109 73 36
-web_mining data_stream 71 35 36
-large_database sequential_pattern 83 47 36
-association_rule proposed_algorithm 162 126 36
-neural_networks time_series 69 33 36
-association_rule medical_computing 89 53 36
-new_algorithm pattern_classification 70 34 36
-web_mining pattern_classification 92 57 35
-information_system big_data 41 6 35
-large_database algorithms 54 19 35
-frequent_itemset machine_learning 116 81 35
-fuzzy_set_theory big_data 40 5 35
-web_mining algorithms 54 19 35
-database bioinformatics 71 36 35
-classification natural_language_processing 73 38 35
-new_algorithm time_series 62 27 35
-new_algorithm internet 57 22 35
-pattern_clustering recommender_systems 85 50 35
-large_database genetic_algorithm 81 46 35
-support_vector_machines social_networking 78 43 35
-machine_learning disease 82 47 35
-neural_networks decision_making 66 31 35
-decision_trees algorithms 68 33 35
-knowledge_discovery frequent_itemset 159 124 35
-rough_set disease 48 13 35
-neural_networks internet 93 58 35
-neural_networks cloud_computing 40 5 35
-intrusion_detection big_data 35 1 34
-web_usage_mining text_mining 57 23 34
-data_warehouse clustering 174 140 34
-intrusion_detection pattern_clustering 79 45 34
-spatial_data_mining text_mining 53 19 34
-neural_networks feature_selection 78 44 34
-knowledge_discovery data_warehouse 130 96 34
-machine_learning design 48 14 34
-efficient_algorithm algorithms 56 22 34
-large_database recommender_systems 43 9 34
-regression_analysis text_mining 64 30 34
-web_usage_mining social_networking 51 17 34
-large_database information_system 46 12 34
-pattern_clustering bioinformatics 109 75 34
-pattern_recognition text_mining 72 38 34
-knowledge_discovery performance_evaluation 72 39 33
-genetic_algorithm cloud_computing 42 9 33
-pattern_recognition decision_making 45 12 33
-association_rule performance_evaluation 102 69 33
-feature_selection text_mining 104 71 33
-rough_set data_stream 74 41 33
-sequential_pattern text_mining 72 39 33
-association_rule prediction 106 73 33
-pattern_clustering probability 88 55 33
-web_services social_networking 52 19 33
-statistical_analysis social_networking 97 64 33
-knowledge_discovery natural_language_processing 67 34 33
-relational_databases big_data 35 2 33
-knowledge_discovery frequent_pattern 141 108 33
-database fuzzy_set_theory 93 60 33
-decision_trees classification 244 211 33
-pattern_clustering text_mining 213 180 33
-internet graph_theory 113 80 33
-large_database medical_computing 37 4 33
-electronic_commerce machine_learning 69 36 33
-knowledge_discovery genetic_algorithm 149 116 33
-association_rule decision_making 126 94 32
-decision_trees pattern_classification 179 147 32
-frequent_pattern text_mining 95 63 32
-internet medical_computing 56 24 32
-information_retrieval medical_computing 52 20 32
-information_retrieval probability 54 22 32
-database design 45 13 32
-knowledge_discovery time_series 127 95 32
-web_mining decision_support_system 56 24 32
-machine_learning algorithms 71 39 32
-neural_networks genetic_algorithm 131 99 32
-decision_trees design 42 10 32
-large_database mine 67 35 32
-database feature_extraction 80 48 32
-association_rule geographic_information_system 110 78 32
-text_mining design 44 12 32
-classification machine_learning 298 266 32
-classification feature_selection 139 107 32
-data_warehouse support_vector_machines 68 36 32
-decision_making big_data 35 4 31
-rough_set decision_support_system 69 38 31
-pattern_recognition big_data 33 2 31
-pattern_clustering machine_learning 309 278 31
-customer_relationship_management text_mining 43 12 31
-knowledge_discovery case_study 102 71 31
-query_processing big_data 39 8 31
-database cloud_computing 45 14 31
-principal_component_analysis big_data 31 0 31
-neural_networks disease 50 19 31
-information_retrieval graph_theory 86 55 31
-principal_component_analysis machine_learning 66 35 31
-case_study big_data 32 1 31
-clustering disease 73 42 31
-neural_networks bioinformatics 53 22 31
-anomaly_detection big_data 35 4 31
-neural_networks data_stream 66 35 31
-genetic_algorithm web_sites 52 21 31
-neural_nets social_networking 38 7 31
-frequent_itemset algorithms 68 37 31
-knowledge_based_systems machine_learning 101 70 31
-ontology text_mining 101 70 31
-association_rule support_vector_machines 177 146 31
-large_database frequent_pattern 113 82 31
-data_visualisation big_data 34 3 31
-large_database data_privacy 52 21 31
-web_mining cloud_computing 37 7 30
-web_sites big_data 33 3 30
-machine_learning graph_theory 155 125 30
-neural_networks database 86 56 30
-knowledge_based_systems text_mining 66 36 30
-rough_set classification 138 108 30
-information_extraction big_data 34 4 30
-classification bioinformatics 88 58 30
-relational_databases pattern_clustering 62 32 30
-database decision_making 58 28 30
-web_mining bioinformatics 45 15 30
-neural_networks graph_theory 47 17 30
-new_algorithm statistical_analysis 46 16 30
-efficient_algorithm graph_theory 78 48 30
-frequent_itemset clustering 199 169 30
-new_algorithm data_stream 75 45 30
-large_database web_sites 45 15 30
-optimisation graph_theory 44 14 30
-fuzzy_set_theory classification 102 72 30
-data_warehouse recommender_systems 38 8 30
-pattern_clustering design 37 7 30
-web_sites recommender_systems 48 18 30
-new_algorithm proposed_algorithm 57 27 30
-intrusion_detection cloud_computing 36 6 30
-query_processing pattern_classification 101 71 30
-web_mining performance_evaluation 48 19 29
-sequential_pattern clustering 149 120 29
-genetic_algorithm graph_theory 81 52 29
-web_log text_mining 44 15 29
-web_sites clustering 119 90 29
-clustering medical_computing 77 48 29
-classification design 39 10 29
-neural_networks medical_computing 53 24 29
-rough_set graph_theory 47 18 29
-web_mining feature_selection 75 46 29
-web_usage_mining pattern_clustering 65 36 29
-web_usage_mining pattern_classification 49 20 29
-large_database security_of_data 42 13 29
-neural_networks remote_sensing 38 9 29
-world_wide_web text_mining 79 50 29
-large_database decision_support_system 46 17 29
-relational_databases text_mining 62 33 29
-proposed_algorithm big_data 30 1 29
-neural_networks probability 43 14 29
-knowledge_based_systems pattern_classification 74 45 29
-mine graph_theory 72 43 29
-new_algorithm big_data 28 0 28
-sequential_pattern algorithms 45 17 28
-database data_privacy 62 34 28
-efficient_algorithm data_stream 110 82 28
-rough_set decision_making 69 41 28
-frequent_itemset time_series 83 55 28
-knowledge_discovery feature_extraction 101 73 28
-classification algorithms 69 41 28
-fuzzy_set_theory decision_support_system 44 16 28
-feature_selection big_data 40 12 28
-parallel_algorithm graph_theory 51 23 28
-query_processing machine_learning 106 78 28
-fuzzy_set_theory information_system 54 26 28
-feature_selection social_networking 77 49 28
-web_log data_stream 50 22 28
-semantic_web social_networking 48 20 28
-recommender_systems big_data 41 13 28
-knowledge_discovery database 202 174 28
-spatial_data_mining graph_theory 47 19 28
-optimisation social_networking 47 19 28
-frequent_itemset classification 114 86 28
-data_structure big_data 30 2 28
-genetic_algorithm recommender_systems 49 21 28
-regression_analysis pattern_classification 80 52 28
-rough_set time_series 74 46 28
-rough_set frequent_pattern 66 38 28
-information_retrieval bioinformatics 65 37 28
-classification probability 72 44 28
-association_rule spatial_data_mining 150 122 28
-frequent_pattern recommender_systems 46 18 28
-new_algorithm social_networking 51 23 28
-pattern_recognition pattern_classification 92 64 28
-information_retrieval natural_language_processing 80 53 27
-geographic_information_system social_networking 39 12 27
-association_rule disease 81 54 27
-case_study graph_theory 48 21 27
-efficient_algorithm bioinformatics 40 13 27
-large_database decision_trees 88 61 27
-knowledge_based_systems big_data 29 2 27
-neural_nets decision_making 40 13 27
-principal_component_analysis text_mining 43 16 27
-neural_nets big_data 28 1 27
-web_sites graph_theory 59 32 27
-frequent_itemset feature_extraction 51 24 27
-decision_trees data_privacy 56 29 27
-fuzzy_set_theory pattern_classification 126 99 27
-bioinformatics big_data 40 13 27
-internet data_privacy 63 36 27
-genetic_algorithm pattern_classification 178 151 27
-sequential_pattern graph_theory 67 40 27
-knowledge_based_systems pattern_clustering 57 30 27
-web_services big_data 29 2 27
-efficient_algorithm recommender_systems 35 8 27
-sequential_pattern cloud_computing 30 3 27
-regression_analysis machine_learning 103 76 27
-decision_trees clustering 263 236 27
-mine monitoring 43 16 27
+association_rule social_networking 226 68 158 0.69680454719937168
+association_rule data_stream 303 170 133 0.97895496089076028
+association_rule big_data 139 10 129 0.28943224379143873
+association_rule text_mining 305 177 128 0.82979985794585998
+knowledge_discovery text_mining 247 125 122 0.82581438603825785
+association_rule clustering 661 539 122 0.98693043707703476
+knowledge_discovery machine_learning 357 240 117 0.85632960850865625
+internet social_networking 201 85 116 0.90093647899798857
+machine_learning big_data 146 34 112 0.74339128162398549
+association_rule pattern_classification 303 192 111 0.81073848542160132
+clustering social_networking 223 113 110 0.790915200485235
+association_rule graph_theory 205 95 110 0.83598875344550183
+knowledge_discovery big_data 120 12 108 0.37443805179106271
+association_rule cloud_computing 124 30 94 0.53658165750377107
+association_rule pattern_clustering 325 235 90 0.84623977068594602
+pattern_clustering social_networking 184 95 89 0.93871762463275654
+association_rule algorithms 172 84 88 0.65627873901278411
+clustering big_data 105 18 87 0.41966239828971363
+decision_trees machine_learning 266 179 87 0.87829822529505375
+knowledge_discovery graph_theory 162 78 84 0.81924826964828468
+classification text_mining 230 146 84 0.94946845812003611
+association_rule classification 387 304 83 0.95858802228809958
+clustering machine_learning 356 273 83 0.90187220382850497
+knowledge_discovery social_networking 168 86 82 0.6793966080613949
+web_mining text_mining 170 89 81 0.84675781210578693
+information_retrieval social_networking 153 73 80 0.88442838892454678
+large_database association_rule 259 180 79 0.75785178132222153
+association_rule frequent_pattern 311 232 79 0.99193344165819486
+knowledge_discovery data_stream 166 87 79 0.88851084726321083
+internet big_data 88 10 78 0.56802575396515398
+pattern_clustering big_data 95 17 78 0.66444144859619936
+association_rule machine_learning 381 305 76 0.83115349634078073
+large_database pattern_clustering 140 65 75 0.60060960129126606
+information_retrieval text_mining 246 172 74 0.96527009283347487
+large_database data_stream 105 31 74 0.65217040937292281
+large_database pattern_classification 126 52 74 0.56509032206848886
+genetic_algorithm social_networking 93 21 72 0.77519473435389086
+association_rule recommender_systems 149 77 72 0.78279747467525684
+clustering text_mining 269 197 72 0.90411964342339324
+knowledge_discovery classification 243 172 71 0.93490985312556596
+clustering graph_theory 171 100 71 0.90770203045998077
+knowledge_discovery clustering 308 238 70 0.94076057625537357
+neural_networks clustering 204 134 70 0.97670847475006795
+data_warehouse text_mining 118 49 69 0.80426920499248422
+association_rule time_series 212 143 69 0.95788268908599905
+data_stream big_data 80 12 68 0.32255957284482961
+database pattern_classification 173 106 67 0.9015920310593617
+internet text_mining 248 181 67 0.96646072875401323
+large_database clustering 167 100 67 0.72026569212317137
+web_mining social_networking 126 59 67 0.70694546349367282
+association_rule design 82 16 66 0.41552564717188267
+clustering pattern_clustering 416 350 66 0.91645771002899967
+internet recommender_systems 104 39 65 0.94402418261920862
+frequent_itemset graph_theory 101 37 64 0.77973459763953024
+clustering time_series 218 154 64 0.98691926425594123
+knowledge_discovery statistical_analysis 134 71 63 0.88666152059712777
+neural_networks machine_learning 177 114 63 0.83411093702921357
+large_database machine_learning 146 83 63 0.62511083991887906
+large_database graph_theory 83 21 62 0.55866576483723596
+decision_trees text_mining 141 80 61 0.88286745504694542
+frequent_itemset text_mining 112 51 61 0.77756270049386478
+knowledge_discovery pattern_classification 206 145 61 0.80855069094492671
+association_rule feature_extraction 169 109 60 0.88458886635013012
+rough_set social_networking 71 12 59 0.65318255706350914
+neural_networks association_rule 220 161 59 0.98863025283609696
+knowledge_discovery bioinformatics 112 53 59 0.84326283646533251
+large_database social_networking 68 9 59 0.41389759579353758
+web_sites social_networking 97 38 59 0.89971703671709724
+rough_set text_mining 109 51 58 0.80426334823733148
+machine_learning social_networking 196 139 57 0.94141690301559211
+frequent_itemset social_networking 88 31 57 0.63611204274541921
+database text_mining 137 80 57 0.91184267992055479
+large_database time_series 84 27 57 0.70941575441647509
+clustering recommender_systems 124 67 57 0.86279663529762107
+knowledge_discovery information_retrieval 174 117 57 0.92810408875014494
+database social_networking 98 41 57 0.80237858792305317
+classification social_networking 128 71 57 0.85154432712729311
+data_warehouse social_networking 75 18 57 0.65192869920426944
+efficient_algorithm social_networking 75 18 57 0.54763498271842714
+decision_trees cloud_computing 67 11 56 0.61116112132611256
+text_mining big_data 73 17 56 0.73823622255995669
+internet machine_learning 253 197 56 0.96108507243235741
+clustering pattern_classification 246 191 55 0.88798465031315565
+frequent_pattern graph_theory 124 69 55 0.86123065912480412
+genetic_algorithm feature_selection 112 57 55 0.95696072080335792
+intrusion_detection social_networking 66 11 55 0.67308045413839945
+mine big_data 56 2 54 0.34867559543430404
+knowledge_discovery algorithms 89 35 54 0.72195079861224354
+association_rule parallel_computation 93 40 53 0.78228450758154944
+query_processing social_networking 85 32 53 0.87054713402131034
+social_networking big_data 75 23 52 0.79695532518919299
+data_warehouse big_data 55 3 52 0.26461472513515361
+text_mining social_networking 206 154 52 0.96143094055371714
+frequent_itemset data_stream 201 149 52 0.95126635851400809
+new_algorithm pattern_clustering 86 34 52 0.71959633917147448
+rough_set pattern_classification 136 84 52 0.78724395835293948
+classification big_data 71 19 52 0.52234176195870663
+frequent_itemset big_data 53 2 51 0.25218141321513921
+knowledge_discovery internet 194 143 51 0.88943620851234828
+data_warehouse machine_learning 124 73 51 0.81370156187455178
+large_database internet 103 52 51 0.6864905596313311
+association_rule internet 259 209 50 0.900366605496012
+large_database statistical_analysis 78 28 50 0.66713407187587503
+internet bioinformatics 84 34 50 0.97930797130157787
+knowledge_discovery cloud_computing 72 22 50 0.532115074613149
+large_database information_retrieval 84 35 49 0.72343669701472557
+data_stream cloud_computing 59 10 49 0.61566020551758005
+data_warehouse internet 103 54 49 0.87700278953491606
+neural_networks big_data 52 3 49 0.28550528849270318
+data_stream graph_theory 108 59 49 0.87489550481085532
+decision_trees data_stream 151 102 49 0.98776575755881324
+rough_set machine_learning 175 127 48 0.80555829627634268
+database clustering 215 167 48 0.96644131378476927
+web_page text_mining 76 28 48 0.78086417489740734
+classification graph_theory 111 63 48 0.94945365037465279
+neural_networks pattern_clustering 118 70 48 0.85199637993918209
+genetic_algorithm machine_learning 219 171 48 0.89911799155189676
+decision_trees feature_selection 130 82 48 0.94847054657062446
+web_mining internet 170 122 48 0.92269613143264295
+web_mining big_data 47 0 47 0.31371655262116394
+genetic_algorithm big_data 51 4 47 0.40039637397537264
+database pattern_clustering 169 122 47 0.92431684719946916
+pattern_clustering graph_theory 156 109 47 0.98030689694151685
+sequential_pattern social_networking 65 18 47 0.69348743223271092
+statistical_analysis text_mining 135 88 47 0.97879712024900312
+information_retrieval big_data 61 15 46 0.57332464215470103
+intrusion_detection machine_learning 96 50 46 0.827895298376221
+knowledge_discovery decision_making 110 64 46 0.85731892704288404
+rough_set support_vector_machines 113 67 46 0.92572628004561397
+neural_nets machine_learning 100 54 46 0.91897950718343635
+web_data_mining text_mining 77 31 46 0.8272280346062828
+large_database feature_extraction 65 19 46 0.65957722294831866
+association_rule decision_trees 355 309 46 0.99056283687152258
+knowledge_discovery decision_support_system 119 74 45 0.9529302299054756
+time_series big_data 50 5 45 0.52135321195641948
+clustering data_stream 232 187 45 0.98312538581597908
+frequent_itemset pattern_classification 108 63 45 0.75332021734024845
+database recommender_systems 65 20 45 0.87347263107760842
+association_rule probability 90 45 45 0.82759749702065866
+clustering algorithms 112 68 44 0.7368387072285657
+rough_set feature_selection 106 62 44 0.89129721720550481
+new_algorithm text_mining 77 33 44 0.70657162984253052
+machine_learning cloud_computing 79 35 44 0.81869297757884596
+machine_learning text_mining 305 261 44 0.99317298768019557
+decision_trees graph_theory 83 39 44 0.88963301400473449
+pattern_classification cloud_computing 77 33 44 0.85497427823029348
+clustering bioinformatics 116 73 43 0.90611789899534834
+frequent_pattern big_data 47 4 43 0.35516744415461565
+new_algorithm clustering 127 84 43 0.91992995649985265
+neural_networks pattern_classification 125 82 43 0.81065661622469498
+association_rule query_processing 152 109 43 0.86867533656554585
+search_engine social_networking 77 34 43 0.84154429672426612
+association_rule case_study 108 65 43 0.96796803178478374
+web_mining recommender_systems 72 29 43 0.79603271769094697
+web_sites text_mining 110 67 43 0.96824572429463962
+query_processing graph_theory 87 44 43 0.94969420472070765
+knowledge_discovery support_vector_machines 126 83 43 0.88873828586478931
+internet cloud_computing 68 26 42 0.75071383015580262
+mine social_networking 77 35 42 0.78562205735552648
+database classification 145 103 42 0.97870574992098081
+large_database web_mining 77 35 42 0.77584206675542611
+neural_networks text_mining 100 58 42 0.82595141111027914
+pattern_clustering pattern_classification 261 219 42 0.99002381407023776
+regression_analysis big_data 44 2 42 0.57686874046223624
+rough_set internet 96 54 42 0.88993351691635458
+decision_trees support_vector_machines 134 92 42 0.97463568156616287
+frequent_pattern social_networking 80 38 42 0.73222639720515015
+machine_learning feature_selection 188 146 42 0.96981266446039183
+internet pattern_classification 197 155 42 0.96872934884347828
+large_database knowledge_discovery 166 124 42 0.89942693901503201
+intrusion_detection text_mining 62 20 42 0.82064054506008599
+knowledge_discovery feature_selection 123 81 42 0.88558646089114257
+information_retrieval recommender_systems 85 43 42 0.93828542861197528
+decision_trees pattern_clustering 149 108 41 0.90271006490571759
+association_rule natural_language_processing 98 57 41 0.77028766855102648
+data_warehouse cloud_computing 54 13 41 0.48530290880779381
+database machine_learning 191 150 41 0.92624950773989045
+genetic_algorithm classification 177 136 41 0.98639930191081882
+information_retrieval pattern_classification 136 95 41 0.95829233825273707
+large_database data_structure 82 41 41 0.77655211146382908
+security_of_data social_networking 65 24 41 0.90561474623488392
+data_warehouse time_series 74 33 41 0.94469330604309421
+database graph_theory 105 64 41 0.90864874151121922
+rough_set cloud_computing 52 11 41 0.46620092129272184
+web_page social_networking 56 15 41 0.63440332494768281
+security_of_data big_data 43 2 41 0.58123709375673194
+association_rule feature_selection 155 115 40 0.90837219445404527
+association_rule wireless_sensor_networks 78 38 40 0.87215121869786472
+intrusion_detection pattern_classification 89 49 40 0.80325164865446541
+large_database database 144 104 40 0.82665351548697197
+pattern_classification social_networking 140 100 40 0.96552422984813291
+knowledge_discovery disease 70 30 40 0.68812160774614828
+pattern_classification feature_selection 137 97 40 0.96224303778813292
+database association_rule 324 284 40 0.94969296800279335
+clustering design 57 17 40 0.51593755518437068
+association_rule information_system 141 101 40 0.935751970306822
+association_rule data_structure 159 119 40 0.95794182221549173
+fuzzy_set_theory machine_learning 144 104 40 0.91132852034815681
+data_warehouse classification 117 77 40 0.94223348418727981
+rough_set clustering 223 183 40 0.97599782871184071
+genetic_algorithm bioinformatics 111 71 40 0.91342702258916553
+genetic_algorithm text_mining 124 85 39 0.89650351337839285
+graph_theory big_data 54 15 39 0.70925832544539646
+large_database bioinformatics 47 8 39 0.6247819009331893
+large_database classification 113 74 39 0.71330331425491189
+web_mining clustering 174 135 39 0.98694398526070426
+association_rule data_privacy 116 77 39 0.86148293855278524
+clustering probability 89 50 39 0.89860731290088358
+web_usage_mining data_stream 57 18 39 0.9288570371237389
+statistical_analysis big_data 48 9 39 0.62377195368251281
+information_retrieval machine_learning 213 174 39 0.97098824211820534
+pattern_classification bioinformatics 99 60 39 0.98154684945913107
+web_services cloud_computing 46 7 39 0.61752997608486304
+new_algorithm machine_learning 90 51 39 0.7224649168569699
+classification cloud_computing 55 17 38 0.69203905739950056
+association_rule sequential_pattern 228 190 38 0.98528074570334911
+ontology social_networking 56 18 38 0.85839626171671379
+association_rule coal_miners 80 42 38 0.90660778745938198
+intrusion_detection data_stream 71 33 38 0.95030422496354439
+knowledge_discovery artificial_intelligence 101 63 38 0.94106617229098732
+spatial_data_mining big_data 40 2 38 0.22288104061822966
+fuzzy_set_theory social_networking 58 20 38 0.79176094145208564
+relational_databases social_networking 47 9 38 0.6434020023013417
+pattern_clustering algorithms 71 33 38 0.84976849904448115
+association_rule statistical_analysis 162 124 38 0.89565689036754781
+knowledge_discovery pattern_clustering 200 162 38 0.83546620904060298
+knowledge_discovery data_structure 110 72 38 0.95063418921168363
+web_usage_mining clustering 102 64 38 0.95950706118705575
+pattern_clustering cloud_computing 69 32 37 0.80389121997481117
+association_rule mine 241 204 37 0.95671208364037841
+text_mining algorithms 66 29 37 0.88518726146334081
+knowledge_discovery information_system 119 82 37 0.91936989529141178
+query_processing text_mining 87 50 37 0.95893734593918301
+association_rule genetic_algorithm 271 234 37 0.98159413239377546
+case_study social_networking 64 27 37 0.71687349815339096
+proposed_algorithm social_networking 64 27 37 0.70687397475689917
+rough_set information_system 108 71 37 0.92352000159118097
+relational_databases association_rule 135 98 37 0.91538277458735318
+text_mining cloud_computing 60 23 37 0.84244813379991557
+support_vector_machines text_mining 136 100 36 0.95219699677057834
+large_database support_vector_machines 53 17 36 0.6455633653457491
+neural_networks recommender_systems 54 18 36 0.78239549367290906
+large_database probability 47 11 36 0.60477534762124885
+web_mining design 43 7 36 0.45301650829741347
+database probability 57 21 36 0.92172521334410584
+web_sites machine_learning 109 73 36 0.96909554315085122
+web_mining data_stream 71 35 36 0.96851767751890538
+large_database sequential_pattern 83 47 36 0.76931349122808423
+association_rule proposed_algorithm 162 126 36 0.97192117763363162
+neural_networks time_series 69 33 36 0.95639054317031735
+association_rule medical_computing 89 53 36 0.74839958633822135
+new_algorithm pattern_classification 70 34 36 0.67777937055863935
+web_mining pattern_classification 92 57 35 0.83378100985019266
+information_system big_data 41 6 35 0.52664022779782238
+large_database algorithms 54 19 35 0.51226753878150555
+frequent_itemset machine_learning 116 81 35 0.7833664407895875
+fuzzy_set_theory big_data 40 5 35 0.42557502801150116
+web_mining algorithms 54 19 35 0.68731645716322043
+database bioinformatics 71 36 35 0.92498612568675043
+classification natural_language_processing 73 38 35 0.91174613071521671
+new_algorithm time_series 62 27 35 0.87370592793244062
+new_algorithm internet 57 22 35 0.80244407763002135
+pattern_clustering recommender_systems 85 50 35 0.97023791909029899
+large_database genetic_algorithm 81 46 35 0.77476772078763323
+support_vector_machines social_networking 78 43 35 0.88258180971766309
+machine_learning disease 82 47 35 0.95302537389408382
+neural_networks decision_making 66 31 35 0.89880942483745807
+decision_trees algorithms 68 33 35 0.700368907293209
+knowledge_discovery frequent_itemset 159 124 35 0.9342592810008562
+rough_set disease 48 13 35 0.65003649544390896
+neural_networks internet 93 58 35 0.90996267289925103
+neural_networks cloud_computing 40 5 35 0.50654433232418117
+intrusion_detection big_data 35 1 34 0.29874672317444606
+web_usage_mining text_mining 57 23 34 0.80345099081608884
+data_warehouse clustering 174 140 34 0.97314226613052013
+intrusion_detection pattern_clustering 79 45 34 0.8352401759679785
+spatial_data_mining text_mining 53 19 34 0.784017056559422
+neural_networks feature_selection 78 44 34 0.91263094956988922
+knowledge_discovery data_warehouse 130 96 34 0.95572583921888909
+machine_learning design 48 14 34 0.78232570196483409
+efficient_algorithm algorithms 56 22 34 0.57477160982222897
+large_database recommender_systems 43 9 34 0.50736493503918934
+regression_analysis text_mining 64 30 34 0.97046867334012732
+web_usage_mining social_networking 51 17 34 0.64829395693643843
+large_database information_system 46 12 34 0.7074791624184702
+pattern_clustering bioinformatics 109 75 34 0.9913462000390687
+pattern_recognition text_mining 72 38 34 0.92141634091335201
+knowledge_discovery performance_evaluation 72 39 33 0.68838261010239687
+genetic_algorithm cloud_computing 42 9 33 0.60452629433891447
+pattern_recognition decision_making 45 12 33 0.9400939136915254
+association_rule performance_evaluation 102 69 33 0.57083875187886268
+feature_selection text_mining 104 71 33 0.97291606486755211
+rough_set data_stream 74 41 33 0.96856117924471818
+sequential_pattern text_mining 72 39 33 0.84066748086118315
+association_rule prediction 106 73 33 0.93248139580398592
+pattern_clustering probability 88 55 33 0.98778302961772424
+web_services social_networking 52 19 33 0.8071230747424788
+statistical_analysis social_networking 97 64 33 0.92559192157002068
+knowledge_discovery natural_language_processing 67 34 33 0.77371917804211121
+relational_databases big_data 35 2 33 0.35450025372450067
+knowledge_discovery frequent_pattern 141 108 33 0.95520309288470018
+database fuzzy_set_theory 93 60 33 0.98698704064799658
+decision_trees classification 244 211 33 0.98165642508714634
+pattern_clustering text_mining 213 180 33 0.98754563005460338
+internet graph_theory 113 80 33 0.96194026330402038
+large_database medical_computing 37 4 33 0.4952391328781125
+electronic_commerce machine_learning 69 36 33 0.90653211939476364
+knowledge_discovery genetic_algorithm 149 116 33 0.95897836076779408
+association_rule decision_making 126 94 32 0.89363669909345633
+decision_trees pattern_classification 179 147 32 0.87092663247460866
+frequent_pattern text_mining 95 63 32 0.86120486997524248
+internet medical_computing 56 24 32 0.93308756568397844
+information_retrieval medical_computing 52 20 32 0.9203786952872961
+information_retrieval probability 54 22 32 0.96496337127500087
+database design 45 13 32 0.59183976372749514
+knowledge_discovery time_series 127 95 32 0.93387880063702589
+web_mining decision_support_system 56 24 32 0.97297912683973775
+machine_learning algorithms 71 39 32 0.90884981372458284
+neural_networks genetic_algorithm 131 99 32 0.98396771047794662
+decision_trees design 42 10 32 0.46848499320588588
+large_database mine 67 35 32 0.70358315072665945
+database feature_extraction 80 48 32 0.95011698155482049
+association_rule geographic_information_system 110 78 32 0.94982645494663032
+text_mining design 44 12 32 0.75510186861352313
+classification machine_learning 298 266 32 0.9491522413437149
+classification feature_selection 139 107 32 0.98522454140972293
+data_warehouse support_vector_machines 68 36 32 0.91919986485773064
+decision_making big_data 35 4 31 0.57386155264262106
+rough_set decision_support_system 69 38 31 0.95828732244907355
+pattern_recognition big_data 33 2 31 0.51637500427935779
+pattern_clustering machine_learning 309 278 31 0.9783445202715414
+customer_relationship_management text_mining 43 12 31 0.82365113563238745
+knowledge_discovery case_study 102 71 31 0.9275931541453778
+query_processing big_data 39 8 31 0.62677936912664201
+database cloud_computing 45 14 31 0.64742934687896758
+principal_component_analysis big_data 31 0 31 0.41397914637873567
+neural_networks disease 50 19 31 0.67908816734449629
+information_retrieval graph_theory 86 55 31 0.96106622508442341
+principal_component_analysis machine_learning 66 35 31 0.89182950428966434
+case_study big_data 32 1 31 0.26091343768918318
+clustering disease 73 42 31 0.78021745257920017
+neural_networks bioinformatics 53 22 31 0.84794711470491024
+anomaly_detection big_data 35 4 31 0.52916108290255259
+neural_networks data_stream 66 35 31 0.96037296535970107
+genetic_algorithm web_sites 52 21 31 0.94720103015782364
+neural_nets social_networking 38 7 31 0.80883836368596118
+frequent_itemset algorithms 68 37 31 0.61407627895404093
+knowledge_based_systems machine_learning 101 70 31 0.93274017904824524
+ontology text_mining 101 70 31 0.95624033661618413
+association_rule support_vector_machines 177 146 31 0.94113221166683791
+large_database frequent_pattern 113 82 31 0.76350904043401358
+data_visualisation big_data 34 3 31 0.64806951812040403
+large_database data_privacy 52 21 31 0.58239361130720246
+web_mining cloud_computing 37 7 30 0.53731624164973413
+web_sites big_data 33 3 30 0.59961655116744605
+machine_learning graph_theory 155 125 30 0.98378500378648659
+neural_networks database 86 56 30 0.96445111968711261
+knowledge_based_systems text_mining 66 36 30 0.92040766091883164
+rough_set classification 138 108 30 0.94428015700649848
+information_extraction big_data 34 4 30 0.54342346178515821
+classification bioinformatics 88 58 30 0.94774834403240293
+relational_databases pattern_clustering 62 32 30 0.81753871467600059
+database decision_making 58 28 30 0.9422444120630884
+web_mining bioinformatics 45 15 30 0.87111406201667685
+neural_networks graph_theory 47 17 30 0.83345920327407497
+new_algorithm statistical_analysis 46 16 30 0.79576851482375766
+efficient_algorithm graph_theory 78 48 30 0.71581412522965271
+frequent_itemset clustering 199 169 30 0.96008441691780999
+new_algorithm data_stream 75 45 30 0.91360483529681147
+large_database web_sites 45 15 30 0.70208414054376356
+optimisation graph_theory 44 14 30 0.95402184190947836
+fuzzy_set_theory classification 102 72 30 0.98391187592615537
+data_warehouse recommender_systems 38 8 30 0.75221425989468327
+pattern_clustering design 37 7 30 0.70099910021929868
+web_sites recommender_systems 48 18 30 0.94566354650644935
+new_algorithm proposed_algorithm 57 27 30 0.95131949234098145
+intrusion_detection cloud_computing 36 6 30 0.50153163484018781
+query_processing pattern_classification 101 71 30 0.95163423157139215
+web_mining performance_evaluation 48 19 29 0.60706337878616279
+sequential_pattern clustering 149 120 29 0.98007232528198374
+genetic_algorithm graph_theory 81 52 29 0.90195351595970086
+web_log text_mining 44 15 29 0.82857316702031825
+web_sites clustering 119 90 29 0.93616928503951147
+clustering medical_computing 77 48 29 0.83665793478542427
+classification design 39 10 29 0.61622535881855944
+neural_networks medical_computing 53 24 29 0.74217414118637903
+rough_set graph_theory 47 18 29 0.8084416127943147
+web_mining feature_selection 75 46 29 0.92337882317292486
+web_usage_mining pattern_clustering 65 36 29 0.8247207499608159
+web_usage_mining pattern_classification 49 20 29 0.78079092614422563
+large_database security_of_data 42 13 29 0.64739271410074639
+neural_networks remote_sensing 38 9 29 0.96893263286984832
+world_wide_web text_mining 79 50 29 0.90177788936996395
+large_database decision_support_system 46 17 29 0.76195150078652063
+relational_databases text_mining 62 33 29 0.79948059427137663
+proposed_algorithm big_data 30 1 29 0.26350400314468425
+neural_networks probability 43 14 29 0.83785545698506814
+knowledge_based_systems pattern_classification 74 45 29 0.91528983165254496
+mine graph_theory 72 43 29 0.88758315602361681
+new_algorithm big_data 28 0 28 0.15617831302340113
+sequential_pattern algorithms 45 17 28 0.72383888613443104
+database data_privacy 62 34 28 0.91926651686545113
+efficient_algorithm data_stream 110 82 28 0.91150030550339067
+rough_set decision_making 69 41 28 0.88647740324222679
+frequent_itemset time_series 83 55 28 0.92495784209065623
+knowledge_discovery feature_extraction 101 73 28 0.88237092334963307
+classification algorithms 69 41 28 0.81185361688494273
+fuzzy_set_theory decision_support_system 44 16 28 0.99017184192148311
+feature_selection big_data 40 12 28 0.59893940513186084
+parallel_algorithm graph_theory 51 23 28 0.92137859102962349
+query_processing machine_learning 106 78 28 0.971929365278831
+fuzzy_set_theory information_system 54 26 28 0.98030295383113886
+feature_selection social_networking 77 49 28 0.90307177514617276
+web_log data_stream 50 22 28 0.97253931646337533
+semantic_web social_networking 48 20 28 0.85209366922094221
+recommender_systems big_data 41 13 28 0.73530014604464911
+knowledge_discovery database 202 174 28 0.97414141492578221
+spatial_data_mining graph_theory 47 19 28 0.79044434313369172
+optimisation social_networking 47 19 28 0.89163794398743745
+frequent_itemset classification 114 86 28 0.92420003727610445
+data_structure big_data 30 2 28 0.45676609971757831
+genetic_algorithm recommender_systems 49 21 28 0.85226447515104975
+regression_analysis pattern_classification 80 52 28 0.9698723123392875
+rough_set time_series 74 46 28 0.94043308463080044
+rough_set frequent_pattern 66 38 28 0.97879141373061485
+information_retrieval bioinformatics 65 37 28 0.97061360200321911
+classification probability 72 44 28 0.94836731992058632
+association_rule spatial_data_mining 150 122 28 0.99372985454077123
+frequent_pattern recommender_systems 46 18 28 0.81266106016207384
+new_algorithm social_networking 51 23 28 0.55097328520394551
+pattern_recognition pattern_classification 92 64 28 0.91505948665593662
+information_retrieval natural_language_processing 80 53 27 0.93482840511327547
+geographic_information_system social_networking 39 12 27 0.77070304279183832
+association_rule disease 81 54 27 0.67962558448619703
+case_study graph_theory 48 21 27 0.82633545067255854
+efficient_algorithm bioinformatics 40 13 27 0.72679544648946215
+large_database decision_trees 88 61 27 0.72673746963852737
+knowledge_based_systems big_data 29 2 27 0.48949798481724527
+neural_nets decision_making 40 13 27 0.96470462743644969
+principal_component_analysis text_mining 43 16 27 0.9018441164116936
+neural_nets big_data 28 1 27 0.47436909277327743
+web_sites graph_theory 59 32 27 0.96487290307295182
+frequent_itemset feature_extraction 51 24 27 0.83796654830555883
+decision_trees data_privacy 56 29 27 0.91265309614607704
+fuzzy_set_theory pattern_classification 126 99 27 0.89372217686884414
+bioinformatics big_data 40 13 27 0.65306304067300591
+internet data_privacy 63 36 27 0.98111535622036417
+genetic_algorithm pattern_classification 178 151 27 0.88291892901678726
+sequential_pattern graph_theory 67 40 27 0.8415451483892773
+knowledge_based_systems pattern_clustering 57 30 27 0.93589745607248043
+web_services big_data 29 2 27 0.38805678699507551
+efficient_algorithm recommender_systems 35 8 27 0.64755056264057298
+sequential_pattern cloud_computing 30 3 27 0.5274922864699344
+regression_analysis machine_learning 103 76 27 0.95823141256611699
+decision_trees clustering 263 236 27 0.99570507954920517
+mine monitoring 43 16 27 0.95028111355175138
