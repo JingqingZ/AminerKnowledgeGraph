@@ -2,6 +2,8 @@
 
 from stemming.porter2 import stem
 import sys
+import random
+
 
 class HTMLGenerator(object):
     """docstring for HTMLGenerator"""
@@ -11,7 +13,7 @@ class HTMLGenerator(object):
         self.query = q.replace(" ", "_")
         self.sim_threshold = 0.85
         self.times_threshold = 10
-        self.graph_num = 30
+        self.graph_num = 200
 
         self.minyear = 1980
         self.maxyear = 2014
@@ -34,19 +36,20 @@ class HTMLGenerator(object):
                 keyword = stem(line[0])
                 self.dictionary[keyword] = {}
         timelinefile.close()
-        
+
         self.keyword_sum = dict()
         for keyword in self.dictionary:
             counter = 0
             for year in self.dictionary[keyword]:
                 counter += self.dictionary[keyword][year]
             self.keyword_sum[keyword] = counter
-        
+
         linkdifffile = open("../../results/trend_sim_" + self.query + ".list", "r")
         self.linklist = []
         for line in linkdifffile:
             line = line.replace("\n", "").split(" ")
             self.linklist.append(line)
+        random.shuffle(self.linklist)
         linkdifffile.close()
 
     def judge(self, key0, key1, i):
@@ -121,6 +124,7 @@ class HTMLGenerator(object):
                 break
             self.htmlfile.write('<input type="checkbox" id="link' + repr(i) + '-checkbox1"> ' + self.linklist[i][0].replace("_", " ") + ' --> ' + self.linklist[i][1].replace("_", " ") + ' (frequency ' + self.linklist[i][2] + ')<br>')
             self.htmlfile.write('<input type="checkbox" id="link' + repr(i) + '-checkbox2"> ' + self.linklist[i][1].replace("_", " ") + ' --> ' + self.linklist[i][0].replace("_", " ") + ' (frequency ' + self.linklist[i][3] + ')<br>')
+            self.htmlfile.write('<p> frequency difference ' + repr(int(self.linklist[i][2]) - int(self.linklist[i][3])) + ' </p>')
             self.htmlfile.write('<p> trend similarity ' + self.linklist[i][5] + ' (注：1.0为完全相同) </p>')
             self.htmlfile.write('<div id="link' + repr(i) + '" style="height: 200px; width: 50%"></div>')
             self.htmlfile.write('<script id="jsbin-javascript">')
