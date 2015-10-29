@@ -200,53 +200,67 @@ class GetTopicFactor(object):
                 diff_list.append((li[0], li[1]))
         return diff_list
 
-    def output_for_FGM(self, diff_list, filename):
-        factor_result = dict()
+    def load_human_labeling(self, filename):
+        content = open(filename).readlines()
+        evolution_label = list()
+        non_evolution_label = list()
+        for i in content:
+            li = i.strip().split(' ')
+            if int(li[2]) == 1:
+                evolution_label.append((li[0], li[1]))
+            elif int(li[2]) == 0:
+                non_evolution_label.append((li[0], li[1]))
+        return set(evolution_label), set(non_evolution_label)
+        print ('loading complete')
+
+    def output_for_FGM(self, diff_list, evolution_set, non_evolution_set, filename):
         for i in self.topic_dict:
             self.topic_dict[i]['paper_list'] = set(self.topic_dict[i]['paper_list'])
             self.topic_dict[i]['author_list'] = set(self.topic_dict[i]['author_list'])
 
+        output = open(filename, 'w')
         for i in diff_list:
             if (i[0] not in self.topic_dict) or (i[1] not in self.topic_dict):
                 continue
 
-            if i not in factor_result:
-                factor_result[i] = dict()
-
             info0 = self.topic_dict[ i[0] ]
             info1 = self.topic_dict[ i[1] ]
             # calculate the distance between two topics
-            factor_result[i]['paper_peak_year'] = info0['paper_peak_year'] \
-                                                    - info1['paper_peak_year']
-            factor_result[i]['paper_peak_num'] = info0['paper_peak_num'] \
-                                                    - info1['paper_peak_num']
-            factor_result[i]['paper_soar_year'] = info0['paper_soar_year'] \
-                                                    - info1['paper_soar_year']
-            factor_result[i]['paper_soar_num'] = info0['paper_soar_num'] \
-                                                    - info1['paper_soar_num']
-            factor_result[i]['voc_dist'] = [ info0['voc_dist'][it] \
-                                             - info1['voc_dist'][it] for it in range(0, self.w2v_length)]
-            factor_result[i]['paper_list_cnt'] = len( info0['paper_list'] & info1['paper_list'] )
-            factor_result[i]['author_list_cnt'] = len( info0['author_list'] & info1['author_list'] )
-            factor_result[i]['trend_sim'] = 1 - distance.cosine(info0['paper_trend'], info1['paper_trend'])
+            paper_peak_year = info0['paper_peak_year'] \
+                                - info1['paper_peak_year']
+            paper_peak_num = info0['paper_peak_num'] \
+                                - info1['paper_peak_num']
+            paper_soar_year = info0['paper_soar_year'] \
+                                - info1['paper_soar_year']
+            paper_soar_num = info0['paper_soar_num'] \
+                                - info1['paper_soar_num']
 
-            # here should load the label from human labeling
-            factor_result[i]['label'] = '1'
+            voc_dist = 1 - distance.cosine(info0['voc_dist'], info1['voc_dist'])
+            trend_sim = 1 - distance.cosine(info0['paper_trend'], info1['paper_trend'])
 
-        output = open(filename, 'w')
-        for i in factor_result:
-            output.write('+' + factor_result[i]['label'])
-            output.write(' 1:' + repr(factor_result[i]['paper_peak_year']))
-            output.write(' 2:' + repr(factor_result[i]['paper_peak_num']))
-            output.write(' 3:' + repr(factor_result[i]['paper_soar_year']))
-            output.write(' 4:' + repr(factor_result[i]['paper_soar_num']))
-            output.write(' 5:' + repr(factor_result[i]['paper_list_cnt']))
-            output.write(' 6:' + repr(factor_result[i]['author_list_cnt']))
-            output.write(' 7:' + repr(factor_result[i]['trend_sim']))
-            start = 8
-            for attr_num in range(0, self.w2v_length):
-                output.write(' %d:' % (attr_num + start))
-                output.write( repr(factor_result[i]['voc_dist'][attr_num]) )
+            overlap = len( info0['paper_list'] & info1['paper_list'] )
+            total = len(info0['paper_list']) + len(info1['paper_list']) - overlap
+            paper_list_rate = overlap / total
+
+            overlap = len( info0['author_list'] & info1['author_list'] )
+            total = len(info0['author_list']) + len(info1['author_list']) - overlap
+            author_list_rate = overlap / total
+
+            if i in evolution_set:
+                output.write('+1')
+            elif i in non_evolution_set:
+                output.write('+0')
+            else:
+                # if the label is unknown, there is no difference between ?0 and ?1
+                output.write('?1')
+            output.write(' 1:' + repr(paper_peak_year) )
+            output.write(' 2:' + repr(paper_peak_num) )
+            output.write(' 3:' + repr(paper_soar_year) )
+            output.write(' 4:' + repr(paper_soar_num) )
+            output.write(' 5:' + repr(trend_sim) )
+            output.write(' 6:' + repr(voc_dist) )
+            output.write(' 7:' + repr(paper_list_rate) )
+            output.write(' 8:' + repr(author_list_rate) )
             output.write('\n')
         output.close()
 
@@ -259,8 +273,11 @@ def main():
     ga.get_voc_dist("../results/vec_data_mining.txt")
     ga.check_factor()
     ga.output_topic_dict("../results/topic_factor_data_mining.txt")
+
     diff_list = ga.load_diff_list('../results/diff_data_mining.list')
-    ga.output_for_FGM(diff_list, '../results/FGM_data_mining.txt')
+    evolution_set, non_evolution_set = ga.load_human_labeling('../views/label/label.txt')
+
+    ga.output_for_FGM(diff_list, evolution_set, non_evolution_set, '../results/FGM_data_mining.txt')
 
 if __name__ == '__main__':
     main()
