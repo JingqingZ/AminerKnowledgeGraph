@@ -1,4 +1,5 @@
 import numpy
+import shutil
 from scipy.spatial import distance
 
 class GetTopicFactor(object):
@@ -16,7 +17,7 @@ class GetTopicFactor(object):
         self.soar_max_year = -1
         self.topic = ""
 
-        self.diff_threshold = 10
+        self.diff_threshold = 5
         self.w2v_length = 200
 
     def init_topic_dict(self, infile_topic):
@@ -210,15 +211,19 @@ class GetTopicFactor(object):
                 evolution_label.append((li[0], li[1]))
             elif int(li[2]) == 0:
                 non_evolution_label.append((li[0], li[1]))
-        return set(evolution_label), set(non_evolution_label)
         print ('loading complete')
+        return set(evolution_label), set(non_evolution_label)
 
-    def output_for_FGM(self, diff_list, evolution_set, non_evolution_set, filename):
+    def output_for_FGM(self, file_label, file_unlabel):
+        diff_list = self.load_diff_list('../results/diff_data_mining.list')
+        evolution_set, non_evolution_set = self.load_human_labeling('../views/label/label.txt')
+
         for i in self.topic_dict:
             self.topic_dict[i]['paper_list'] = set(self.topic_dict[i]['paper_list'])
             self.topic_dict[i]['author_list'] = set(self.topic_dict[i]['author_list'])
 
-        output = open(filename, 'w')
+        output_label = open(file_label, 'w')
+        output_unlabel = open(file_unlabel, 'w')
         for i in diff_list:
             if (i[0] not in self.topic_dict) or (i[1] not in self.topic_dict):
                 continue
@@ -246,13 +251,15 @@ class GetTopicFactor(object):
             total = len(info0['author_list']) + len(info1['author_list']) - overlap
             author_list_rate = overlap / total
 
+            output = output_label
             if i in evolution_set:
                 output.write('+1')
             elif i in non_evolution_set:
                 output.write('+0')
             else:
                 # if the label is unknown, there is no difference between ?0 and ?1
-                output.write('?1')
+                output = output_unlabel
+                output.write('?0')
             output.write(' 1:' + repr(paper_peak_year) )
             output.write(' 2:' + repr(paper_peak_num) )
             output.write(' 3:' + repr(paper_soar_year) )
@@ -262,6 +269,31 @@ class GetTopicFactor(object):
             output.write(' 7:' + repr(paper_list_rate) )
             output.write(' 8:' + repr(author_list_rate) )
             output.write('\n')
+        output_label.close()
+        output_unlabel.close()
+
+    def gen_FGM_train_test(self, file_label, file_unlabel, file_train, file_test):
+        pos = list()
+        neg = list()
+        label = open(file_label).readlines()
+        for i in label:
+            if i[1] == '1':
+                pos.append(i)
+            else:
+                neg.append(i)
+        shutil.copyfile(file_unlabel, file_train)
+        output = open(file_train, 'a')
+        for i in range(0, int(len(pos)/2)):
+            output.write(pos[i])
+        for i in range(0, int(len(neg)/2)):
+            output.write(neg[i])
+        output.close()
+        
+        output = open(file_test, 'w')
+        for i in range(int(len(pos)/2), len(pos)):
+            output.write(pos[i])
+        for i in range(int(len(neg)/2), len(neg)):
+            output.write(neg[i])
         output.close()
 
 def main():
@@ -274,10 +306,9 @@ def main():
     ga.check_factor()
     ga.output_topic_dict("../results/topic_factor_data_mining.txt")
 
-    diff_list = ga.load_diff_list('../results/diff_data_mining.list')
-    evolution_set, non_evolution_set = ga.load_human_labeling('../views/label/label.txt')
-
-    ga.output_for_FGM(diff_list, evolution_set, non_evolution_set, '../results/FGM_data_mining.txt')
+    ga.output_for_FGM('../results/FGM_label_data_mining.txt', '../results/FGM_unlabel_data_mining.txt')
+    ga.gen_FGM_train_test('../results/FGM_label_data_mining.txt', '../results/FGM_unlabel_data_mining.txt', 
+                            '../results/train.txt', '../results/test.txt')
 
 if __name__ == '__main__':
     main()
