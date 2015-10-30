@@ -214,7 +214,7 @@ class GetTopicFactor(object):
         print ('loading complete')
         return set(evolution_label), set(non_evolution_label)
 
-    def output_for_FGM(self, file_label, file_unlabel):
+    def output_for_FGM(self, file_label, file_unlabel, file_mark_label, file_mark_unlabel):
         diff_list = self.load_diff_list('../results/diff_data_mining.list')
         evolution_set, non_evolution_set = self.load_human_labeling('../views/label/label.txt')
 
@@ -224,6 +224,8 @@ class GetTopicFactor(object):
 
         output_label = open(file_label, 'w')
         output_unlabel = open(file_unlabel, 'w')
+        output_mark_label = open(file_mark_label, 'w')
+        output_mark_unlabel = open(file_mark_unlabel, 'w')
         for i in diff_list:
             if (i[0] not in self.topic_dict) or (i[1] not in self.topic_dict):
                 continue
@@ -252,14 +254,19 @@ class GetTopicFactor(object):
             author_list_rate = overlap / total
 
             output = output_label
+            output_mark = output_mark_label
             if i in evolution_set:
                 output.write('+1')
+                output_mark.write(repr(i) + '\n')
             elif i in non_evolution_set:
                 output.write('+0')
+                output_mark.write(repr(i) + '\n')
             else:
                 # if the label is unknown, there is no difference between ?0 and ?1
                 output = output_unlabel
+                output_mark = output_mark_unlabel
                 output.write('?0')
+                output_mark.write(repr(i) + '\n')
             output.write(' 1:' + repr(paper_peak_year) )
             output.write(' 2:' + repr(paper_peak_num) )
             output.write(' 3:' + repr(paper_soar_year) )
@@ -271,30 +278,52 @@ class GetTopicFactor(object):
             output.write('\n')
         output_label.close()
         output_unlabel.close()
+        output_mark_label.close()
+        output_mark_unlabel.close()
 
-    def gen_FGM_train_test(self, file_label, file_unlabel, file_train, file_test):
+    def gen_FGM_train_test(self, file_label, file_unlabel, mark_label, mark_unlabel,
+                            file_train, file_test, mark_train, mark_test):
         pos = list()
         neg = list()
         label = open(file_label).readlines()
-        for i in label:
-            if i[1] == '1':
-                pos.append(i)
+        mark = open(mark_label).readlines()
+        for i in range(0, len(label)):
+            if label[i][1] == '1':
+                pos.append( (label[i], mark[i]) )
             else:
-                neg.append(i)
+                neg.append( (label[i], mark[i]) )
+
         shutil.copyfile(file_unlabel, file_train)
+        shutil.copyfile(mark_unlabel, mark_train)
+
         output = open(file_train, 'a')
         for i in range(0, int(len(pos)/2)):
-            output.write(pos[i])
+            output.write(pos[i][0])
         for i in range(0, int(len(neg)/2)):
-            output.write(neg[i])
+            output.write(neg[i][0])
         output.close()
         
         output = open(file_test, 'w')
         for i in range(int(len(pos)/2), len(pos)):
-            output.write(pos[i])
+            output.write(pos[i][0])
         for i in range(int(len(neg)/2), len(neg)):
-            output.write(neg[i])
+            output.write(neg[i][0])
         output.close()
+
+        output = open(mark_train, 'a')
+        for i in range(0, int(len(pos)/2)):
+            output.write(pos[i][1])
+        for i in range(0, int(len(neg)/2)):
+            output.write(neg[i][1])
+        output.close()
+        
+        output = open(mark_test, 'w')
+        for i in range(int(len(pos)/2), len(pos)):
+            output.write(pos[i][1])
+        for i in range(int(len(neg)/2), len(neg)):
+            output.write(neg[i][1])
+        output.close()
+        
 
 def main():
     ga = GetTopicFactor()
@@ -306,9 +335,13 @@ def main():
     ga.check_factor()
     ga.output_topic_dict("../results/topic_factor_data_mining.txt")
 
-    ga.output_for_FGM('../results/FGM_label_data_mining.txt', '../results/FGM_unlabel_data_mining.txt')
+    ga.output_for_FGM('../results/FGM_label_data_mining.txt', '../results/FGM_unlabel_data_mining.txt',
+                        '../results/FGM_label_data_mining.mark', '../results/FGM_unlabel_data_mining.mark')
+
     ga.gen_FGM_train_test('../results/FGM_label_data_mining.txt', '../results/FGM_unlabel_data_mining.txt', 
-                            '../results/train.txt', '../results/test.txt')
+                            '../results/FGM_label_data_mining.mark', '../results/FGM_unlabel_data_mining.mark',
+                            '../results/train.txt', '../results/test.txt', 
+                            '../results/train.mark', '../results/test.mark')
 
 if __name__ == '__main__':
     main()
