@@ -18,8 +18,9 @@ class LabelAnalysis(object):
             if len(line) > 1:
                 continue
             else:
-                keyword = stem(line[0])
-                self.topic_table[keyword] = line[0]
+                # keyword = stem(line[0])
+                # self.topic_table[keyword] = line[0]
+                self.topic_table[line[0]] = line[0]
         infile.close()
 
     def load_link_label(self, infilename1, infilename2):
@@ -70,7 +71,7 @@ class LabelAnalysis(object):
 def main():
     la = LabelAnalysis(sys.argv[1])
     la.load_topic_table()
-    la.load_link_label("../label/TianrunSim.txt", "../label/JingqingSim.txt")
+    la.load_link_label("../label/TianrunCheck100.txt", "../label/JingqingCheck100.txt")
     la.output("../label/sim.txt", "../label/diff.txt")
 
 

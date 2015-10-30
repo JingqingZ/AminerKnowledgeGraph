@@ -13,7 +13,7 @@ class HTMLGenerator(object):
         self.query = q.replace(" ", "_")
         self.sim_threshold = 0.85
         self.times_threshold = 10
-        self.graph_num = 200
+        self.graph_num = 100
 
         self.minyear = 1980
         self.maxyear = 2014
@@ -44,7 +44,8 @@ class HTMLGenerator(object):
                 counter += self.dictionary[keyword][year]
             self.keyword_sum[keyword] = counter
 
-        linkdifffile = open("../../results/trend_sim_" + self.query + ".list", "r")
+        # linkdifffile = open("../../results/trend_sim_" + self.query + ".list", "r")
+        linkdifffile = open("../label/unlabeled_top500.txt", 'r')
         self.linklist = []
         for line in linkdifffile:
             line = line.replace("\n", "").split(" ")
@@ -68,7 +69,7 @@ class HTMLGenerator(object):
         for i in range(0, len(self.linklist)):
             key0 = stem(self.linklist[i][0])
             key1 = stem(self.linklist[i][1])
-            if self.judge(key0, key1, i) == False:
+            if self.judge(key0, key1, i) is False:
                 continue
             correct_list.append(i)
         return correct_list
@@ -101,12 +102,12 @@ class HTMLGenerator(object):
         for i in range(0, len(self.linklist)):
             key0 = stem(self.linklist[i][0])
             key1 = stem(self.linklist[i][1])
-            if self.judge(key0, key1, i) == False:
+            if self.judge(key0, key1, i) is False:
                 continue
             valid += 1
             if valid > self.graph_num:
                 break
-            self.htmlfile.write('<p id="link' + repr(i) + '-results" label0="' + key0 + '" label1="' + key1 + '">0</p>\n')
+            self.htmlfile.write('<p id="link' + repr(i) + '-results" label0="' + self.linklist[i][0] + '" label1="' + self.linklist[i][1] + '">0</p>\n')
         self.htmlfile.write('</div>\n')
         self.htmlfile.write('<p>说明1：请在你认为正确的衍生关系前打勾</p>')
         self.htmlfile.write('<p>说明2：frequency代表发表的论文中有该先后关系的作者数，仅供参考</p>')
@@ -117,7 +118,7 @@ class HTMLGenerator(object):
         for i in range(0, len(self.linklist)):
             key0 = stem(self.linklist[i][0])
             key1 = stem(self.linklist[i][1])
-            if self.judge(key0, key1, i) == False:
+            if self.judge(key0, key1, i) is False:
                 continue
             valid += 1
             if valid > self.graph_num:
