@@ -17,7 +17,7 @@ class GetTopicFactor(object):
         self.soar_max_year = -1
         self.topic = ""
 
-        self.diff_threshold = 5
+        self.diff_threshold = 27
         self.w2v_length = 200
 
     def init_topic_dict(self, infile_topic):
