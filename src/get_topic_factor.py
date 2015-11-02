@@ -192,6 +192,7 @@ class GetTopicFactor(object):
 
     def load_diff_list(self, filename):
         diff_list = list()
+        freq_list = list()
         content = open(filename).readlines()
         for i in content:
             li = i.strip().split(' ')
@@ -199,7 +200,8 @@ class GetTopicFactor(object):
                 continue
             else:
                 diff_list.append((li[0], li[1]))
-        return diff_list
+                freq_list.append((int(li[2]), int(li[3]), int(li[4])))
+        return diff_list, freq_list
 
     def load_human_labeling(self, filename):
         content = open(filename).readlines()
@@ -215,7 +217,7 @@ class GetTopicFactor(object):
         return set(evolution_label), set(non_evolution_label)
 
     def output_for_FGM(self, file_label, file_unlabel, file_mark_label, file_mark_unlabel):
-        diff_list = self.load_diff_list('../results/diff_data_mining.list')
+        diff_list, freq_list = self.load_diff_list('../results/diff_data_mining.list')
         evolution_set, non_evolution_set = self.load_human_labeling('../views/label/label.txt')
 
         for i in self.topic_dict:
@@ -226,8 +228,10 @@ class GetTopicFactor(object):
         output_unlabel = open(file_unlabel, 'w')
         output_mark_label = open(file_mark_label, 'w')
         output_mark_unlabel = open(file_mark_unlabel, 'w')
+        rank = 0
         for i in diff_list:
             if (i[0] not in self.topic_dict) or (i[1] not in self.topic_dict):
+                rank += 1
                 continue
 
             info0 = self.topic_dict[ i[0] ]
@@ -241,6 +245,9 @@ class GetTopicFactor(object):
                                 - info1['paper_soar_year']
             paper_soar_num = info0['paper_soar_num'] \
                                 - info1['paper_soar_num']
+            topic1_2_freq = freq_list[rank][0]
+            topic2_1_freq = freq_list[rank][1]
+            topic_freq_diff = freq_list[rank][2]
 
             voc_dist = 1 - distance.cosine(info0['voc_dist'], info1['voc_dist'])
             trend_sim = 1 - distance.cosine(info0['paper_trend'], info1['paper_trend'])
@@ -267,22 +274,26 @@ class GetTopicFactor(object):
                 output_mark = output_mark_unlabel
                 output.write('?0')
                 output_mark.write(repr(i) + '\n')
-            output.write(' 1:' + repr(paper_peak_year) )
-            output.write(' 2:' + repr(paper_peak_num) )
-            output.write(' 3:' + repr(paper_soar_year) )
-            output.write(' 4:' + repr(paper_soar_num) )
-            output.write(' 5:' + repr(trend_sim) )
-            output.write(' 6:' + repr(voc_dist) )
-            output.write(' 7:' + repr(paper_list_rate) )
-            output.write(' 8:' + repr(author_list_rate) )
+            output.write(' 1:' + repr(trend_sim) )
+            output.write(' 2:' + repr(voc_dist) )
+            output.write(' 3:' + repr(paper_list_rate) )
+            output.write(' 4:' + repr(author_list_rate) )
+            output.write(' 5:' + repr(paper_peak_year) )
+            output.write(' 6:' + repr(paper_soar_year) )
+            # output.write(' 7:' + repr(paper_peak_num) )
+            # output.write(' 8:' + repr(paper_soar_num) )
+            # output.write(' 7:' + repr(topic1_2_freq) )
+            # output.write(' 8:' + repr(topic2_1_freq) )
+            output.write(' 7:' + repr(topic_freq_diff) )
             output.write('\n')
+            rank += 1
         output_label.close()
         output_unlabel.close()
         output_mark_label.close()
         output_mark_unlabel.close()
 
     def gen_FGM_train_test(self, file_label, file_unlabel, mark_label, mark_unlabel,
-                            file_train, file_test, mark_train, mark_test):
+                            file_train, file_test, mark_train, mark_test, unlabel_pred):
         pos = list()
         neg = list()
         label = open(file_label).readlines()
@@ -294,6 +305,7 @@ class GetTopicFactor(object):
                 neg.append( (label[i], mark[i]) )
 
         shutil.copyfile(file_unlabel, file_train)
+        shutil.copyfile(file_unlabel, unlabel_pred)
         shutil.copyfile(mark_unlabel, mark_train)
 
         output = open(file_train, 'a')
@@ -340,8 +352,9 @@ def main():
 
     ga.gen_FGM_train_test('../results/FGM_label_data_mining.txt', '../results/FGM_unlabel_data_mining.txt', 
                             '../results/FGM_label_data_mining.mark', '../results/FGM_unlabel_data_mining.mark',
-                            '../results/train.txt', '../results/test.txt', 
-                            '../results/train.mark', '../results/test.mark')
+                            '../social_tie/results/train.txt', '../social_tie/results/test.txt', 
+                            '../social_tie/results/train.mark', '../social_tie/results/test.mark',
+                            '../social_tie/results/unlabel.txt')
 
 if __name__ == '__main__':
     main()
