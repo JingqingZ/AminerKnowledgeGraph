@@ -1,3 +1,6 @@
+import math
+from scipy.spatial import distance
+
 # detect the traid in topic evolution
 # according to TKDE15-Traid Closure Pattern Analysis and Prediction
 # There are two kinds of open Traid, and 1 kind of close Traid
@@ -15,12 +18,12 @@ class TraidDetect(object):
         self.evolution = dict()
         self.evolution_reverse = dict()
 
-    def load_evolution_file(self, filename):
+    def load_evolution_file(self, filename, skip_char):
         # load evolution from one file
         content = open(filename).readlines()
         for i in content:
             li = i.strip().split(' ')
-            if int(li[2]) == 0:
+            if li[2] == skip_char:
                 continue
             if li[0] not in self.key2num:
                 self.key2num[ li[0] ] = self.counter
@@ -70,7 +73,7 @@ class TraidDetect(object):
 
         output.close()
 
-    def detect_traid(self, filename):
+    def detect_traid(self):
         # (from, to1, to2)
         open_traid_0 = list()
         # (from, to1, to1_to2)
@@ -96,15 +99,62 @@ class TraidDetect(object):
                         continue
                     else:
                         open_traid_3.append( (num1, num2, i) )
+        return open_traid_0, open_traid_3, close_traid_6
 
-        self.output_traids(filename, open_traid_0, open_traid_3, close_traid_6)
+    def calc_similarity(self, open_traid_0, open_traid_3):
+        factor = list()
+        content = open('../results/FGM_data_mining.txt').readlines()
+        for i in content:
+            li = i.strip().split(' ')
+            fli = list()
+            for i in li:
+                fli.append(float(i))
+            factor.append(fli)
 
-def main():
+        pair_dict = dict()
+        content = open('../results/FGM_data_mining.mark').readlines()
+        counter = 0
+        for i in content:
+            pair_dict[i.strip()] = factor[counter]
+            counter += 1
+
+        pair_list = list()
+        for i in open_traid_0:
+            pair_list.append( '(\'%s\', \'%s\')' % (self.num2key[ i[1] ], self.num2key[ i[2] ] ) )
+        for i in open_traid_3:
+            pair_list.append( '(\'%s\', \'%s\')' % (self.num2key[ i[0] ], self.num2key[ i[1] ] ) )
+
+        length = len(factor[0])
+        accumulator = [0.0] * length
+        counter = 0
+        for i in pair_list:
+            if i in pair_dict:
+                for j in range(0, length):
+                    accumulator[j] += pair_dict[i][j]
+                counter += 1
+        for i in range(0, length):
+            accumulator[i] /= counter
+
+        print (accumulator)
+        return accumulator
+
+def test(skip_char):
     td = TraidDetect('data mining')
     # the input should be label.txt
-    td.load_evolution_file('../views/label/label.txt')
-    td.detect_traid('../results/data_mining.traid')
+    td.load_evolution_file('../views/label/label.txt', skip_char)
+    open_traid_0, open_traid_3, close_traid_6 = td.detect_traid()
+    filename = '../results/data_mining.utraid'
+    td.output_traids(filename, open_traid_0, open_traid_3, close_traid_6)
 
+    #return td.calc_similarity(open_traid_0, open_traid_3)
 
+def main():
+	test('0')
+    #label_avg = test('0')
+    #unlabel_avg = test('1')
+    #for i in range(0, len(label_avg)):
+    #    rate = math.fabs(label_avg[i] - unlabel_avg[i]) / math.fabs(label_avg[i] + unlabel_avg[i])
+    #    print (rate)
+    
 if __name__ == '__main__':
     main()
