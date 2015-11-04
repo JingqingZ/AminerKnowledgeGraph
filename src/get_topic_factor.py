@@ -226,7 +226,7 @@ class GetTopicFactor(object):
 
     def output_for_FGM(self, file_label, file_unlabel, file_mark_label, file_mark_unlabel):
         diff_list, freq_list = self.load_diff_list("../results/diff_" + sys.argv[1] + ".list")
-        evolution_set, non_evolution_set = self.load_human_labeling('../views/label/tmp/label.txt')
+        evolution_set, non_evolution_set = self.load_human_labeling("../views/label/label_" + sys.argv[1] + ".txt")
 
         for i in self.topic_dict:
             self.topic_dict[i]['paper_list'] = set(self.topic_dict[i]['paper_list'])
@@ -358,9 +358,9 @@ def main():
 
     ga.gen_FGM_train_test("../results/FGM_label_" + sys.argv[1] + ".txt", "../results/FGM_unlabel_" + sys.argv[1] + ".txt", 
                             "../results/FGM_label_" + sys.argv[1] + ".mark", "../results/FGM_unlabel_" + sys.argv[1] + ".mark",
-                            "../social_tie/results/train.txt", "../social_tie/results/test.txt", 
-                            "../social_tie/results/train.mark", "../social_tie/results/test.mark",
-                            "../social_tie/results/unlabel.txt")
+                            "../social_tie/results/" + sys.argv[1] + "/train.txt", "../social_tie/results/" + sys.argv[1] + "/test.txt", 
+                            "../social_tie/results/" + sys.argv[1] + "/train.mark", "../social_tie/results/" + sys.argv[1] + "/test.mark",
+                            "../social_tie/results/" + sys.argv[1] + "/unlabel.txt")
 
 if __name__ == '__main__':
     main()
