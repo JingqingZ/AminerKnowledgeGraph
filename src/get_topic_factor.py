@@ -2,6 +2,7 @@ import numpy
 import shutil
 from scipy.spatial import distance
 
+
 class GetTopicFactor(object):
     """docstring for GetTopicFactor"""
 
@@ -34,6 +35,7 @@ class GetTopicFactor(object):
             for year in range(self.year_begin, self.year_end):
                 paper_trend.append(0)
             self.topic_dict[topic]["paper_trend"] = paper_trend
+            self.topic_dict[topic]["first_paper_year"] = -1
             self.topic_dict[topic]["paper_peak_year"] = -1
             self.topic_dict[topic]["paper_peak_num"] = -1
             self.topic_dict[topic]["paper_soar_year"] = -1
@@ -59,6 +61,11 @@ class GetTopicFactor(object):
                 if growth > self.soar_max:
                     self.soar_max = growth
                     self.soar_max_year = year
+            self.topic_dict[self.topic]["first_paper_year"] = self.year_end
+            for i in range(0, self.year_end - self.year_begin):
+                if self.topic_dict[self.topic]["paper_trend"][i] > 0:
+                    self.topic_dict[self.topic]["first_paper_year"] = i + self.year_begin
+                    break
             self.topic_dict[self.topic]["paper_soar_year"] = self.soar_max_year
             self.topic_dict[self.topic]["paper_soar_num"] = self.soar_max
             self.soar_max = -1
@@ -218,7 +225,7 @@ class GetTopicFactor(object):
 
     def output_for_FGM(self, file_label, file_unlabel, file_mark_label, file_mark_unlabel):
         diff_list, freq_list = self.load_diff_list('../results/diff_data_mining.list')
-        evolution_set, non_evolution_set = self.load_human_labeling('../views/label/label.txt')
+        evolution_set, non_evolution_set = self.load_human_labeling('../views/label/tmp/label.txt')
 
         for i in self.topic_dict:
             self.topic_dict[i]['paper_list'] = set(self.topic_dict[i]['paper_list'])
@@ -237,17 +244,14 @@ class GetTopicFactor(object):
             info0 = self.topic_dict[ i[0] ]
             info1 = self.topic_dict[ i[1] ]
             # calculate the distance between two topics
-            paper_peak_year = info0['paper_peak_year'] \
-                                - info1['paper_peak_year']
-            paper_peak_num = info0['paper_peak_num'] \
-                                - info1['paper_peak_num']
-            paper_soar_year = info0['paper_soar_year'] \
-                                - info1['paper_soar_year']
-            paper_soar_num = info0['paper_soar_num'] \
-                                - info1['paper_soar_num']
+            paper_peak_year = info0['paper_peak_year'] - info1['paper_peak_year']
+            paper_peak_num = info0['paper_peak_num'] - info1['paper_peak_num']
+            paper_soar_year = info0['paper_soar_year'] - info1['paper_soar_year']
+            paper_soar_num = info0['paper_soar_num'] - info1['paper_soar_num']
             topic1_2_freq = freq_list[rank][0]
             topic2_1_freq = freq_list[rank][1]
             topic_freq_diff = freq_list[rank][2]
+            first_paper_year_diff = info0['first_paper_year'] - info1['first_paper_year']
 
             voc_dist = 1 - distance.cosine(info0['voc_dist'], info1['voc_dist'])
             trend_sim = 1 - distance.cosine(info0['paper_trend'], info1['paper_trend'])
@@ -285,6 +289,7 @@ class GetTopicFactor(object):
             # output.write(' 7:' + repr(topic1_2_freq) )
             # output.write(' 8:' + repr(topic2_1_freq) )
             output.write(' 7:' + repr(topic_freq_diff) )
+            output.write(' 8:' + repr(first_paper_year_diff) )
             output.write('\n')
             rank += 1
         output_label.close()

@@ -13,7 +13,8 @@ class HTMLGenerator(object):
         self.query = q.replace(" ", "_")
         self.sim_threshold = 0.85
         self.times_threshold = 10
-        self.graph_num = 100
+        self.graph_num = 200
+        self.top_num = 500
 
         self.minyear = 1980
         self.maxyear = 2014
@@ -44,12 +45,16 @@ class HTMLGenerator(object):
                 counter += self.dictionary[keyword][year]
             self.keyword_sum[keyword] = counter
 
-        # linkdifffile = open("../../results/trend_sim_" + self.query + ".list", "r")
-        linkdifffile = open("../label/unlabeled_top500.txt", 'r')
+        linkdifffile = open("../../results/trend_sim_" + self.query + ".list", "r")
+        # linkdifffile = open("../label/unlabeled_top500.txt", 'r')
         self.linklist = []
+        currentnum = 0
         for line in linkdifffile:
+            if currentnum >= self.top_num:
+                break
             line = line.replace("\n", "").split(" ")
             self.linklist.append(line)
+            currentnum += 1
         random.shuffle(self.linklist)
         linkdifffile.close()
 
@@ -96,7 +101,7 @@ class HTMLGenerator(object):
         self.htmlfile.write('</script>')
         jsfile.close()
 
-        self.htmlfile.write('<meta charset=utf-8 /><title>Knowledge Trend Check</title></head><body>')
+        self.htmlfile.write('<meta charset=utf-8 /><title>' + sys.argv[1] + '</title></head><body>')
         self.htmlfile.write('<div id="results" style="display: none">\n')
         valid = 0
         for i in range(0, len(self.linklist)):
