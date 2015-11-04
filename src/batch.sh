@@ -12,7 +12,7 @@ echo "word2vec"
 # sh ./w2vec.sh $1
 
 echo "get factor"
-# python3.4 ./get_topic_factor.py $1
+python3.4 ./get_topic_factor.py $1
 
 echo "social tie"
 ../social_tie/src/OpenCRF_Main -est -niter 30 -nbpiter 30 -dstmodel ../social_tie/src/train_model.txt -method gradient -gradientstep 0.02 -hasvalue -trainfile ../social_tie/results/$1/train.txt -testfile ../social_tie/results/$1/test.txt
