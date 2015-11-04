@@ -5,7 +5,7 @@ from scipy.spatial import distance
 class GetTopicFactor(object):
     """docstring for GetTopicFactor"""
 
-    def __init__(self):
+    def __init__(self, q):
         super(GetTopicFactor, self).__init__()
         self.year_begin = 1980
         self.year_end = 2015
@@ -19,8 +19,10 @@ class GetTopicFactor(object):
 
         self.diff_threshold = 27
         self.w2v_length = 200
+        self.query = q.replace(' ', '_')
 
-    def init_topic_dict(self, infile_topic):
+    def init_topic_dict(self):
+        infile_topic = '../results/pub_' + self.query + '.keywords'
         infile = open(infile_topic)
         curline = 0
         for line in infile:
@@ -64,13 +66,14 @@ class GetTopicFactor(object):
             self.soar_max = -1
             self.soar_max_year = 0
 
-    def get_paper_number(self, infile_pub_dist):
+    def get_paper_number(self):
         # range of year: [1980, 2015)
         # get the year when the number of
         #   papers that have a certain topic reaches the peak
         # get the year when the number of
         #   papers that have a certain topic grows fastest
         # get the trend of a certain topic
+        infile_pub_dist = '../results/pub_' + self.query + '.dist'
         infile = open(infile_pub_dist, "r")
         self.topic = ""
         self.numb_max = -1
@@ -101,7 +104,8 @@ class GetTopicFactor(object):
         self.update_paper_info()
         infile.close()
 
-    def get_paper_author_list(self, infile_paper_simp):
+    def get_paper_author_list(self):
+        infile_paper_simp = '../results/pub_' + self.query + '.simp'
         infile_paper = open(infile_paper_simp, "r")
         paper_id = ""
         author_list = []
@@ -126,7 +130,8 @@ class GetTopicFactor(object):
                         self.topic_dict[topic]["author_list"][author] += 1
             curline += 1
 
-    def get_voc_dist(self, infile_voc_dist):
+    def get_voc_dist(self):
+        infile_voc_dist = '../results/vec_' + self.query + '.txt'
         infile = open(infile_voc_dist, 'r')
         line = infile.readline()
         content = line.replace("\n", "").split(" ")
@@ -184,8 +189,9 @@ class GetTopicFactor(object):
         for i in invalid_topics:
             del(self.topic_dict[i])
 
-    def output_topic_dict(self, outfilename):
+    def output_topic_dict(self):
         # output
+        outfilename = '../results/topic_factor_' + self.query + '.txt'
         outfile = open(outfilename, "w")
         outfile.write(repr(self.topic_dict))
         outfile.close()
@@ -216,7 +222,12 @@ class GetTopicFactor(object):
         print ('loading complete')
         return set(evolution_label), set(non_evolution_label)
 
-    def output_for_FGM(self, file_label, file_unlabel, file_mark_label, file_mark_unlabel):
+    def output_for_FGM(self):
+        file_label = '../results/FGM_label_' + self.query + '.txt'
+        file_unlabel = '../results/FGM_unlabel_' + self.query + '.txt'
+        file_mark_label = '../results/FGM_label_' + self.query + '.mark'
+        file_mark_unlabel = '../results/FGM_unlabel_' + self.query + '.mark'
+
         diff_list, freq_list = self.load_diff_list('../results/diff_data_mining.list')
         evolution_set, non_evolution_set = self.load_human_labeling('../views/label/label.txt')
 
@@ -292,8 +303,19 @@ class GetTopicFactor(object):
         output_mark_label.close()
         output_mark_unlabel.close()
 
-    def gen_FGM_train_test(self, file_label, file_unlabel, mark_label, mark_unlabel,
-                            file_train, file_test, mark_train, mark_test, unlabel_pred):
+    def gen_FGM_train_test(self):
+
+        file_label = '../results/FGM_label_' + self.query + '.txt'
+        file_unlabel = '../results/FGM_unlabel_' + self.query + '.txt'
+        mark_label = '../results/FGM_label_' + self.query + '.mark'
+        mark_unlabel = '../results/FGM_unlabel_' + self.query + '.mark'
+
+        file_train = '../social_tie/results/train.txt'
+        file_test = '../social_tie/results/test.txt'
+        mark_train = '../social_tie/results/train.mark'
+        mark_test = '../social_tie/results/test.mark'
+        unlabel_pred = '../social_tie/results/unlabel.txt'
+
         pos = list()
         neg = list()
         label = open(file_label).readlines()
@@ -338,23 +360,18 @@ class GetTopicFactor(object):
         
 
 def main():
-    ga = GetTopicFactor()
-    ga.init_topic_dict("../results/pub_data_mining.keywords")
-    ga.get_paper_number("../results/pub_data_mining.dist")
+    ga = GetTopicFactor('data mining')
+    ga.init_topic_dict()
+    ga.get_paper_number()
     # ga.output_topic_dict("../results/topic_factor_data_mining_paper_num.txt")
-    ga.get_paper_author_list("../results/pub_data_mining.simp")
-    ga.get_voc_dist("../results/vec_data_mining.txt")
+    ga.get_paper_author_list()
+    ga.get_voc_dist()
     ga.check_factor()
-    ga.output_topic_dict("../results/topic_factor_data_mining.txt")
+    ga.output_topic_dict()
 
-    ga.output_for_FGM('../results/FGM_label_data_mining.txt', '../results/FGM_unlabel_data_mining.txt',
-                        '../results/FGM_label_data_mining.mark', '../results/FGM_unlabel_data_mining.mark')
+    ga.output_for_FGM()
 
-    ga.gen_FGM_train_test('../results/FGM_label_data_mining.txt', '../results/FGM_unlabel_data_mining.txt', 
-                            '../results/FGM_label_data_mining.mark', '../results/FGM_unlabel_data_mining.mark',
-                            '../social_tie/results/train.txt', '../social_tie/results/test.txt', 
-                            '../social_tie/results/train.mark', '../social_tie/results/test.mark',
-                            '../social_tie/results/unlabel.txt')
+    ga.gen_FGM_train_test()
 
 if __name__ == '__main__':
     main()
