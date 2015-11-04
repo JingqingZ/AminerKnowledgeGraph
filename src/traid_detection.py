@@ -18,7 +18,8 @@ class TraidDetect(object):
         self.evolution = dict()
         self.evolution_reverse = dict()
 
-    def load_evolution_file(self, filename, skip_char):
+    def load_evolution_file(self, skip_char):
+        filename = '../views/label/label_' + self.query + '.txt'
         # load evolution from one file
         content = open(filename).readlines()
         for i in content:
@@ -157,7 +158,7 @@ class TraidDetect(object):
 def test(skip_char):
     td = TraidDetect('data mining')
     # the input should be label.txt
-    td.load_evolution_file('../views/label/label.txt', skip_char)
+    td.load_evolution_file(skip_char)
     open_traid_0, open_traid_3, close_traid_6 = td.detect_traid()
     td.output_traids(skip_char, open_traid_0, open_traid_3, close_traid_6)
 

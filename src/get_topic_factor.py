@@ -1,12 +1,13 @@
 import numpy
 import shutil
 from scipy.spatial import distance
+import sys
 
 
 class GetTopicFactor(object):
     """docstring for GetTopicFactor"""
 
-    def __init__(self, q):
+    def __init__(self, q, threshold):
         super(GetTopicFactor, self).__init__()
         self.year_begin = 1980
         self.year_end = 2015
@@ -18,7 +19,7 @@ class GetTopicFactor(object):
         self.soar_max_year = -1
         self.topic = ""
 
-        self.diff_threshold = 27
+        self.diff_threshold = threshold
         self.w2v_length = 200
         self.query = q.replace(' ', '_')
 
@@ -235,8 +236,11 @@ class GetTopicFactor(object):
         file_mark_label = '../results/FGM_label_' + self.query + '.mark'
         file_mark_unlabel = '../results/FGM_unlabel_' + self.query + '.mark'
 
-        diff_list, freq_list = self.load_diff_list('../results/diff_data_mining.list')
-        evolution_set, non_evolution_set = self.load_human_labeling('../views/label/tmp/label.txt')
+        diff_file = '../results/diff_' + self.query + '.list'
+        label_file = '../views/label/label_' + self.query + '.txt'
+
+        diff_list, freq_list = self.load_diff_list(diff_file)
+        evolution_set, non_evolution_set = self.load_human_labeling(label_file)
 
         for i in self.topic_dict:
             self.topic_dict[i]['paper_list'] = set(self.topic_dict[i]['paper_list'])
@@ -365,7 +369,8 @@ class GetTopicFactor(object):
         
 
 def main():
-    ga = GetTopicFactor('data mining')
+    # the second parameter is the difff threshold
+    ga = GetTopicFactor('data mining', 27)
     ga.init_topic_dict()
     ga.get_paper_number()
     # ga.output_topic_dict("../results/topic_factor_data_mining_paper_num.txt")
