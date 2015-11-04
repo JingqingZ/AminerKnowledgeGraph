@@ -51,8 +51,8 @@ class GeneratePredictedLink(object):
         unlabel_outfile = open(unlabel_outname, 'w')
         for i in range(len(self.train_mark)):
             if i < unlabel_num:
-                outfile.write("unlabel " + self.train_mark[i][0] + " " + self.train_mark[i][1] + " " + train_final[i] + "\n")
-                unlabel_outfile.write("unlabel " + self.train_mark[i][0] + " " + self.train_mark[i][1] + " " + train_final[i] + "\n")
+                outfile.write("pred " + self.train_mark[i][0] + " " + self.train_mark[i][1] + " " + train_final[i] + "\n")
+                unlabel_outfile.write("pred " + self.train_mark[i][0] + " " + self.train_mark[i][1] + " " + train_final[i] + "\n")
             else:
                 outfile.write("label " + self.train_mark[i][0] + " " + self.train_mark[i][1] + " " + train_final[i] + "\n")
                 label_outfile.write("label " + self.train_mark[i][0] + " " + self.train_mark[i][1] + " " + train_final[i] + "\n")
@@ -69,7 +69,7 @@ def main():
     gpl.load_mark_file("../results/train.mark", "../results/test.mark")
     gpl.load_pred("../results/pred.txt")
     gpl.load_factor_file("../results/train.txt", "../results/test.txt")
-    gpl.generate("../results/results.txt", "../results/results_label.txt", "../results/results_unlabel.txt")
+    gpl.generate("../results/results.txt", "../results/results_label.txt", "../results/results_pred.txt")
 
 
 if __name__ == '__main__':
