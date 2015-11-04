@@ -1,6 +1,7 @@
 import numpy
 import shutil
 from scipy.spatial import distance
+import sys
 
 
 class GetTopicFactor(object):
@@ -224,7 +225,7 @@ class GetTopicFactor(object):
         return set(evolution_label), set(non_evolution_label)
 
     def output_for_FGM(self, file_label, file_unlabel, file_mark_label, file_mark_unlabel):
-        diff_list, freq_list = self.load_diff_list('../results/diff_data_mining.list')
+        diff_list, freq_list = self.load_diff_list("../results/diff_" + sys.argv[1] + ".list")
         evolution_set, non_evolution_set = self.load_human_labeling('../views/label/tmp/label.txt')
 
         for i in self.topic_dict:
@@ -344,22 +345,22 @@ class GetTopicFactor(object):
 
 def main():
     ga = GetTopicFactor()
-    ga.init_topic_dict("../results/pub_data_mining.keywords")
-    ga.get_paper_number("../results/pub_data_mining.dist")
-    # ga.output_topic_dict("../results/topic_factor_data_mining_paper_num.txt")
-    ga.get_paper_author_list("../results/pub_data_mining.simp")
-    ga.get_voc_dist("../results/vec_data_mining.txt")
+    ga.init_topic_dict("../results/pub_" + sys.argv[1] + ".keywords")
+    ga.get_paper_number("../results/pub_" + sys.argv[1] + ".dist")
+    # ga.output_topic_dict("../results/topic_factor_" + sys.argv[1] + "_paper_num.txt")
+    ga.get_paper_author_list("../results/pub_" + sys.argv[1] + ".simp")
+    ga.get_voc_dist("../results/vec_" + sys.argv[1] + ".txt")
     ga.check_factor()
-    ga.output_topic_dict("../results/topic_factor_data_mining.txt")
+    ga.output_topic_dict("../results/topic_factor_" + sys.argv[1] + ".txt")
 
-    ga.output_for_FGM('../results/FGM_label_data_mining.txt', '../results/FGM_unlabel_data_mining.txt',
-                        '../results/FGM_label_data_mining.mark', '../results/FGM_unlabel_data_mining.mark')
+    ga.output_for_FGM("../results/FGM_label_" + sys.argv[1] + ".txt", "../results/FGM_unlabel_" + sys.argv[1] + ".txt",
+                        "../results/FGM_label_" + sys.argv[1] + ".mark", "../results/FGM_unlabel_" + sys.argv[1] + ".mark")
 
-    ga.gen_FGM_train_test('../results/FGM_label_data_mining.txt', '../results/FGM_unlabel_data_mining.txt', 
-                            '../results/FGM_label_data_mining.mark', '../results/FGM_unlabel_data_mining.mark',
-                            '../social_tie/results/train.txt', '../social_tie/results/test.txt', 
-                            '../social_tie/results/train.mark', '../social_tie/results/test.mark',
-                            '../social_tie/results/unlabel.txt')
+    ga.gen_FGM_train_test("../results/FGM_label_" + sys.argv[1] + ".txt", "../results/FGM_unlabel_" + sys.argv[1] + ".txt", 
+                            "../results/FGM_label_" + sys.argv[1] + ".mark", "../results/FGM_unlabel_" + sys.argv[1] + ".mark",
+                            "../social_tie/results/train.txt", "../social_tie/results/test.txt", 
+                            "../social_tie/results/train.mark", "../social_tie/results/test.mark",
+                            "../social_tie/results/unlabel.txt")
 
 if __name__ == '__main__':
     main()
