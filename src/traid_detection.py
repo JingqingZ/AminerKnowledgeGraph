@@ -51,7 +51,11 @@ class TraidDetect(object):
             kid = self.key2num[i]
             self.num2key[kid] = i
 
-    def output_traids(self, filename, op0, op3, cp6):
+    def output_traids(self, skip_char, op0, op3, cp6):
+        if skip_char == '0':
+            filename = '../results/' + self.query + '.traid'
+        elif skip_char == '1':
+            filename = '../results/' + self.query + '.utraid'
         output = open(filename, 'w')
         output.write('#----------------------------------------------------------------------\n')
         output.write('#open_traid_0\n')
@@ -101,19 +105,31 @@ class TraidDetect(object):
                         open_traid_3.append( (num1, num2, i) )
         return open_traid_0, open_traid_3, close_traid_6
 
-    def calc_similarity(self, open_traid_0, open_traid_3):
-        factor = list()
-        content = open('../results/FGM_data_mining.txt').readlines()
+    def read_factor(self, filename, factor):
+        content = open(filename).readlines()
         for i in content:
             li = i.strip().split(' ')
             fli = list()
-            for i in li:
-                fli.append(float(i))
+            for i in range(1, len(li)):
+                fli.append( float(li[i].split(':')[1]) )
             factor.append(fli)
 
+    def calc_similarity(self, open_traid_0, open_traid_3):
+        factor = list()
+        filename = '../results/FGM_label_' + self.query + '.txt'
+        self.read_factor(filename, factor)
+        filename = '../results/FGM_unlabel_' + self.query + '.txt'
+        self.read_factor(filename, factor)
+
         pair_dict = dict()
-        content = open('../results/FGM_data_mining.mark').readlines()
         counter = 0
+        filename = '../results/FGM_label_' + self.query + '.mark'
+        content = open(filename).readlines()
+        for i in content:
+            pair_dict[i.strip()] = factor[counter]
+            counter += 1
+        filename = '../results/FGM_unlabel_' + self.query + '.mark'
+        content = open(filename).readlines()
         for i in content:
             pair_dict[i.strip()] = factor[counter]
             counter += 1
@@ -143,18 +159,16 @@ def test(skip_char):
     # the input should be label.txt
     td.load_evolution_file('../views/label/label.txt', skip_char)
     open_traid_0, open_traid_3, close_traid_6 = td.detect_traid()
-    filename = '../results/data_mining.utraid'
-    td.output_traids(filename, open_traid_0, open_traid_3, close_traid_6)
+    td.output_traids(skip_char, open_traid_0, open_traid_3, close_traid_6)
 
-    #return td.calc_similarity(open_traid_0, open_traid_3)
+    return td.calc_similarity(open_traid_0, open_traid_3)
 
 def main():
-	test('0')
-    #label_avg = test('0')
-    #unlabel_avg = test('1')
-    #for i in range(0, len(label_avg)):
-    #    rate = math.fabs(label_avg[i] - unlabel_avg[i]) / math.fabs(label_avg[i] + unlabel_avg[i])
-    #    print (rate)
+    label_avg = test('0')
+    unlabel_avg = test('1')
+    for i in range(0, len(label_avg)):
+        rate = math.fabs(label_avg[i] - unlabel_avg[i]) / math.fabs(label_avg[i] + unlabel_avg[i])
+        print (rate)
     
 if __name__ == '__main__':
     main()
