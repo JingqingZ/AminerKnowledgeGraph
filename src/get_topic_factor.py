@@ -286,10 +286,10 @@ class GetTopicFactor(object):
             output_mark = output_mark_label
             if i in evolution_set:
                 output.write('+1')
-                output_mark.write(repr(i) + '\n')
+                output_mark.write(i[0] + ' ' + i[1] + '\n')
             elif i in non_evolution_set:
                 output.write('+0')
-                output_mark.write(repr(i) + '\n')
+                output_mark.write(i[0] + ' ' + i[1] + '\n')
             else:
                 # if the label is unknown, there is no difference between ?0 and ?1
                 output = output_unlabel
