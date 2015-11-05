@@ -106,7 +106,8 @@ class TraidDetect(object):
             for second in self.evolution[first]:
                 if second in self.evolution:
                     for third in self.evolution[second]:
-                        open_traid_1.append( (first, second, third) )
+                        if third not in self.evolution[first]:
+                            open_traid_1.append( (first, second, third) )
 
         # (from1, from2, to)
         open_traid_3 = list()
