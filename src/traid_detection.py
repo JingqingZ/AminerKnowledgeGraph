@@ -1,5 +1,6 @@
 import math
 from scipy.spatial import distance
+import sys
 
 # detect the traid in topic evolution
 # according to TKDE15-Traid Closure Pattern Analysis and Prediction
@@ -156,7 +157,7 @@ class TraidDetect(object):
         return accumulator
 
 def test(skip_char):
-    td = TraidDetect('data mining')
+    td = TraidDetect(sys.argv[1])
     # the input should be label.txt
     td.load_evolution_file(skip_char)
     open_traid_0, open_traid_3, close_traid_6 = td.detect_traid()

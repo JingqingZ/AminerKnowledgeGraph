@@ -19,7 +19,8 @@ class GetTopicFactor(object):
         self.soar_max_year = -1
         self.topic = ""
 
-        self.diff_threshold = threshold
+        # self.diff_threshold = threshold
+        self.num_threshold = threshold
         self.w2v_length = 200
         self.query = q.replace(' ', '_')
 
@@ -208,13 +209,14 @@ class GetTopicFactor(object):
         diff_list = list()
         freq_list = list()
         content = open(filename).readlines()
+        curnum = 0
         for i in content:
             li = i.strip().split(' ')
-            if int(li[4]) < self.diff_threshold:
-                continue
-            else:
-                diff_list.append((li[0], li[1]))
-                freq_list.append((int(li[2]), int(li[3]), int(li[4])))
+            if curnum >= self.num_threshold:
+                break
+            curnum += 1
+            diff_list.append((li[0], li[1]))
+            freq_list.append((int(li[2]), int(li[3]), int(li[4])))
         return diff_list, freq_list
 
     def load_human_labeling(self, filename):
@@ -320,11 +322,11 @@ class GetTopicFactor(object):
         mark_label = '../results/FGM_label_' + self.query + '.mark'
         mark_unlabel = '../results/FGM_unlabel_' + self.query + '.mark'
 
-        file_train = '../social_tie/results/train.txt'
-        file_test = '../social_tie/results/test.txt'
-        mark_train = '../social_tie/results/train.mark'
-        mark_test = '../social_tie/results/test.mark'
-        unlabel_pred = '../social_tie/results/unlabel.txt'
+        file_train = '../social_tie/results/' + self.query + '/train.txt'
+        file_test = '../social_tie/results/' + self.query + '/test.txt'
+        mark_train = '../social_tie/results/' + self.query + '/train.mark'
+        mark_test = '../social_tie/results/' + self.query + '/test.mark'
+        unlabel_pred = '../social_tie/results/' + self.query + '/unlabel.txt'
 
         pos = list()
         neg = list()
@@ -371,7 +373,7 @@ class GetTopicFactor(object):
 
 def main():
     # the second parameter is the difff threshold
-    ga = GetTopicFactor(sys.argv[1], 27)
+    ga = GetTopicFactor(sys.argv[1], 500)
     ga.init_topic_dict()
     ga.get_paper_number()
     # ga.output_topic_dict("../results/topic_factor_data_mining_paper_num.txt")
@@ -382,7 +384,7 @@ def main():
 
     ga.output_for_FGM()
 
-    ga.gen_FGM_train_test()]
+    ga.gen_FGM_train_test()
 
 if __name__ == '__main__':
     main()
