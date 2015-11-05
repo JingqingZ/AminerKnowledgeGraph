@@ -102,12 +102,21 @@ class TraidDetect(object):
 
         # (first, second, thrid)
         open_traid_1 = list()
+        # (A->B->C->A)
+        # just for debug, should not occur in evolution
+        close_traid_7 = list()
         for first in self.evolution:
             for second in self.evolution[first]:
                 if second in self.evolution:
                     for third in self.evolution[second]:
                         if third not in self.evolution[first]:
                             open_traid_1.append( (first, second, third) )
+                        if third in self.evolution and first in self.evolution[third]:
+                            close_traid_7.append( (first, second, third) )
+        if len(close_traid_7) != 0:
+            print ('cyclic evolution detected')
+            for i in close_traid_7:
+                print (i)
 
         # (from1, from2, to)
         open_traid_3 = list()
@@ -120,6 +129,7 @@ class TraidDetect(object):
                         continue
                     else:
                         open_traid_3.append( (num1, num2, i) )
+
         return open_traid_0, open_traid_1, open_traid_3, close_traid_6
 
     def read_factor(self, filename, factor):
@@ -162,19 +172,19 @@ class TraidDetect(object):
             edge1 = '%s %s' % (self.num2key[ i[0] ], self.num2key[ i[1] ])
             edge2 = '%s %s' % (self.num2key[ i[0] ], self.num2key[ i[2] ])
             if edge1 in mark and edge2 in mark:
-                output.write('#Edge %d %d %d\n' % (mark[edge1], mark[edge2], 1) )
+                output.write('#edge %d %d %d\n' % (mark[edge1], mark[edge2], 1) )
 
         for i in open_traid_1:
             edge1 = '%s %s' % (self.num2key[ i[0] ], self.num2key[ i[1] ])
             edge2 = '%s %s' % (self.num2key[ i[1] ], self.num2key[ i[2] ])
             if edge1 in mark and edge2 in mark:
-                output.write('#Edge %d %d %d\n' % (mark[edge1], mark[edge2], 2))
+                output.write('#edge %d %d %d\n' % (mark[edge1], mark[edge2], 2))
 
         for i in open_traid_3:
             edge1 = '%s %s' % (self.num2key[ i[0] ], self.num2key[ i[2] ])
             edge2 = '%s %s' % (self.num2key[ i[1] ], self.num2key[ i[2] ])
             if edge1 in mark and edge2 in mark:
-                output.write('#Edge %d %d %d\n' % (mark[edge1], mark[edge2], 3))
+                output.write('#edge %d %d %d\n' % (mark[edge1], mark[edge2], 3))
         output.close()
 
     def calc_similarity(self, open_traid_0, open_traid_3):
