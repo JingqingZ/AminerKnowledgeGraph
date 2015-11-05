@@ -178,14 +178,14 @@ def test(skip_char):
     open_traid_0, open_traid_1, open_traid_3, close_traid_6 = td.detect_traid()
     td.output_traids(skip_char, open_traid_0, open_traid_1, open_traid_3, close_traid_6)
 
-    return td.calc_similarity(open_traid_0, open_traid_3)
+    #return td.calc_similarity(open_traid_0, open_traid_3)
 
 def main():
     label_avg = test('0')
-    unlabel_avg = test('1')
-    for i in range(0, len(label_avg)):
-        rate = math.fabs(label_avg[i] - unlabel_avg[i]) / math.fabs(label_avg[i] + unlabel_avg[i])
-        print (rate)
+    #unlabel_avg = test('1')
+    #for i in range(0, len(label_avg)):
+    #    rate = math.fabs(label_avg[i] - unlabel_avg[i]) / math.fabs(label_avg[i] + unlabel_avg[i])
+    #    print (rate)
     
 if __name__ == '__main__':
     main()
