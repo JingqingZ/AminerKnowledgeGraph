@@ -230,6 +230,7 @@ class GetTopicFactor(object):
         print ('loading complete')
         return set(evolution_label), set(non_evolution_label)
 
+
     def output_for_FGM(self):
         file_label = '../results/FGM_label_' + self.query + '.txt'
         file_unlabel = '../results/FGM_unlabel_' + self.query + '.txt'
@@ -370,7 +371,7 @@ class GetTopicFactor(object):
 
 def main():
     # the second parameter is the difff threshold
-    ga = GetTopicFactor('data mining', 27)
+    ga = GetTopicFactor(sys.argv[1], 27)
     ga.init_topic_dict()
     ga.get_paper_number()
     # ga.output_topic_dict("../results/topic_factor_data_mining_paper_num.txt")
@@ -381,7 +382,7 @@ def main():
 
     ga.output_for_FGM()
 
-    ga.gen_FGM_train_test()
+    ga.gen_FGM_train_test()]
 
 if __name__ == '__main__':
     main()

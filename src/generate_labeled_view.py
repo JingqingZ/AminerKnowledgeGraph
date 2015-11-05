@@ -16,7 +16,7 @@ class LabelResultsHTMLGenerate(object):
         self.maxyear = 2014
 
     def load_files(self):
-        timelinefile = open("../../results/pub_" + self.query + ".dist", "r")
+        timelinefile = open("../results/pub_" + self.query + ".dist", "r")
         self.keydict = {}
         keyword = ""
         for line in timelinefile:
@@ -32,7 +32,7 @@ class LabelResultsHTMLGenerate(object):
                 self.keydict[keyword] = {}
         timelinefile.close()
 
-        linkdifffile = open("../../results/trend_sim_" + self.query + ".list", "r")
+        linkdifffile = open("../results/trend_sim_" + self.query + ".list", "r")
         self.linkdict = {}
         for line in linkdifffile:
             line = line.replace("\n", "").split(" ")
@@ -46,7 +46,7 @@ class LabelResultsHTMLGenerate(object):
             self.linkdict[link]["trendsim"] = line[5]
         linkdifffile.close()
 
-        labelfile = open("../pattern_analysis/results/" + self.query + "/results_label.txt", 'r')
+        labelfile = open("../views/pattern_analysis/results/" + self.query + "/results_label.txt", 'r')
         self.labellist = []
         self.labeldict = {}
         for line in labelfile:
@@ -61,21 +61,21 @@ class LabelResultsHTMLGenerate(object):
         labelfile.close()
 
     def gen_html(self):
-        self.htmlfile = open("../pattern_analysis/results/" + self.query + "/views.html", "w")
+        self.htmlfile = open("../views/pattern_analysis/results/" + self.query + "/views.html", "w")
         self.htmlfile.write('<html><head>')
-        jsfile = open("../static/jquery-1.8.2.min.js", 'r')
+        jsfile = open("../views/static/jquery-1.8.2.min.js", 'r')
         self.htmlfile.write('<script>')
         for line in jsfile:
             self.htmlfile.write(line)
         self.htmlfile.write('</script>')
         jsfile.close()
-        jsfile = open("../static/raphael-min.js", 'r')
+        jsfile = open("../views/static/raphael-min.js", 'r')
         self.htmlfile.write('<script>')
         for line in jsfile:
             self.htmlfile.write(line)
         self.htmlfile.write('</script>')
         jsfile.close()
-        jsfile = open("../static/morris-0.4.1.min.js", 'r')
+        jsfile = open("../views/static/morris-0.4.1.min.js", 'r')
         self.htmlfile.write('<script>')
         for line in jsfile:
             self.htmlfile.write(line)

@@ -1,3 +1,6 @@
+import sys
+
+
 class GeneratePredictedLink(object):
     """docstring for GeneratePredictedLink"""
 
@@ -66,10 +69,10 @@ class GeneratePredictedLink(object):
 
 def main():
     gpl = GeneratePredictedLink()
-    gpl.load_mark_file("../results/train.mark", "../results/test.mark")
-    gpl.load_pred("../results/pred.txt")
-    gpl.load_factor_file("../results/train.txt", "../results/test.txt")
-    gpl.generate("../results/results.txt", "../results/results_label.txt", "../results/results_pred.txt")
+    gpl.load_mark_file("../social_tie/results/" + sys.argv[1] + "/train.mark", "../social_tie/results/" + sys.argv[1] + "/test.mark")
+    gpl.load_pred("../social_tie/results/" + sys.argv[1] + "/pred.txt")
+    gpl.load_factor_file("../social_tie/results/" + sys.argv[1] + "/train.txt", "../social_tie/results/" + sys.argv[1] + "/test.txt")
+    gpl.generate("../social_tie/results/" + sys.argv[1] + "/results.txt", "../social_tie/results/" + sys.argv[1] + "/results_label.txt", "../social_tie/results/" + sys.argv[1] + "/results_pred.txt")
 
 
 if __name__ == '__main__':
