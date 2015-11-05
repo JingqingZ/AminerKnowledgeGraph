@@ -18,8 +18,7 @@ class TraidDetect(object):
         self.evolution = dict()
         self.evolution_reverse = dict()
 
-    def load_evolution_file(self, skip_char):
-        filename = '../views/label/label_' + self.query + '.txt'
+    def load_evolution_file(self, skip_char, filename):
         # load evolution from one file
         content = open(filename).readlines()
         for i in content:
@@ -131,12 +130,54 @@ class TraidDetect(object):
                 fli.append( float(li[i].split(':')[1]) )
             factor.append(fli)
 
-    def calc_similarity(self, open_traid_0, open_traid_3):
+    def load_factor(self):
         factor = list()
         filename = '../results/FGM_label_' + self.query + '.txt'
         self.read_factor(filename, factor)
         filename = '../results/FGM_unlabel_' + self.query + '.txt'
         self.read_factor(filename, factor)
+        return factor
+
+    def load_mark(self):
+        mark = dict()
+        counter = 0
+        filename = '../results/FGM_label_' + self.query + '.mark'
+        content = open(filename).readlines()
+        for i in content:
+            mark[ i.strip() ] = counter
+            counter += 1
+        filename = '../results/FGM_unlabel_' + self.query + '.mark'
+        content = open(filename).readlines()
+        for i in content:
+            mark[ i.strip() ] = counter
+            counter += 1
+        return mark
+
+    def output_edge(self, open_traid_0, open_traid_1, open_traid_3):
+        filename = '../results/FGM_Edge.txt'
+        output = open(filename, 'w')
+        mark = self.load_mark()
+        for i in open_traid_0:
+            edge1 = '%s %s' % (self.num2key[ i[0] ], self.num2key[ i[1] ])
+            edge2 = '%s %s' % (self.num2key[ i[0] ], self.num2key[ i[2] ])
+            if edge1 in mark and edge2 in mark:
+                output.write('#Edge %d %d %d\n' % (mark[edge1], mark[edge2], 1) )
+
+        for i in open_traid_1:
+            edge1 = '%s %s' % (self.num2key[ i[0] ], self.num2key[ i[1] ])
+            edge2 = '%s %s' % (self.num2key[ i[1] ], self.num2key[ i[2] ])
+            if edge1 in mark and edge2 in mark:
+                output.write('#Edge %d %d %d\n' % (mark[edge1], mark[edge2], 2))
+
+        for i in open_traid_3:
+            edge1 = '%s %s' % (self.num2key[ i[0] ], self.num2key[ i[2] ])
+            edge2 = '%s %s' % (self.num2key[ i[1] ], self.num2key[ i[2] ])
+            if edge1 in mark and edge2 in mark:
+                output.write('#Edge %d %d %d\n' % (mark[edge1], mark[edge2], 3))
+        output.close()
+
+    def calc_similarity(self, open_traid_0, open_traid_3):
+        factor = self.load_factor()
 
         pair_dict = dict()
         counter = 0
@@ -153,9 +194,9 @@ class TraidDetect(object):
 
         pair_list = list()
         for i in open_traid_0:
-            pair_list.append( '(\'%s\', \'%s\')' % (self.num2key[ i[1] ], self.num2key[ i[2] ] ) )
+            pair_list.append( '%s %s' % (self.num2key[ i[1] ], self.num2key[ i[2] ] ) )
         for i in open_traid_3:
-            pair_list.append( '(\'%s\', \'%s\')' % (self.num2key[ i[0] ], self.num2key[ i[1] ] ) )
+            pair_list.append( '%s %s' % (self.num2key[ i[0] ], self.num2key[ i[1] ] ) )
 
         length = len(factor[0])
         accumulator = [0.0] * length
@@ -174,10 +215,13 @@ class TraidDetect(object):
 def test(skip_char):
     td = TraidDetect('data mining')
     # the input should be label.txt
-    td.load_evolution_file(skip_char)
+    filename = '../views/label/label_data_mining.txt'
+    td.load_evolution_file(skip_char, filename)
+
     open_traid_0, open_traid_1, open_traid_3, close_traid_6 = td.detect_traid()
     td.output_traids(skip_char, open_traid_0, open_traid_1, open_traid_3, close_traid_6)
 
+    td.output_edge(open_traid_0, open_traid_1, open_traid_3)
     #return td.calc_similarity(open_traid_0, open_traid_3)
 
 def main():
