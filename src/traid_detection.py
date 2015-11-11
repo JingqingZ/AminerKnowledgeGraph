@@ -97,7 +97,7 @@ class TraidDetect(object):
                         close_traid_6.append( (i, num1, num2) )
                     elif num2 in self.evolution and num1 in self.evolution[num2]:
                         close_traid_6.append( (i, num2, num1) )
-                    else:
+                    elif num1 > num2:
                         open_traid_0.append( (i, num1, num2) )
 
         # (first, second, thrid)
@@ -116,7 +116,7 @@ class TraidDetect(object):
         if len(close_traid_7) != 0:
             print ('cyclic evolution detected')
             for i in close_traid_7:
-                print (i)
+                print ('(%s, %s, %s)' % (self.num2key[i[0]], self.num2key[i[1]], self.num2key[i[2]]) )
 
         # (from1, from2, to)
         open_traid_3 = list()
@@ -127,7 +127,7 @@ class TraidDetect(object):
                         continue
                     elif num2 in self.evolution_reverse and num1 in self.evolution_reverse[num2]:
                         continue
-                    else:
+                    elif num1 > num2:
                         open_traid_3.append( (num1, num2, i) )
 
         return open_traid_0, open_traid_1, open_traid_3, close_traid_6
@@ -165,7 +165,7 @@ class TraidDetect(object):
         return mark
 
     def output_edge(self, open_traid_0, open_traid_1, open_traid_3):
-        filename = '../results/FGM_Edge.txt'
+        filename = '../results/FGM_Edge_' + self.query + '.txt'
         output = open(filename, 'w')
         mark = self.load_mark()
         for i in open_traid_0:
@@ -232,15 +232,17 @@ def test(skip_char):
     open_traid_0, open_traid_1, open_traid_3, close_traid_6 = td.detect_traid()
     td.output_traids(skip_char, open_traid_0, open_traid_1, open_traid_3, close_traid_6)
 
-    td.output_edge(open_traid_0, open_traid_1, open_traid_3)
-    #return td.calc_similarity(open_traid_0, open_traid_3)
+    if skip_char == '0'
+        td.output_edge(open_traid_0, open_traid_1, open_traid_3)
+
+    return td.calc_similarity(open_traid_0, open_traid_3)
 
 def main():
     label_avg = test('0')
-    #unlabel_avg = test('1')
-    #for i in range(0, len(label_avg)):
-    #    rate = math.fabs(label_avg[i] - unlabel_avg[i]) / math.fabs(label_avg[i] + unlabel_avg[i])
-    #    print (rate)
+    unlabel_avg = test('1')
+    for i in range(0, len(label_avg)):
+        rate = math.fabs(label_avg[i] - unlabel_avg[i]) / math.fabs(label_avg[i] + unlabel_avg[i])
+        print (rate)
     
 if __name__ == '__main__':
     main()
