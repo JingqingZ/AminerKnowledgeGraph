@@ -1,4 +1,5 @@
 import math
+import sys
 from scipy.spatial import distance
 
 # detect the traid in topic evolution
@@ -18,7 +19,8 @@ class TraidDetect(object):
         self.evolution = dict()
         self.evolution_reverse = dict()
 
-    def load_evolution_file(self, skip_char, filename):
+    def load_evolution_file(self, skip_char):
+        filename = '../views/label/label_' + self.query + '.txt'
         # load evolution from one file
         content = open(filename).readlines()
         for i in content:
@@ -223,23 +225,23 @@ class TraidDetect(object):
         print (accumulator)
         return accumulator
 
-def test(skip_char):
-    td = TraidDetect('data mining')
+def test(query, skip_char):
+    td = TraidDetect(query)
     # the input should be label.txt
-    filename = '../views/label/label_data_mining.txt'
-    td.load_evolution_file(skip_char, filename)
+    td.load_evolution_file(skip_char)
 
     open_traid_0, open_traid_1, open_traid_3, close_traid_6 = td.detect_traid()
     td.output_traids(skip_char, open_traid_0, open_traid_1, open_traid_3, close_traid_6)
 
-    if skip_char == '0'
+    if skip_char == '0':
         td.output_edge(open_traid_0, open_traid_1, open_traid_3)
 
     return td.calc_similarity(open_traid_0, open_traid_3)
+    #return list()
 
 def main():
-    label_avg = test('0')
-    unlabel_avg = test('1')
+    label_avg = test(sys.argv[1], '0')
+    unlabel_avg = test(sys.argv[1], '1')
     for i in range(0, len(label_avg)):
         rate = math.fabs(label_avg[i] - unlabel_avg[i]) / math.fabs(label_avg[i] + unlabel_avg[i])
         print (rate)
