@@ -39,7 +39,7 @@ class MergeKeywords(object):
             output.write(i + '\t' + self.matching[i] + '\n')
         output.close()
 
-    def process_keywords(self, new_keyword_file, query_string):
+    def process_keywords(self, new_keyword_file):
         # check the suffix for keywords
         print ('checking suffix for all keywords')
         for i in self.keywords:
@@ -96,10 +96,7 @@ class MergeKeywords(object):
                 new_key[ self.matching[i] ] = self.keywords[i]
         ans = sorted(new_key.items(), key = lambda asd:asd[1], reverse=True)
         output = open(new_keyword_file, 'w')
-        query_string_repl = query_string.replace(' ', '_')
         for i in ans:
-            if i[0].startswith(query_string_repl):
-                continue
             output.write(i[0] + '\t' + repr(i[1]) + '\n')
         output.close()
 
@@ -125,7 +122,7 @@ class MergeKeywords(object):
 def main():
     mk = MergeKeywords()
     mk.readin('../results/pub_data_mining.keywords')
-    mk.process_keywords('../results/pub_data_mining.merged', 'data mining')
+    mk.process_keywords('../results/pub_data_mining.merged')
     
     mk.process_publication('../results/pub_data_mining.simp', '../results/pub_data_mining.ttt')
 

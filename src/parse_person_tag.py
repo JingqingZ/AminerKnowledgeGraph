@@ -14,7 +14,7 @@ class PersonTagParser(object):
     def __init__(self):
         super(PersonTagParser, self).__init__()
         
-    def parse_person_tag(self, person_data_file, output_person_keyword, query_string):
+    def parse_person_tag(self, person_data_file, output_person_keyword):
         tag_dict = {}
         stem_tag_dict = {}
         infile = open(person_data_file, 'r')
@@ -41,9 +41,6 @@ class PersonTagParser(object):
         outfile = open(output_person_keyword, 'w')
         for i in range(len(sorted_tag_dict) - 1, -1, -1):
             key = stem_tag_dict[sorted_tag_dict[i][0]]
-            # remove query string from keywords
-            if key == query_string:
-                continue
             outfile.write(key.replace(" ", "_").replace('-', '_') +
                           "\t" + repr(sorted_tag_dict[i][1]) + '\n')
         outfile.close()
@@ -51,7 +48,7 @@ class PersonTagParser(object):
 
 def main():
     ptp = PersonTagParser()
-    ptp.parse_person_tag('../data/person_artificial_intelligence.data', '../results/person_artificial_intelligence.keywords', '')
+    ptp.parse_person_tag('../data/person_artificial_intelligence.data', '../results/person_artificial_intelligence.keywords')
 
 if __name__ == '__main__':
     main()

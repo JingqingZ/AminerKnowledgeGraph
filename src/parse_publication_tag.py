@@ -14,7 +14,7 @@ class PublicationTagParser(object):
     def __init__(self):
         super(PublicationTagParser, self).__init__()
         
-    def parse_publication_tag(self, publication_data_file, output_keyword_file, query_string):
+    def parse_publication_tag(self, publication_data_file, output_keyword_file):
         keyword_dict = {}
         stem_keyword_dict = {}
         infile = open(publication_data_file, 'r')
@@ -45,9 +45,6 @@ class PublicationTagParser(object):
         outfile = open(output_keyword_file, 'w')
         for i in range(len(sorted_keyword_dict) - 1, -1, -1):
             key = stem_keyword_dict[sorted_keyword_dict[i][0]]
-            # remove query_string from keywords
-            if key == query_string:
-                continue
             outfile.write(key.replace(" ", "_") +
                         "\t" + repr(sorted_keyword_dict[i][1]) + '\n')
         outfile.close()
@@ -55,7 +52,7 @@ class PublicationTagParser(object):
 
 def main():
     ptp = PublicationTagParser()
-    ptp.parse_publication_tag('../results/publication.data', '../results/publication.keywords', 'data mining')
+    ptp.parse_publication_tag('../results/publication.data', '../results/publication.keywords')
 
 if __name__ == '__main__':
     main()
