@@ -3,7 +3,8 @@ import shutil
 from scipy.spatial import distance
 import sys
 
-
+# initialize the first topic_num topics, remove those without enough factor
+# initialize link with diff > threshold, remove those not in topic_dict
 class GetTopicFactor(object):
     """docstring for GetTopicFactor"""
 
