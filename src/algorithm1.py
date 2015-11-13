@@ -2,7 +2,7 @@
 # algorithm 1 find links between keywords        					  #
 # 																	  #
 # input1: publication keyword link                                    #
-# 	fetch top 100 frequent keywords 								  #
+# 	fetch top x frequent keywords 								      #
 # 																	  #
 # input2: publication list, each publication have the following info: #
 #   line1: year                                                       #
@@ -44,8 +44,9 @@ from stemming.porter2 import stem
 
 class Algorithm1(object):
     """docstring for Algorithm1"""
-    def __init__(self):
+    def __init__(self, topic_top_num):
         super(Algorithm1, self).__init__()
+        self.topic_top_num = topic_top_num
         
     def algorithm1(self, keyword_file, simplified_publication_file, output1, output2, output3, output4):
         # stemmed keywords dictionary
@@ -55,11 +56,11 @@ class Algorithm1(object):
         # {stemmed_keyword1: keyword1, ...}
         stemm2keywords_dictionary = {}
     
-        print("Loading top 100 keywords from publication.keywords file")
+        print("Loading top top x keywords from publication.keywords file")
         curline = 0
         infile1 = open(keyword_file, 'r')
         for line in infile1:
-            if curline >= 100:
+            if curline >= self.topic_top_num:
                 break
             line = line.split("\t")
             keyword_stem = stem(line[0])

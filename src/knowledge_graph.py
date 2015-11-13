@@ -94,7 +94,7 @@ def main():
 
     # use algorithm1 to get link from person
     print("algorithm1")
-    alg1 = Algorithm1()
+    alg1 = Algorithm1(100)
     alg1.algorithm1(person_keyword, publication_simplified,
                     list_author_year_keyword, list_author,
                     list_link, link_diff)
