@@ -6,6 +6,7 @@
 # stem_tag_dict are used to link a stemmed tag to its origin tag
 # output: tags sorted by their number
 import ast
+import sys
 import operator
 from stemming.porter2 import stem
 
@@ -51,7 +52,7 @@ class PersonTagParser(object):
 
 def main():
     ptp = PersonTagParser()
-    ptp.parse_person_tag('../data/person_artificial_intelligence.data', '../results/person_artificial_intelligence.keywords', '')
+    ptp.parse_person_tag('../data/person_' + sys.argv[1] + '.data', '../results/person_' + sys.argv[1] + '.keywords', '')
 
 if __name__ == '__main__':
     main()

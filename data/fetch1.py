@@ -3,6 +3,7 @@ import requests
 import json
 import sys
 # import time
+# usage: python fetch1 "data mining"
 
 
 def search(type, query):
