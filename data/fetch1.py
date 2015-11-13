@@ -1,6 +1,7 @@
 # fetch people/publication data from Aminer through Aminer API
 import requests
 import json
+import sys
 # import time
 
 
@@ -33,7 +34,7 @@ def search(type, query):
     outfile.close()
 
 def main():
-    search('person', 'machine learning')
+    search('person', sys.argv[1])
 
 if __name__ == '__main__':
     main()
