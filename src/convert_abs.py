@@ -31,7 +31,11 @@ class ConvertAbstract(object):
         output.close()
 
     def load_keywords(self):
-        content = open('../results/pub_' + self.query + '.keywords').readlines()
+        # load keyword from person, or from publication
+        keyword_file = '../results/person_' + self.query + '.keywords'
+        #keyword_file = '../results/pub_' + self.query + '.keywords'
+
+        content = open(keyword_file).readlines()
         print ('loading keywords')
         for i in content:
             key = i.split('\t')[0]
