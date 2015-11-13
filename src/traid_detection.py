@@ -1,6 +1,7 @@
 import math
 import sys
 from scipy.spatial import distance
+import sys
 
 # detect the traid in topic evolution
 # according to TKDE15-Traid Closure Pattern Analysis and Prediction
