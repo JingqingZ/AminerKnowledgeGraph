@@ -36,16 +36,6 @@ def main():
     link_diff = result_dir + 'diff_' + query + '.list'
     trend_sim = result_dir + 'trend_sim_' + query + '.list'
 
-    # extract keywords from people
-    persontp = PersonTagParser()
-    persontp.parse_person_tag(person_data, person_keyword, '')
-
-    '''
-    # extract keywords from publication
-    print("extract keywords")
-    ptp = PublicationTagParser()
-    ptp.parse_publication_tag(publication_data, publication_keyword, '')
-    '''
 
     # extract author, time
     print("extract author time")
@@ -53,8 +43,30 @@ def main():
     e.extract(publication_data)
     e.output(publication_simplified)
 
+
+    # extract keywords from people
+    print ('extract keywords from author')
+    persontp = PersonTagParser()
+    persontp.parse_person_tag(person_data, person_keyword)
     '''
-    # merge keywords
+    # extract keywords from publication
+    print('extract keywords from publication')
+    ptp = PublicationTagParser()
+    ptp.parse_publication_tag(publication_data, publication_keyword)
+    '''
+
+
+    # merge keywords from people
+    print ("merge keywords")
+    mk = MergeKeywords()
+    mk.readin(person_keyword)
+    mk.process_keywords(person_keyword + '_merge')
+    mk.process_publication(publication_simplified, publication_simplified + '_merge')
+    # rename the new file after merge keywords
+    os.rename(person_keyword + '_merge', person_keyword)
+    os.rename(publication_simplified + '_merge', publication_simplified)    
+    '''
+    # merge keywords from publication
     print("merge keywords")
     mk = MergeKeywords()
     mk.readin(publication_keyword)
@@ -64,19 +76,36 @@ def main():
     os.rename(publication_keyword + '_merge', publication_keyword)
     os.rename(publication_simplified + '_merge', publication_simplified)
     '''
+
     
-    # get the topic time distribution
+    # get the topic time distribution from person
+    print("get the topic time distribution")
+    tt = TopicTime()
+    tt.read(person_keyword, publication_simplified)
+    tt.show(person_keyword, publication_distribution)
+    '''
+    # get the topic time distribution from publication
     print("get the topic time distribution")
     tt = TopicTime()
     tt.read(publication_keyword, publication_simplified)
     tt.show(publication_keyword, publication_distribution)
+    '''
 
-    # use algorithm1 to get link
+
+    # use algorithm1 to get link from person
+    print("algorithm1")
+    alg1 = Algorithm1()
+    alg1.algorithm1(person_keyword, publication_simplified,
+                    list_author_year_keyword, list_author,
+                    list_link, link_diff)
+    '''
+    # use algorithm1 to get link from publication
     print("algorithm1")
     alg1 = Algorithm1()
     alg1.algorithm1(publication_keyword, publication_simplified,
                     list_author_year_keyword, list_author,
                     list_link, link_diff)
+    '''
 
     # compute trend similarity
     print("compute trend similarity")
