@@ -26,7 +26,7 @@ class GetTopicFactor(object):
         self.query = q.replace(' ', '_')
 
     def init_topic_dict(self):
-        infile_topic = '../results/pub_' + self.query + '.keywords'
+        infile_topic = '../results/person_' + self.query + '.keywords'
         infile = open(infile_topic)
         curline = 0
         for line in infile:
