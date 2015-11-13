@@ -156,26 +156,26 @@ class TraidDetect(object):
         return mark
 
     def output_edge(self, open_traid_0, open_traid_1, open_traid_3):
-        filename = '../results/FGM_Edge.txt'
+        filename = '../results/FGM_Edge ' + self.query + ' .txt'
         output = open(filename, 'w')
         mark = self.load_mark()
         for i in open_traid_0:
             edge1 = '%s %s' % (self.num2key[ i[0] ], self.num2key[ i[1] ])
             edge2 = '%s %s' % (self.num2key[ i[0] ], self.num2key[ i[2] ])
             if edge1 in mark and edge2 in mark:
-                output.write('#Edge %d %d %d\n' % (mark[edge1], mark[edge2], 1) )
+                output.write('#edge %d %d %d\n' % (mark[edge1], mark[edge2], 1) )
 
         for i in open_traid_1:
             edge1 = '%s %s' % (self.num2key[ i[0] ], self.num2key[ i[1] ])
             edge2 = '%s %s' % (self.num2key[ i[1] ], self.num2key[ i[2] ])
             if edge1 in mark and edge2 in mark:
-                output.write('#Edge %d %d %d\n' % (mark[edge1], mark[edge2], 2))
+                output.write('#edge %d %d %d\n' % (mark[edge1], mark[edge2], 2))
 
         for i in open_traid_3:
             edge1 = '%s %s' % (self.num2key[ i[0] ], self.num2key[ i[2] ])
             edge2 = '%s %s' % (self.num2key[ i[1] ], self.num2key[ i[2] ])
             if edge1 in mark and edge2 in mark:
-                output.write('#Edge %d %d %d\n' % (mark[edge1], mark[edge2], 3))
+                output.write('#edge %d %d %d\n' % (mark[edge1], mark[edge2], 3))
         output.close()
 
     def calc_similarity(self, open_traid_0, open_traid_3):
@@ -217,7 +217,7 @@ class TraidDetect(object):
 def test(skip_char):
     td = TraidDetect(sys.argv[1])
     # the input should be label.txt
-    filename = '../views/label/label_data_mining.txt'
+    filename = '../views/label/label_' + sys.argv[1] + '.txt'
     td.load_evolution_file(skip_char, filename)
 
     open_traid_0, open_traid_1, open_traid_3, close_traid_6 = td.detect_traid()
