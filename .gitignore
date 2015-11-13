@@ -7,3 +7,4 @@ paper/*
 src/__pycache__/
 word2vec/*
 proposal/*
+src/.tags*

@@ -1,4 +1,5 @@
 import math
+import sys
 from scipy.spatial import distance
 import sys
 
@@ -19,7 +20,8 @@ class TraidDetect(object):
         self.evolution = dict()
         self.evolution_reverse = dict()
 
-    def load_evolution_file(self, skip_char, filename):
+    def load_evolution_file(self, skip_char):
+        filename = '../views/label/label_' + self.query + '.txt'
         # load evolution from one file
         content = open(filename).readlines()
         for i in content:
@@ -98,17 +100,26 @@ class TraidDetect(object):
                         close_traid_6.append( (i, num1, num2) )
                     elif num2 in self.evolution and num1 in self.evolution[num2]:
                         close_traid_6.append( (i, num2, num1) )
-                    else:
+                    elif num1 > num2:
                         open_traid_0.append( (i, num1, num2) )
 
         # (first, second, thrid)
         open_traid_1 = list()
+        # (A->B->C->A)
+        # just for debug, should not occur in evolution
+        close_traid_7 = list()
         for first in self.evolution:
             for second in self.evolution[first]:
                 if second in self.evolution:
                     for third in self.evolution[second]:
                         if third not in self.evolution[first]:
                             open_traid_1.append( (first, second, third) )
+                        if third in self.evolution and first in self.evolution[third]:
+                            close_traid_7.append( (first, second, third) )
+        if len(close_traid_7) != 0:
+            print ('cyclic evolution detected')
+            for i in close_traid_7:
+                print ('(%s, %s, %s)' % (self.num2key[i[0]], self.num2key[i[1]], self.num2key[i[2]]) )
 
         # (from1, from2, to)
         open_traid_3 = list()
@@ -119,8 +130,9 @@ class TraidDetect(object):
                         continue
                     elif num2 in self.evolution_reverse and num1 in self.evolution_reverse[num2]:
                         continue
-                    else:
+                    elif num1 > num2:
                         open_traid_3.append( (num1, num2, i) )
+
         return open_traid_0, open_traid_1, open_traid_3, close_traid_6
 
     def read_factor(self, filename, factor):
@@ -156,7 +168,7 @@ class TraidDetect(object):
         return mark
 
     def output_edge(self, open_traid_0, open_traid_1, open_traid_3):
-        filename = '../results/FGM_Edge ' + self.query + ' .txt'
+        filename = '../results/FGM_Edge_' + self.query + '.txt'
         output = open(filename, 'w')
         mark = self.load_mark()
         for i in open_traid_0:
@@ -214,24 +226,26 @@ class TraidDetect(object):
         print (accumulator)
         return accumulator
 
-def test(skip_char):
-    td = TraidDetect(sys.argv[1])
+def test(query, skip_char):
+    td = TraidDetect(query)
     # the input should be label.txt
-    filename = '../views/label/label_' + sys.argv[1] + '.txt'
-    td.load_evolution_file(skip_char, filename)
+    td.load_evolution_file(skip_char)
 
     open_traid_0, open_traid_1, open_traid_3, close_traid_6 = td.detect_traid()
     td.output_traids(skip_char, open_traid_0, open_traid_1, open_traid_3, close_traid_6)
 
-    td.output_edge(open_traid_0, open_traid_1, open_traid_3)
-    #return td.calc_similarity(open_traid_0, open_traid_3)
+    if skip_char == '0':
+        td.output_edge(open_traid_0, open_traid_1, open_traid_3)
+
+    return td.calc_similarity(open_traid_0, open_traid_3)
+    #return list()
 
 def main():
-    label_avg = test('0')
-    #unlabel_avg = test('1')
-    #for i in range(0, len(label_avg)):
-    #    rate = math.fabs(label_avg[i] - unlabel_avg[i]) / math.fabs(label_avg[i] + unlabel_avg[i])
-    #    print (rate)
+    label_avg = test(sys.argv[1], '0')
+    unlabel_avg = test(sys.argv[1], '1')
+    for i in range(0, len(label_avg)):
+        rate = math.fabs(label_avg[i] - unlabel_avg[i]) / math.fabs(label_avg[i] + unlabel_avg[i])
+        print (rate)
     
 if __name__ == '__main__':
     main()
