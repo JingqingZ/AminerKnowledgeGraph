@@ -33,7 +33,7 @@ def search(type, query):
     outfile.close()
 
 def main():
-    search('pub', 'software engineering')
+    search('person', 'machine learning')
 
 if __name__ == '__main__':
     main()
