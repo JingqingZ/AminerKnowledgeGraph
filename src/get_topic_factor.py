@@ -1,6 +1,7 @@
 import numpy
 import shutil
 from scipy.spatial import distance
+from stemming.porter2 import stem
 import sys
 
 # initialize the first topic_num topics, remove those without enough factor
@@ -19,11 +20,22 @@ class GetTopicFactor(object):
         self.soar_max = -1
         self.soar_max_year = -1
         self.topic = ""
+        self.stem2keyword = {}
 
         # self.diff_threshold = threshold
         self.num_threshold = threshold
         self.w2v_length = 200
         self.query = q.replace(' ', '_')
+
+    def keyword2stem(self, keyword, record=False):
+        keylist = keyword.split("_")
+        stemmed = ""
+        for i in range(0, len(keylist)):
+            stemmed += stem(keylist[i]) + "_"
+        stemmed = stemmed[:-1]
+        if record:
+            self.stem2keyword[stemmed] = keyword
+        return stemmed
 
     def init_topic_dict(self):
         infile_topic = '../results/person_' + self.query + '.keywords'
@@ -33,7 +45,7 @@ class GetTopicFactor(object):
             if curline >= self.topic_num:
                 break
             content = line.split("\t")
-            topic = content[0]
+            topic = self.keyword2stem(content[0], record=True)
             self.topic_dict[topic] = {}
             # initialize factors
             paper_trend = []
@@ -95,7 +107,7 @@ class GetTopicFactor(object):
             if len(content) == 1:   # topic
                 self.update_paper_info()
                 # update and initial new topic factors
-                self.topic = content[0]
+                self.topic = self.keyword2stem(content[0])
                 print(self.topic)
                 assert(self.topic in self.topic_dict)
             else:  # topic distribution
@@ -129,6 +141,7 @@ class GetTopicFactor(object):
             elif curline % 4 == 3:
                 topiclist = line.split(" ")
                 for topic in topiclist:
+                    topic = self.keyword2stem(topic)
                     if topic not in self.topic_dict:
                         continue
                     self.topic_dict[topic]["paper_list"][paper_id] = 1
@@ -152,14 +165,14 @@ class GetTopicFactor(object):
         for i in range(0, linenum):
             line = infile.readline()
             content = line.replace("\n", "").split(" ")
-            topic = content[0]
+            topic = self.keyword2stem(content[0])
             if topic not in self.topic_dict:
                 continue
             content = content[1: len(content) - 1]
             for i in range(0, len(content)):
                 content[i] = float(content[i])
             assert(len(content) == vocsize)
-            assert(len(self.topic_dict[topic]["voc_dist"]) == 0)
+            # assert(len(self.topic_dict[topic]["voc_dist"]) == 0)
             self.topic_dict[topic]["voc_dist"] = content
         infile.close()
 
@@ -203,7 +216,10 @@ class GetTopicFactor(object):
         # output
         outfilename = '../results/topic_factor_' + self.query + '.txt'
         outfile = open(outfilename, "w")
-        outfile.write(repr(self.topic_dict))
+        origin_topic_dict = dict()
+        for key in self.topic_dict:
+            origin_topic_dict[self.stem2keyword[key]] = self.topic_dict[key]
+        outfile.write(repr(origin_topic_dict))
         outfile.close()
 
     def load_diff_list(self, filename):
@@ -256,12 +272,14 @@ class GetTopicFactor(object):
         output_mark_unlabel = open(file_mark_unlabel, 'w')
         rank = 0
         for i in diff_list:
-            if (i[0] not in self.topic_dict) or (i[1] not in self.topic_dict):
+            i0 = self.keyword2stem(i[0])
+            i1 = self.keyword2stem(i[1])
+            if (i0 not in self.topic_dict) or (i1 not in self.topic_dict):
                 rank += 1
                 continue
 
-            info0 = self.topic_dict[ i[0] ]
-            info1 = self.topic_dict[ i[1] ]
+            info0 = self.topic_dict[ i0 ]
+            info1 = self.topic_dict[ i1 ]
             # calculate the distance between two topics
             paper_peak_year = info0['paper_peak_year'] - info1['paper_peak_year']
             paper_peak_num = info0['paper_peak_num'] - info1['paper_peak_num']
@@ -287,10 +305,10 @@ class GetTopicFactor(object):
             output_mark = output_mark_label
             if i in evolution_set:
                 output.write('+1')
-                output_mark.write(i[0] + ' ' + i[1] + '\n')
+                output_mark.write(i0 + ' ' + i1 + '\n')
             elif i in non_evolution_set:
                 output.write('+0')
-                output_mark.write(i[0] + ' ' + i[1] + '\n')
+                output_mark.write(i0 + ' ' + i1 + '\n')
             else:
                 # if the label is unknown, there is no difference between ?0 and ?1
                 output = output_unlabel
@@ -375,16 +393,22 @@ class GetTopicFactor(object):
 def main():
     # the second parameter is the difff threshold
     ga = GetTopicFactor(sys.argv[1], 500)
+    print("init topic")
     ga.init_topic_dict()
+    print("paper number")
     ga.get_paper_number()
     # ga.output_topic_dict("../results/topic_factor_data_mining_paper_num.txt")
+    print("author list")
     ga.get_paper_author_list()
+    print("voc dist")
     ga.get_voc_dist()
+    print("check")
     ga.check_factor()
+    print("output dict")
     ga.output_topic_dict()
-
+    print("output fgm")
     ga.output_for_FGM()
-
+    print("output tran test")
     ga.gen_FGM_train_test()
 
 if __name__ == '__main__':
