@@ -98,8 +98,6 @@ class TraidDetect(object):
                 for num2 in self.evolution[i]:
                     if num1 in self.evolution and num2 in self.evolution[num1]:
                         close_traid_6.append( (i, num1, num2) )
-                    elif num2 in self.evolution and num1 in self.evolution[num2]:
-                        close_traid_6.append( (i, num2, num1) )
                     elif num1 > num2:
                         open_traid_0.append( (i, num1, num2) )
 
@@ -237,8 +235,8 @@ def test(query, skip_char):
     if skip_char == '0':
         td.output_edge(open_traid_0, open_traid_1, open_traid_3)
 
-    return td.calc_similarity(open_traid_0, open_traid_3)
-    #return list()
+    #return td.calc_similarity(open_traid_0, open_traid_3)
+    return list()
 
 def main():
     label_avg = test(sys.argv[1], '0')

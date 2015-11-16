@@ -38,7 +38,9 @@ class GetTopicFactor(object):
         return stemmed
 
     def init_topic_dict(self):
+        # load from person keyword
         infile_topic = '../results/person_' + self.query + '.keywords'
+        #infile_topic = '../results/pub_' + self.query + '.keywords'
         infile = open(infile_topic)
         curline = 0
         for line in infile:
@@ -314,7 +316,7 @@ class GetTopicFactor(object):
                 output = output_unlabel
                 output_mark = output_mark_unlabel
                 output.write('?0')
-                output_mark.write(repr(i) + '\n')
+                output_mark.write(i[0] + ' ' + i[1] + '\n')
             output.write(' 1:' + repr(trend_sim) )
             output.write(' 2:' + repr(voc_dist) )
             output.write(' 3:' + repr(paper_list_rate) )
