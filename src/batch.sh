@@ -5,19 +5,19 @@ then
     exit
 fi
 
-echo "knoledge graph"
+echo "knowledge graph"
 # python3.4 ./knowledge_graph.py $1
 
 echo "word2vec"
-# sh ./w2vec.sh $1
+sh ./w2vec.sh $1
 
 echo "get factor"
 python3.4 ./get_topic_factor.py $1
 
 echo "social tie"
-../social_tie/src/OpenCRF_Main -est -niter 30 -nbpiter 30 -dstmodel ../social_tie/src/train_model.txt -method gradient -gradientstep 0.02 -hasvalue -trainfile ../social_tie/results/$1/train.txt -testfile ../social_tie/results/$1/test.txt
-../social_tie/src/OpenCRF_Main -inf -niter 30 -nbipter 30 -srcmodel ../social_tie/src/train_model.txt -method gradient -gradientstep 0.02 -hasvalue -trainfile ../social_tie/results/$1/train.txt -testfile ../social_tie/results/$1/unlabel.txt
-cp ./pred.txt ../social_tie/results/$1/pred.txt
+# ../social_tie/src/OpenCRF_Main -est -niter 30 -nbpiter 30 -dstmodel ../social_tie/src/train_model.txt -method gradient -gradientstep 0.02 -hasvalue -trainfile ../social_tie/results/$1/train.txt -testfile ../social_tie/results/$1/test.txt
+# ../social_tie/src/OpenCRF_Main -inf -niter 30 -nbipter 30 -srcmodel ../social_tie/src/train_model.txt -method gradient -gradientstep 0.02 -hasvalue -trainfile ../social_tie/results/$1/train.txt -testfile ../social_tie/results/$1/unlabel.txt
+# cp ./pred.txt ../social_tie/results/$1/pred.txt
 
 
 echo "generate predict link"
