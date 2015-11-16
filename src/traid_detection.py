@@ -20,7 +20,25 @@ class TraidDetect(object):
         self.evolution = dict()
         self.evolution_reverse = dict()
 
-    def load_evolution_file(self, skip_char):
+    def add_line(self, li):
+        if li[0] not in self.key2num:
+            self.key2num[ li[0] ] = self.counter
+            self.counter += 1
+        if li[1] not in self.key2num:
+            self.key2num[ li[1] ] = self.counter
+            self.counter += 1
+        num1 = self.key2num[ li[0] ]
+        num2 = self.key2num[ li[1] ]
+        if num1 not in self.evolution:
+            self.evolution[num1] = [ num2 ]
+        else:
+            self.evolution[num1].append(num2)
+        if num2 not in self.evolution_reverse:
+            self.evolution_reverse[num2] = [ num1 ]
+        else:
+            self.evolution_reverse[num2].append(num1)
+
+    def load_labeled_file(self, skip_char):
         filename = '../views/label/label_' + self.query + '.txt'
         # load evolution from one file
         content = open(filename).readlines()
@@ -28,24 +46,14 @@ class TraidDetect(object):
             li = i.strip().split(' ')
             if li[2] == skip_char:
                 continue
-            if li[0] not in self.key2num:
-                self.key2num[ li[0] ] = self.counter
-                self.counter += 1
-            if li[1] not in self.key2num:
-                self.key2num[ li[1] ] = self.counter
-                self.counter += 1
-            num1 = self.key2num[ li[0] ]
-            num2 = self.key2num[ li[1] ]
+            self.add_line(li)
+        self.gen_num2key()
 
-            if num1 not in self.evolution:
-                self.evolution[num1] = [ num2 ]
-            else:
-                self.evolution[num1].append(num2)
-
-            if num2 not in self.evolution_reverse:
-                self.evolution_reverse[num2] = [ num1 ]
-            else:
-                self.evolution_reverse[num2].append(num1)
+    def load_unlabeled_file(self, filename):
+        content = open(filename).readlines()
+        for i in content:
+            li = i.strip().split(' ')
+            self.add_line(li)
         self.gen_num2key()
 
     def gen_num2key(self):
@@ -133,7 +141,7 @@ class TraidDetect(object):
 
         return open_traid_0, open_traid_1, open_traid_3, close_traid_6
 
-    def read_factor(self, filename, factor):
+    def load_factor_file(self, filename, factor):
         content = open(filename).readlines()
         for i in content:
             li = i.strip().split(' ')
@@ -145,30 +153,30 @@ class TraidDetect(object):
     def load_factor(self):
         factor = list()
         filename = '../results/FGM_label_' + self.query + '.txt'
-        self.read_factor(filename, factor)
+        self.load_factor_file(filename, factor)
         filename = '../results/FGM_unlabel_' + self.query + '.txt'
-        self.read_factor(filename, factor)
+        self.load_factor_file(filename, factor)
         return factor
 
+    def load_mark_file(self, filename, mark):
+        counter = len(mark)
+        content = open(filename).readlines()
+        for i in content:
+            mark[ i.strip() ] = counter
+            counter += 1
+        
     def load_mark(self):
         mark = dict()
-        counter = 0
         filename = '../results/FGM_label_' + self.query + '.mark'
-        content = open(filename).readlines()
-        for i in content:
-            mark[ i.strip() ] = counter
-            counter += 1
+        load_mark_file(filename, mark)
         filename = '../results/FGM_unlabel_' + self.query + '.mark'
-        content = open(filename).readlines()
-        for i in content:
-            mark[ i.strip() ] = counter
-            counter += 1
+        load_mark_file(filename, mark)
         return mark
 
-    def output_edge(self, open_traid_0, open_traid_1, open_traid_3):
-        filename = '../results/FGM_Edge_' + self.query + '.txt'
-        output = open(filename, 'w')
-        mark = self.load_mark()
+    def output_edge(self, open_traid_0, open_traid_1, open_traid_3, infile, outfile):
+        output = open(outfile, 'w')
+        mark = dict()
+        self.load_mark_file(infile, mark)
         for i in open_traid_0:
             edge1 = '%s %s' % (self.num2key[ i[0] ], self.num2key[ i[1] ])
             edge2 = '%s %s' % (self.num2key[ i[0] ], self.num2key[ i[2] ])
@@ -227,23 +235,29 @@ class TraidDetect(object):
 def test(query, skip_char):
     td = TraidDetect(query)
     # the input should be label.txt
-    td.load_evolution_file(skip_char)
+    td.load_labeled_file(skip_char)
 
     open_traid_0, open_traid_1, open_traid_3, close_traid_6 = td.detect_traid()
     td.output_traids(skip_char, open_traid_0, open_traid_1, open_traid_3, close_traid_6)
 
-    if skip_char == '0':
-        td.output_edge(open_traid_0, open_traid_1, open_traid_3)
-
-    #return td.calc_similarity(open_traid_0, open_traid_3)
     return list()
 
 def main():
+    '''
     label_avg = test(sys.argv[1], '0')
     unlabel_avg = test(sys.argv[1], '1')
     for i in range(0, len(label_avg)):
         rate = math.fabs(label_avg[i] - unlabel_avg[i]) / math.fabs(label_avg[i] + unlabel_avg[i])
         print (rate)
+    '''
+
+    input_file = '../social_tie/results/test.mark'
+    output_file = '../social_tie/results/edges.txt'
+
+    td = TraidDetect(sys.argv[1])
+    td.load_unlabeled_file(input_file)
+    op0, op1, op3, cp6 = td.detect_traid()
+    td.output_edge(op0, op1, op3, input_file, output_file)
     
 if __name__ == '__main__':
     main()
