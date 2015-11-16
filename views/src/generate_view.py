@@ -11,10 +11,10 @@ class HTMLGenerator(object):
         super(HTMLGenerator, self).__init__()
 
         self.query = q.replace(" ", "_")
-        self.sim_threshold = 0.85
+        self.sim_threshold = 1.00
         self.times_threshold = 10
-        self.graph_num = 200
-        self.top_num = 500
+        self.graph_num = 100
+        self.top_num = 100
 
         self.minyear = 1980
         self.maxyear = 2014
@@ -55,7 +55,7 @@ class HTMLGenerator(object):
             line = line.replace("\n", "").split(" ")
             self.linklist.append(line)
             currentnum += 1
-        random.shuffle(self.linklist)
+        # random.shuffle(self.linklist)
         linkdifffile.close()
 
     def judge(self, key0, key1, i):
