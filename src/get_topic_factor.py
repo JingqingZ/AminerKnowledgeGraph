@@ -26,7 +26,9 @@ class GetTopicFactor(object):
         self.query = q.replace(' ', '_')
 
     def init_topic_dict(self):
-        infile_topic = '../results/pub_' + self.query + '.keywords'
+        # load from person keyword
+        infile_topic = '../results/person_' + self.query + '.keywords'
+        #infile_topic = '../results/pub_' + self.query + '.keywords'
         infile = open(infile_topic)
         curline = 0
         for line in infile:
@@ -296,7 +298,7 @@ class GetTopicFactor(object):
                 output = output_unlabel
                 output_mark = output_mark_unlabel
                 output.write('?0')
-                output_mark.write(repr(i) + '\n')
+                output_mark.write(i[0] + ' ' + i[1] + '\n')
             output.write(' 1:' + repr(trend_sim) )
             output.write(' 2:' + repr(voc_dist) )
             output.write(' 3:' + repr(paper_list_rate) )
@@ -374,7 +376,7 @@ class GetTopicFactor(object):
 
 def main():
     # the second parameter is the difff threshold
-    ga = GetTopicFactor(sys.argv[1], 500)
+    ga = GetTopicFactor(sys.argv[1], 5)
     ga.init_topic_dict()
     ga.get_paper_number()
     # ga.output_topic_dict("../results/topic_factor_data_mining_paper_num.txt")

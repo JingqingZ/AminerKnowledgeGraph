@@ -6,7 +6,7 @@ class MergeKeywords(object):
     """docstring for MergeKeywords"""
     def __init__(self):
         super(MergeKeywords, self).__init__()
-        self.suffix = [ '.', '_algorithms', '_algorithm', '_theory', '_mining',
+        self.suffix = [ '.', '_algorithms', '_algorithm', '_theory',
                         '_analysis', '_module', '_techniques', '_technique'
                         '_model', '_processing', '_tools', '_tool', 
                         '_applications', '_application', '_systems', '_system']
