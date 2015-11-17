@@ -1,5 +1,6 @@
 # generate view
 
+import operator
 from stemming.porter2 import stem
 import sys
 import random
@@ -12,12 +13,13 @@ class HTMLGenerator(object):
 
         self.query = q.replace(" ", "_")
         self.sim_threshold = 1.00
-        self.times_threshold = 10
-        self.graph_num = 100
+        self.times_threshold = 1000000
+        self.graph_num = 50
         self.top_num = 100
 
         self.minyear = 1980
         self.maxyear = 2014
+        self.sort_policy = 'absolute' # or 'absolute'
 
         self.reciprocal_times_threshold = 1 / self.times_threshold
 
@@ -49,13 +51,28 @@ class HTMLGenerator(object):
         # linkdifffile = open("../label/unlabeled_top500.txt", 'r')
         self.linklist = []
         currentnum = 0
-        for line in linkdifffile:
-            if currentnum >= self.top_num:
-                break
-            line = line.replace("\n", "").split(" ")
-            self.linklist.append(line)
-            currentnum += 1
-        # random.shuffle(self.linklist)
+        if self.sort_policy == 'relative':
+            diff_dict = {}
+            for line in linkdifffile:
+                cont = line.replace("\n", "").split(" ")
+                diff_dict[line.replace("\n", "")] = int(cont[4]) / int(cont[2])
+            sorted_dict = sorted(diff_dict.items(), key=operator.itemgetter(1))
+            for i in range(len(sorted_dict) - 1, -1, -1):
+                if currentnum >= self.top_num:
+                    break
+                line = sorted_dict[i][0]
+                line = line.split(" ")
+                self.linklist.append(line)
+                currentnum += 1
+            random.shuffle(self.linklist)
+        else:
+            for line in linkdifffile:
+                if currentnum >= self.top_num:
+                    break
+                line = line.replace("\n", "").split(" ")
+                self.linklist.append(line)
+                currentnum += 1
+            random.shuffle(self.linklist)
         linkdifffile.close()
 
     def judge(self, key0, key1, i):

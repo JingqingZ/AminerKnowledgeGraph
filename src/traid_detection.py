@@ -251,13 +251,21 @@ def main():
         print (rate)
     '''
 
-    input_file = '../social_tie/results/test.mark'
-    output_file = '../social_tie/results/edges.txt'
+    input_file = '../social_tie/results/' + sys.argv[1] + '/' + sys.argv[2] + '.mark'
+    output_file = '../social_tie/results/' + sys.argv[1] + '/edges.txt'
 
     td = TraidDetect(sys.argv[1])
     td.load_unlabeled_file(input_file)
     op0, op1, op3, cp6 = td.detect_traid()
     td.output_edge(op0, op1, op3, input_file, output_file)
+
+    append_filename = '../social_tie/results/' + sys.argv[1] + '/' + sys.argv[2] + '.txt'
+    append_file = open(append_filename, 'a')
+    output = open(output_file, 'r')
+    for line in output:
+        append_file.write(line)
+    append_file.close()
+    output.close()
     
 if __name__ == '__main__':
     main()

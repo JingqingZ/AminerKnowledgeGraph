@@ -3,6 +3,8 @@ import shutil
 from scipy.spatial import distance
 from stemming.porter2 import stem
 import sys
+import math
+from os import path
 
 # initialize the first topic_num topics, remove those without enough factor
 # initialize link with diff > threshold, remove those not in topic_dict
@@ -174,8 +176,11 @@ class GetTopicFactor(object):
             for i in range(0, len(content)):
                 content[i] = float(content[i])
             assert(len(content) == vocsize)
-            # assert(len(self.topic_dict[topic]["voc_dist"]) == 0)
-            self.topic_dict[topic]["voc_dist"] = content
+            if len(self.topic_dict[topic]["voc_dist"]) == 0:
+                self.topic_dict[topic]["voc_dist"] = content
+            else:
+                for i in range(0, len(content)):
+                    self.topic_dict[topic]["voc_dist"][i] += content[i]
         infile.close()
 
     def check_factor(self):
@@ -253,10 +258,10 @@ class GetTopicFactor(object):
 
 
     def output_for_FGM(self):
-        file_label = '../results/FGM_label_' + self.query + '.txt'
-        file_unlabel = '../results/FGM_unlabel_' + self.query + '.txt'
-        file_mark_label = '../results/FGM_label_' + self.query + '.mark'
-        file_mark_unlabel = '../results/FGM_unlabel_' + self.query + '.mark'
+        file_label = '../social_tie/results/' + self.query + '/label.txt'
+        file_unlabel = '../social_tie/results/' + self.query + '/unlabel.txt'
+        file_mark_label = '../social_tie/results/' + self.query + '/label.mark'
+        file_mark_unlabel = '../social_tie/results/' + self.query + '/unlabel.mark'
 
         diff_file = '../results/diff_' + self.query + '.list'
         label_file = '../views/label/label_' + self.query + '.txt'
@@ -284,9 +289,9 @@ class GetTopicFactor(object):
             info1 = self.topic_dict[ i1 ]
             # calculate the distance between two topics
             paper_peak_year = info0['paper_peak_year'] - info1['paper_peak_year']
-            paper_peak_num = info0['paper_peak_num'] - info1['paper_peak_num']
+            paper_peak_num = info0['paper_peak_num'] / info1['paper_peak_num']
             paper_soar_year = info0['paper_soar_year'] - info1['paper_soar_year']
-            paper_soar_num = info0['paper_soar_num'] - info1['paper_soar_num']
+            paper_soar_num = info0['paper_soar_num'] / info1['paper_soar_num']
             topic1_2_freq = freq_list[rank][0]
             topic2_1_freq = freq_list[rank][1]
             topic_freq_diff = freq_list[rank][2]
@@ -307,10 +312,10 @@ class GetTopicFactor(object):
             output_mark = output_mark_label
             if i in evolution_set:
                 output.write('+1')
-                output_mark.write(i0 + ' ' + i1 + '\n')
+                output_mark.write(i[0] + ' ' + i[1] + '\n')
             elif i in non_evolution_set:
                 output.write('+0')
-                output_mark.write(i0 + ' ' + i1 + '\n')
+                output_mark.write(i[0] + ' ' + i[1] + '\n')
             else:
                 # if the label is unknown, there is no difference between ?0 and ?1
                 output = output_unlabel
@@ -319,16 +324,16 @@ class GetTopicFactor(object):
                 output_mark.write(i[0] + ' ' + i[1] + '\n')
             output.write(' 1:' + repr(trend_sim) )
             output.write(' 2:' + repr(voc_dist) )
-            output.write(' 3:' + repr(paper_list_rate) )
-            output.write(' 4:' + repr(author_list_rate) )
-            output.write(' 5:' + repr(paper_peak_year) )
-            output.write(' 6:' + repr(paper_soar_year) )
+            output.write(' 3:' + repr(paper_list_rate))
+            output.write(' 4:' + repr(author_list_rate))
+            output.write(' 5:' + repr(paper_peak_year))
+            output.write(' 6:' + repr(paper_soar_year))
             # output.write(' 7:' + repr(paper_peak_num) )
             # output.write(' 8:' + repr(paper_soar_num) )
             # output.write(' 7:' + repr(topic1_2_freq) )
             # output.write(' 8:' + repr(topic2_1_freq) )
-            output.write(' 7:' + repr(topic_freq_diff) )
-            output.write(' 8:' + repr(first_paper_year_diff) )
+            output.write(' 7:' + repr(math.log(topic_freq_diff)))
+            output.write(' 8:' + repr(first_paper_year_diff))
             output.write('\n')
             rank += 1
         output_label.close()
@@ -338,16 +343,16 @@ class GetTopicFactor(object):
 
     def gen_FGM_train_test(self):
 
-        file_label = '../results/FGM_label_' + self.query + '.txt'
-        file_unlabel = '../results/FGM_unlabel_' + self.query + '.txt'
-        mark_label = '../results/FGM_label_' + self.query + '.mark'
-        mark_unlabel = '../results/FGM_unlabel_' + self.query + '.mark'
+        file_label = '../social_tie/results/' + self.query + '/label.txt'
+        file_unlabel = '../social_tie/results/' + self.query + '/unlabel.txt'
+        mark_label = '../social_tie/results/' + self.query + '/label.mark'
+        mark_unlabel = '../social_tie/results/' + self.query + '/unlabel.mark'
 
         file_train = '../social_tie/results/' + self.query + '/train.txt'
         file_test = '../social_tie/results/' + self.query + '/test.txt'
         mark_train = '../social_tie/results/' + self.query + '/train.mark'
         mark_test = '../social_tie/results/' + self.query + '/test.mark'
-        unlabel_pred = '../social_tie/results/' + self.query + '/unlabel.txt'
+        # unlabel_pred = '../social_tie/results/' + self.query + '/unlabel.txt'
 
         pos = list()
         neg = list()
@@ -360,7 +365,7 @@ class GetTopicFactor(object):
                 neg.append( (label[i], mark[i]) )
 
         shutil.copyfile(file_unlabel, file_train)
-        shutil.copyfile(file_unlabel, unlabel_pred)
+        # shutil.copyfile(file_unlabel, unlabel_pred)
         shutil.copyfile(mark_unlabel, mark_train)
 
         output = open(file_train, 'a')
@@ -394,7 +399,7 @@ class GetTopicFactor(object):
 
 def main():
     # the second parameter is the difff threshold
-    ga = GetTopicFactor(sys.argv[1], 500)
+    ga = GetTopicFactor(sys.argv[1], 100)
     print("init topic")
     ga.init_topic_dict()
     print("paper number")
