@@ -196,6 +196,18 @@ class TraidDetect(object):
                 output.write('#edge %d %d %d\n' % (mark[edge1], mark[edge2], 3))
         output.close()
 
+    def output_triangle(self, close_traid_6, infile, outfile):
+        output = open(outfile, 'w')
+        mark = dict()
+        self.load_mark_file(infile, mark)
+        for i in close_traid_6:
+            edge1 = '%s %s' % (self.num2key[ i[0] ], self.num2key[ i[1] ])
+            edge2 = '%s %s' % (self.num2key[ i[0] ], self.num2key[ i[2] ])
+            edge3 = '%s %s' % (self.num2key[ i[1] ], self.num2key[ i[2] ])
+            if edge1 in mark and edge2 in mark and edge3 in mark:
+                output.write('#triangle %d %d %d %d\n' % (mark[edge1], mark[edge2], mark[edge3], 1) )
+        output.close()
+
     def calc_similarity(self, open_traid_0, open_traid_3):
         factor = self.load_factor()
 
@@ -253,15 +265,24 @@ def main():
 
     input_file = '../social_tie/results/' + sys.argv[1] + '/' + sys.argv[2] + '.mark'
     output_file = '../social_tie/results/' + sys.argv[1] + '/edges.txt'
+    output_triangle_file = '../social_tie/results/' + sys.argv[1] + '/triangles.txt'
 
     td = TraidDetect(sys.argv[1])
     td.load_unlabeled_file(input_file)
     op0, op1, op3, cp6 = td.detect_traid()
     td.output_edge(op0, op1, op3, input_file, output_file)
+    td.output_triangle(cp6, input_file, output_triangle_file)
 
     append_filename = '../social_tie/results/' + sys.argv[1] + '/' + sys.argv[2] + '.txt'
     append_file = open(append_filename, 'a')
     output = open(output_file, 'r')
+    for line in output:
+        append_file.write(line)
+    append_file.close()
+    output.close()
+
+    append_file = open(append_filename, 'a')
+    output = open(output_triangle_file, 'r')
     for line in output:
         append_file.write(line)
     append_file.close()
