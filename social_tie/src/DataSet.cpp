@@ -45,8 +45,8 @@ void GlobalDataSet::LoadData(const char* data_file, Config* conf)
         {
             DataEdge* curt_edge = new DataEdge();
 
-            curt_edge->a = atoi(tokens[1].c_str()) - 1;
-            curt_edge->b = atoi(tokens[2].c_str()) - 1;
+            curt_edge->a = atoi(tokens[1].c_str()); // origin version has -1, but we think it is wrong or a trick
+            curt_edge->b = atoi(tokens[2].c_str()); // origin version has -1, but we think it is wrong or a trick
 
             curt_edge->edge_type = 0;
             if (tokens.size() >= 4)
@@ -151,8 +151,8 @@ void GlobalDataSet::LoadDataWithDict(const char* data_file, Config* conf, const 
         {
             DataEdge* curt_edge = new DataEdge();
 
-            curt_edge->a = atoi(tokens[1].c_str()) - 1;
-            curt_edge->b = atoi(tokens[2].c_str()) - 1;
+            curt_edge->a = atoi(tokens[1].c_str()); // origin version has -1, but we think it is wrong or a trick
+            curt_edge->b = atoi(tokens[2].c_str()); // origin version has -1, but we think it is wrong or a trick
 
             curt_edge->edge_type = 0;
             if (tokens.size() >= 4)
