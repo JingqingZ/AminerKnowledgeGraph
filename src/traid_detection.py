@@ -152,9 +152,9 @@ class TraidDetect(object):
 
     def load_factor(self):
         factor = list()
-        filename = '../results/FGM_label_' + self.query + '.txt'
+        filename = '../social_tie/results/' + self.query + '/label.txt'
         self.load_factor_file(filename, factor)
-        filename = '../results/FGM_unlabel_' + self.query + '.txt'
+        filename = '../social_tie/results/' + self.query + '/unlabel.txt'
         self.load_factor_file(filename, factor)
         return factor
 
@@ -167,9 +167,9 @@ class TraidDetect(object):
         
     def load_mark(self):
         mark = dict()
-        filename = '../results/FGM_label_' + self.query + '.mark'
+        filename = '../social_tie/results/' + self.query + '/label.mark'
         load_mark_file(filename, mark)
-        filename = '../results/FGM_unlabel_' + self.query + '.mark'
+        filename = '../social_tie/results/' + self.query + '/unlabel.mark'
         load_mark_file(filename, mark)
         return mark
 
@@ -213,12 +213,12 @@ class TraidDetect(object):
 
         pair_dict = dict()
         counter = 0
-        filename = '../results/FGM_label_' + self.query + '.mark'
+        filename = '../social_tie/results/' + self.query + '/label.mark'
         content = open(filename).readlines()
         for i in content:
             pair_dict[i.strip()] = factor[counter]
             counter += 1
-        filename = '../results/FGM_unlabel_' + self.query + '.mark'
+        filename = '../social_tie/results/' + self.query + '/unlabel.mark'
         content = open(filename).readlines()
         for i in content:
             pair_dict[i.strip()] = factor[counter]
@@ -255,14 +255,14 @@ def test(query, skip_char):
     return list()
 
 def main():
-    '''
+    
     label_avg = test(sys.argv[1], '0')
     unlabel_avg = test(sys.argv[1], '1')
     for i in range(0, len(label_avg)):
         rate = math.fabs(label_avg[i] - unlabel_avg[i]) / math.fabs(label_avg[i] + unlabel_avg[i])
         print (rate)
-    '''
 
+    '''
     input_file = '../social_tie/results/' + sys.argv[1] + '/' + sys.argv[2] + '.mark'
     output_file = '../social_tie/results/' + sys.argv[1] + '/edges.txt'
     output_triangle_file = '../social_tie/results/' + sys.argv[1] + '/triangles.txt'
@@ -287,6 +287,7 @@ def main():
         append_file.write(line)
     append_file.close()
     output.close()
+    '''
     
 if __name__ == '__main__':
     main()
