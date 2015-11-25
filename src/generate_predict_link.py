@@ -42,26 +42,28 @@ class GeneratePredictedLink(object):
                 self.train.append(content[0][1:])
         for line in in_test:
             content = line.split(" ")
-            self.test.append(content[0][1:])
+            if content[0][0] != "#":
+                self.test.append(content[0][1:])
 
     def generate(self, outputname, label_outname, unlabel_outname):
-        train_final = self.pred + self.train
+        #train_final = self.pred + self.train
         unlabel_num = len(self.pred)
-        assert(len(self.train_mark) == len(train_final))
-        assert(len(self.test_mark) == len(self.test))
+        #assert(len(self.train_mark) == len(train_final))
+        #assert(len(self.test_mark) == len(self.test))
         outfile = open(outputname, 'w')
         label_outfile = open(label_outname, 'w')
         unlabel_outfile = open(unlabel_outname, 'w')
         for i in range(len(self.train_mark)):
-            if i < unlabel_num:
-                outfile.write("pred " + self.train_mark[i][0] + " " + self.train_mark[i][1] + " " + train_final[i] + "\n")
-                unlabel_outfile.write("pred " + self.train_mark[i][0] + " " + self.train_mark[i][1] + " " + train_final[i] + "\n")
-            else:
-                outfile.write("label " + self.train_mark[i][0] + " " + self.train_mark[i][1] + " " + train_final[i] + "\n")
-                label_outfile.write("label " + self.train_mark[i][0] + " " + self.train_mark[i][1] + " " + train_final[i] + "\n")
-        for i in range(len(self.test_mark)):
-            outfile.write("label " + self.test_mark[i][0] + " " + self.test_mark[i][1] + " " + self.test[i] + "\n")
-            label_outfile.write("label " + self.test_mark[i][0] + " " + self.test_mark[i][1] + " " + self.test[i] + "\n")
+            outfile.write("pred " + self.train_mark[i][0] + " " + self.train_mark[i][1] + " " + self.pred[i] + "\n")
+            #if i < unlabel_num:
+            #    outfile.write("pred " + self.train_mark[i][0] + " " + self.train_mark[i][1] + " " + train_final[i] + "\n")
+            #    unlabel_outfile.write("pred " + self.train_mark[i][0] + " " + self.train_mark[i][1] + " " + train_final[i] + "\n")
+            #else:
+            #    outfile.write("label " + self.train_mark[i][0] + " " + self.train_mark[i][1] + " " + train_final[i] + "\n")
+            #    label_outfile.write("label " + self.train_mark[i][0] + " " + self.train_mark[i][1] + " " + train_final[i] + "\n")
+        #for i in range(len(self.test_mark)):
+            #outfile.write("label " + self.test_mark[i][0] + " " + self.test_mark[i][1] + " " + self.test[i] + "\n")
+            #label_outfile.write("label " + self.test_mark[i][0] + " " + self.test_mark[i][1] + " " + self.test[i] + "\n")
         outfile.close()
         label_outfile.close()
         unlabel_outfile.close()

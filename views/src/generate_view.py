@@ -14,8 +14,8 @@ class HTMLGenerator(object):
         self.query = q.replace(" ", "_")
         self.sim_threshold = 1.00
         self.times_threshold = 1000000
-        self.graph_num = 50
-        self.top_num = 100
+        self.graph_num = 200
+        self.top_num = 400
 
         self.minyear = 1980
         self.maxyear = 2014

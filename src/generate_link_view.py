@@ -5,7 +5,7 @@ import sys
 
 class LabelResultsHTMLGenerate(object):
     """docstring for LabelResultsHTMLGenerate"""
-    def __init__(self, q):
+    def __init__(self, q, t):
         super(LabelResultsHTMLGenerate, self).__init__()
         self.query = q.replace(" ", "_")
         self.keydict = dict()
@@ -14,6 +14,13 @@ class LabelResultsHTMLGenerate(object):
         self.labeldict = dict()
         self.minyear = 1980
         self.maxyear = 2014
+        self.type = ""
+        if t == "label":
+            self.type = "_label"
+        elif t == "pred":
+            self.type = "_pred"
+        elif t == "all":
+            self.type = ""
 
     def load_files(self):
         timelinefile = open("../results/pub_" + self.query + ".dist", "r")
@@ -46,7 +53,7 @@ class LabelResultsHTMLGenerate(object):
             self.linkdict[link]["trendsim"] = line[5]
         linkdifffile.close()
 
-        labelfile = open("../views/pattern_analysis/results/" + self.query + "/results_label.txt", 'r')
+        labelfile = open("../views/pattern_analysis/results/" + self.query + "/results" + self.type + ".txt", 'r')
         self.labellist = []
         self.labeldict = {}
         for line in labelfile:
@@ -61,7 +68,7 @@ class LabelResultsHTMLGenerate(object):
         labelfile.close()
 
     def gen_html(self):
-        self.htmlfile = open("../views/pattern_analysis/results/" + self.query + "/views.html", "w")
+        self.htmlfile = open("../views/pattern_analysis/results/" + self.query + "/views" + self.type + ".html", "w")
         self.htmlfile.write('<html><head>')
         jsfile = open("../views/static/jquery-1.8.2.min.js", 'r')
         self.htmlfile.write('<script>')
@@ -123,7 +130,7 @@ class LabelResultsHTMLGenerate(object):
 
 
 def main():
-    hg = LabelResultsHTMLGenerate(sys.argv[1])
+    hg = LabelResultsHTMLGenerate(sys.argv[1], sys.argv[2])
     hg.load_files()
     hg.gen_html()
 
